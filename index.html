@@ -2,176 +2,291 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>GUSTAV</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>GUSTAV LINK</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-    background:#000;
-    display:flex;
-    justify-content:center;
-    overflow-x:hidden;
-    font-family:Arial,sans-serif;
+background:
+linear-gradient(
+180deg,
+#06000d,
+#12001f,
+#06000d
+);
+color:white;
+min-height:100vh;
+padding:20px;
 }
 
 .container{
-    position:relative;
-    width:100%;
-    max-width:900px;
+max-width:700px;
+margin:auto;
 }
 
-.bg{
-    width:100%;
-    display:block;
+/* PROFILE */
+
+.profile{
+text-align:center;
+margin:40px 0;
 }
 
-.link{
-    position:absolute;
-    display:block;
-    border-radius:20px;
-    background:rgba(255,255,255,0);
-    text-decoration:none;
+.avatar{
+width:130px;
+height:130px;
+border-radius:50%;
+margin:auto;
+border:4px solid #cf5cff;
+box-shadow:
+0 0 15px #cf5cff,
+0 0 35px #cf5cff;
+overflow:hidden;
 }
 
-/* Debug mode
-.link{
-outline:2px solid red;
-background:rgba(255,0,0,.15);
-}
-*/
-
-/* TELEGRAM */
-.tg1{
-    top:39.7%;
-    left:20%;
-    width:66%;
-    height:3.2%;
+.avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
-.tg2{
-    top:44.2%;
-    left:20%;
-    width:66%;
-    height:3.2%;
+.profile h1{
+font-size:52px;
+font-weight:700;
+letter-spacing:3px;
+margin-top:15px;
+color:#f3d8ff;
 }
 
-/* KB */
-.kb1{
-    top:53.3%;
-    left:20%;
-    width:66%;
-    height:3.2%;
+.profile p{
+margin-top:8px;
+color:#d7c4e8;
+font-size:17px;
 }
 
-/* INFORMASI */
-.info1{
-    top:63.3%;
-    left:20%;
-    width:66%;
-    height:3.2%;
+/* LINK */
+
+.link-card{
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+text-decoration:none;
+color:white;
+
+background:rgba(255,255,255,.03);
+
+border:1px solid rgba(207,92,255,.25);
+
+backdrop-filter:blur(10px);
+
+padding:20px;
+border-radius:25px;
+
+margin-bottom:16px;
+
+transition:.25s ease;
 }
 
-.info2{
-    top:68%;
-    left:20%;
-    width:66%;
-    height:3.2%;
+.link-card:hover{
+transform:translateY(-4px);
+
+border-color:#cf5cff;
+
+box-shadow:
+0 0 15px rgba(207,92,255,.35);
 }
 
-/* LANGGANAN */
-.lang1{
-    top:78.2%;
-    left:20%;
-    width:66%;
-    height:2.8%;
+.left{
+display:flex;
+align-items:center;
+gap:16px;
 }
 
-.lang2{
-    top:82.2%;
-    left:20%;
-    width:66%;
-    height:2.8%;
+.icon{
+width:58px;
+height:58px;
+
+border-radius:16px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:26px;
+
+background:
+linear-gradient(
+135deg,
+#7a00ff,
+#ff2bff
+);
+
+box-shadow:
+0 0 15px rgba(207,92,255,.4);
 }
 
-.lang3{
-    top:86.1%;
-    left:20%;
-    width:66%;
-    height:2.8%;
+.title{
+font-size:19px;
+font-weight:600;
 }
 
-/* FT CS */
-.ft1{
-    top:95.3%;
-    left:20%;
-    width:66%;
-    height:2.3%;
+.arrow{
+font-size:28px;
+color:#d9a8ff;
 }
 
-.ft2{
-    top:99.1%;
-    left:20%;
-    width:66%;
-    height:2.3%;
+@media(max-width:768px){
+
+.profile h1{
+font-size:42px;
 }
 
-.ft3{
-    top:103%;
-    left:20%;
-    width:66%;
-    height:2.3%;
+.title{
+font-size:16px;
 }
 
-.ft4{
-    top:106.8%;
-    left:20%;
-    width:66%;
-    height:2.3%;
+.icon{
+width:50px;
+height:50px;
+font-size:22px;
 }
 
-.ft5{
-    top:110.6%;
-    left:20%;
-    width:66%;
-    height:2.3%;
 }
+
 </style>
 </head>
-
 <body>
 
 <div class="container">
 
-<img src="bg.jpg" class="bg" alt="GUSTAV">
+<div class="profile">
 
-<!-- TELEGRAM -->
-<a class="link tg1" href="https://t.me/gustavreall21x" target="_blank"></a>
-<a class="link tg2" href="https://t.me/bosgustav" target="_blank"></a>
+<div class="avatar">
+<img src="https://i.imgur.com/8Km9tLL.jpg">
+</div>
 
-<!-- KB -->
-<a class="link kb1" href="http://t.me/+M6lvT5AFByc2OTQ1" target="_blank"></a>
+<h1>GUSTAV</h1>
 
-<!-- INFORMASI -->
-<a class="link info1" href="https://t.me/info21gustav" target="_blank"></a>
-<a class="link info2" href="https://t.me/testi21gustav" target="_blank"></a>
+<p>
+Semua Link Resmi Gustav
+</p>
 
-<!-- LANGGANAN -->
-<a class="link lang1" href="https://t.me/+teyQSTZB5QY5ODg1" target="_blank"></a>
-<a class="link lang2" href="https://t.me/+YfQMt1Sjq5I0Nzhl" target="_blank"></a>
-<a class="link lang3" href="https://t.me/+-FB4nONsi9dhYjI1" target="_blank"></a>
+</div>
 
-<!-- FT CS -->
-<a class="link ft1" href="https://t.me/+jpkEImEyogAxMzk1" target="_blank"></a>
-<a class="link ft2" href="https://t.me/+YfQMt1Sjq5I0Nzhl" target="_blank"></a>
-<a class="link ft3" href="https://t.me/+Ifhj5_-kOkk2MjFl" target="_blank"></a>
-<a class="link ft4" href="https://t.me/+2oS_50bWAw5mYmY1" target="_blank"></a>
-<a class="link ft5" href="https://t.me/+IgKJ4uTpCTxmNjU9" target="_blank"></a>
+<a href="https://t.me/gustavreall21x" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">✈️</div>
+<div class="title">TELEGRAM GUSTAV 1</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="https://t.me/bosgustav" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">✈️</div>
+<div class="title">TELEGRAM GUSTAV 2</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="http://t.me/+M6lvT5AFByc2OTQ1" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">💎</div>
+<div class="title">KB 1M 9D PERAK</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="https://t.me/info21gustav" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">📢</div>
+<div class="title">ALL INFO GUSTAV</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="https://t.me/testi21gustav" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">⭐</div>
+<div class="title">CH TESTI / OWN GUSTAV</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="https://t.me/+teyQSTZB5QY5ODg1" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">🔥</div>
+<div class="title">GB LANGGANAN GUSTAV X PT</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="https://t.me/+YfQMt1Sjq5I0Nzhl" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">🔥</div>
+<div class="title">GB LANGGANAN GUSTAV X OWN 1</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="https://t.me/+-FB4nONsi9dhYjI1" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">🔥</div>
+<div class="title">GB LANGGANAN GUSTAV X OWN 2</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="https://t.me/+jpkEImEyogAxMzk1" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">🎯</div>
+<div class="title">GB FT CS GUSTAV 1</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="https://t.me/+YfQMt1Sjq5I0Nzhl" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">🎯</div>
+<div class="title">GB FT CS GUSTAV 2</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="https://t.me/+Ifhj5_-kOkk2MjFl" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">🎯</div>
+<div class="title">GB FT CS GUSTAV 3</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="https://t.me/+2oS_50bWAw5mYmY1" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">🎯</div>
+<div class="title">GB FT CS GUSTAV 4</div>
+</div>
+<div class="arrow">→</div>
+</a>
+
+<a href="https://t.me/+IgKJ4uTpCTxmNjU9" target="_blank" class="link-card">
+<div class="left">
+<div class="icon">🎯</div>
+<div class="title">GB FT CS GUSTAV 5</div>
+</div>
+<div class="arrow">→</div>
+</a>
 
 </div>
 
