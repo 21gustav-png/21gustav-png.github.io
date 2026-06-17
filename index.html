@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUSTAV</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+:root{
+--purple:#a855f7;
+--purple2:#c084fc;
+--dark:#080510;
+}
+
+body{
+font-family:'Orbitron',sans-serif;
+background:url('anime-bg.jpg') center center/cover no-repeat fixed;
+min-height:100vh;
+overflow-x:hidden;
+color:#fff;
+position:relative;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+linear-gradient(to bottom,
+rgba(0,0,0,.35),
+rgba(10,0,25,.65));
+backdrop-filter:blur(2px);
+z-index:0;
+}
+
+#stars{
+position:fixed;
+inset:0;
+z-index:1;
+pointer-events:none;
+}
+
+.star{
+position:absolute;
+width:2px;
+height:2px;
+background:white;
+border-radius:50%;
+animation:twinkle 3s infinite;
+}
+
+@keyframes twinkle{
+0%,100%{opacity:.2}
+50%{opacity:1}
+}
+
+.shooting-star{
+position:absolute;
+width:200px;
+height:2px;
+background:linear-gradient(90deg,
+transparent,
+#fff,
+#c084fc);
+border-radius:20px;
+box-shadow:
+0 0 10px #fff,
+0 0 25px #c084fc;
+transform:rotate(-35deg);
+animation:meteor 3s linear forwards;
+}
+
+@keyframes meteor{
+from{
+opacity:1;
+transform:translate(0,0) rotate(-35deg);
+}
+to{
+opacity:0;
+transform:translate(-1000px,1000px) rotate(-35deg);
+}
+}
+
+.container{
+position:relative;
+z-index:2;
+max-width:500px;
+margin:auto;
+padding:20px;
+}
+
+.logo{
+width:150px;
+height:150px;
+margin:20px auto;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:70px;
+font-weight:900;
+
+background:
+linear-gradient(135deg,
+#d8b4fe,
+#9333ea);
+
+border:3px solid #fff;
+
+box-shadow:
+0 0 20px #c084fc,
+0 0 40px #a855f7,
+0 0 80px #7c3aed;
+}
+
+.logo-ring{
+animation:pulse 3s infinite;
+}
+
+@keyframes pulse{
+50%{
+transform:scale(1.05);
+}
+}
+
+.title{
+text-align:center;
+font-size:56px;
+font-weight:900;
+letter-spacing:3px;
+
+text-shadow:
+0 0 15px #fff,
+0 0 30px #c084fc,
+0 0 60px #9333ea;
+}
+
+.subtitle{
+text-align:center;
+margin-top:10px;
+margin-bottom:25px;
+color:#f3e8ff;
+font-size:13px;
+}
+
+.card{
+background:rgba(10,0,25,.55);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,.15);
+border-radius:25px;
+padding:18px;
+margin-bottom:18px;
+
+box-shadow:
+0 0 20px rgba(168,85,247,.4);
+}
+
+.section-title{
+font-size:13px;
+font-weight:700;
+margin-bottom:12px;
+color:#f5d0fe;
+}
+
+.btn{
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+text-decoration:none;
+color:white;
+
+padding:15px;
+margin-bottom:10px;
+
+border-radius:16px;
+
+background:
+rgba(168,85,247,.15);
+
+border:
+1px solid rgba(255,255,255,.1);
+
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-3px);
+box-shadow:
+0 0 15px #c084fc,
+0 0 30px #9333ea;
+}
+
+.arrow{
+font-size:18px;
+}
+
+.footer{
+text-align:center;
+padding:30px 0;
+}
+
+.footer h2{
+font-size:28px;
+text-shadow:
+0 0 15px #c084fc;
+}
+
+.footer p{
+font-size:12px;
+color:#ddd;
+margin-top:5px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+<div class="container">
+
+<div class="logo logo-ring">
+G
+</div>
+
+<h1 class="title">GUSTAV</h1>
+<p class="subtitle">ALL INFO GUSTAV FT / KB</p>
+
+<div class="card">
+<div class="section-title">✈ TELEGRAM</div>
+
+<a href="https://t.me/gustavreall21x" class="btn" target="_blank">
+<span>Telegram Gustav 1</span>
+<span class="arrow">➜</span>
+</a>
+
+<a href="https://t.me/bosgustav" class="btn" target="_blank">
+<span>Telegram Gustav 2</span>
+<span class="arrow">➜</span>
+</a>
+</div>
+
+<div class="card">
+<div class="section-title">💎 KB</div>
+
+<a href="http://t.me/+M6lvT5AFByc2OTQ1" class="btn" target="_blank">
+<span>KB 1M 9D PERAK</span>
+<span class="arrow">➜</span>
+</a>
+</div>
+
+<div class="card">
+<div class="section-title">ℹ INFORMASI</div>
+
+<a href="https://t.me/info21gustav" class="btn" target="_blank">
+<span>ALL INFO GUSTAV</span>
+<span class="arrow">➜</span>
+</a>
+
+<a href="https://t.me/testi21gustav" class="btn" target="_blank">
+<span>CH TESTI / OWN GUSTAV</span>
+<span class="arrow">➜</span>
+</a>
+</div>
+
+<div class="card">
+<div class="section-title">👑 GB LANGGANAN</div>
+
+<a href="https://t.me/+teyQSTZB5QY5ODg1" class="btn" target="_blank">
+<span>GB LANGGANAN GUSTAV X PT</span>
+<span class="arrow">➜</span>
+</a>
+
+<a href="https://t.me/+YfQMt1Sjq5I0Nzhl" class="btn" target="_blank">
+<span>GB LANGGANAN GUSTAV X OWN 1</span>
+<span class="arrow">➜</span>
+</a>
+
+<a href="https://t.me/+-FB4nONsi9dhYjI1" class="btn" target="_blank">
+<span>GB LANGGANAN GUSTAV X OWN 2</span>
+<span class="arrow">➜</span>
+</a>
+</div>
+
+<div class="card">
+<div class="section-title">🎮 GB FT CS</div>
+
+<a href="https://t.me/+jpkEImEyogAxMzk1" class="btn" target="_blank"><span>GB FT CS GUSTAV 1</span><span class="arrow">➜</span></a>
+
+<a href="https://t.me/+YfQMt1Sjq5I0Nzhl" class="btn" target="_blank"><span>GB FT CS GUSTAV 2</span><span class="arrow">➜</span></a>
+
+<a href="https://t.me/+Ifhj5_-kOkk2MjFl" class="btn" target="_blank"><span>GB FT CS GUSTAV 3</span><span class="arrow">➜</span></a>
+
+<a href="https://t.me/+2oS_50bWAw5mYmY1" class="btn" target="_blank"><span>GB FT CS GUSTAV 4</span><span class="arrow">➜</span></a>
+
+<a href="https://t.me/+IgKJ4uTpCTxmNjU9" class="btn" target="_blank"><span>GB FT CS GUSTAV 5</span><span class="arrow">➜</span></a>
+</div>
+
+<div class="footer">
+<h2>GUSTAV</h2>
+<p>EST. 2026</p>
+<p>THANKS FOR SUPPORT</p>
+</div>
+
+</div>
+
+<script>
+for(let i=0;i<180;i++){
+let star=document.createElement("div");
+star.className="star";
+star.style.left=Math.random()*100+"%";
+star.style.top=Math.random()*100+"%";
+star.style.animationDelay=Math.random()*5+"s";
+document.getElementById("stars").appendChild(star);
+}
+
+function createMeteor(){
+const meteor=document.createElement("div");
+meteor.className="shooting-star";
+meteor.style.left=Math.random()*window.innerWidth+"px";
+meteor.style.top=Math.random()*250+"px";
+document.getElementById("stars").appendChild(meteor);
+
+setTimeout(()=>{
+meteor.remove();
+},3000);
+}
+
+setInterval(createMeteor,2500);
+</script>
+
+</body>
+                       </html>
