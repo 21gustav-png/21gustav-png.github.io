@@ -11,12 +11,22 @@ margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:'Segoe UI',sans-serif;
-}
-
 body{
-background:radial-gradient(circle at top,#7c3aed 0%,#312e81 35%,#09090f 100%);
+background:url('background.jpg') center center/cover no-repeat fixed;
 min-height:100vh;
 overflow-x:hidden;
+color:white;
+position:relative;
+}
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+backdrop-filter:blur(3px);
+z-index:-1;
+}
 color:white;
 }
 
@@ -70,17 +80,22 @@ padding:25px 15px;
 }
 
 .logo{
-width:140px;
-height:140px;
+width:150px;
+height:150px;
 margin:auto;
 border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:65px;
-background:linear-gradient(135deg,#a855ff,#6d28d9);
-border:3px solid #d8b4fe;
-box-shadow:0 0 25px #a855ff,0 0 60px #9333ea;
+overflow:hidden;
+border:3px solid #c084fc;
+box-shadow:
+0 0 20px #a855ff,
+0 0 50px #9333ea,
+0 0 80px #7c3aed;
+}
+
+.logo img{
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
 .title{
@@ -98,13 +113,27 @@ margin-top:5px;
 margin-bottom:25px;
 }
 
-.card{
-background:rgba(255,255,255,.06);
-backdrop-filter:blur(18px);
-border:1px solid rgba(255,255,255,.12);
-border-radius:30px;
-padding:20px;
-box-shadow:0 0 25px rgba(168,85,247,.25);
+.btn{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:16px;
+margin-bottom:10px;
+text-decoration:none;
+color:white;
+background:rgba(80,20,150,.35);
+border:1px solid rgba(192,132,252,.4);
+border-radius:18px;
+transition:.3s;
+box-shadow:0 0 10px rgba(168,85,247,.3);
+}
+
+.btn:hover{
+transform:translateY(-3px);
+box-shadow:
+0 0 20px #a855ff,
+0 0 40px #9333ea,
+0 0 60px #7c3aed;
 }
 
 .section{
@@ -162,7 +191,9 @@ margin-top:5px;
 
 <div class="container">
 
-<div class="logo">👑</div>
+<div class="logo">
+<img src="background.jpg" alt="GUSTAV">
+</div>
 
 <h1 class="title">GUSTAV</h1>
 <p class="subtitle">ALL INFO GUSTAV FT / KB</p>
