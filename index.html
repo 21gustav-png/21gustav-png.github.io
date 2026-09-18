@@ -18,7 +18,6 @@ html,body{height:100%}
 body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;font-size:14px;line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
 
-/* BG ANIMATION — z-index 0, pointer-events none */
 .bg-animation{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;display:none}
 .bg-animation.show{display:block}
 .nebula{position:absolute;top:-20%;left:-20%;width:140%;height:140%;background:radial-gradient(circle at 30% 40%,rgba(84,37,143,.35) 0%,transparent 40%),radial-gradient(circle at 70% 60%,rgba(168,85,247,.25) 0%,transparent 45%),radial-gradient(circle at 50% 80%,rgba(59,23,109,.3) 0%,transparent 40%);filter:blur(60px);animation:nebulaMove 25s ease-in-out infinite;will-change:transform}
@@ -28,7 +27,6 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
 @keyframes starMove{0%{transform:translateY(-10vh)}100%{transform:translateY(110vh)}}
 @keyframes starTwinkle{0%,100%{opacity:.3}50%{opacity:1}}
 
-/* APP — z-index 1, di atas background */
 .app{width:100%;max-width:640px;min-height:100vh;margin:0 auto;padding:32px 20px 130px;position:relative;z-index:1}
 .page{display:none;animation:fadeUp .35s ease}
 .page.active{display:block}
@@ -105,7 +103,7 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 
 .preview{display:none;border-radius:var(--radius);overflow:hidden;background:var(--panel);border:1px solid var(--line);margin-bottom:20px}
 .preview.show{display:block}
-.preview img{width:100%;display:block;aspect-ratio:16/11;object-fit:cover;background:#111}
+.preview img,.preview video{width:100%;display:block;aspect-ratio:16/11;object-fit:cover;background:#111}
 .preview-info{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);gap:12px}
 .preview-info b{font-size:13px;font-weight:600;color:#fff;display:block;word-break:break-all}
 .preview-info span{font-size:11.5px;color:var(--text2);display:block;margin-top:4px}
@@ -113,7 +111,7 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .remove:hover{color:#e07a7a;border-color:#3a2020}
 .remove .ico{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 
-.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
 .res{padding:22px 20px;border-radius:17px;background:var(--panel);border:1.5px solid var(--line);text-align:left;transition:.22s;cursor:pointer;position:relative;overflow:hidden}
 .res:hover{border-color:rgba(109,61,184,.4)}
 .res:active{transform:scale(.97)}
@@ -125,6 +123,15 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .res.selected p{color:#c9a8ee}
 .res .lock-badge{position:absolute;top:12px;right:12px;color:var(--muted)}
 .res .lock-badge .ico{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+.fps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.fps{padding:16px 12px;border-radius:14px;background:var(--panel);border:1.5px solid var(--line);text-align:center;transition:.2s;cursor:pointer}
+.fps:hover{border-color:rgba(109,61,184,.4)}
+.fps:active{transform:scale(.97)}
+.fps.selected{background:linear-gradient(145deg,#1a0f2e,#0d0818);border-color:var(--accent);box-shadow:0 0 20px rgba(84,37,143,.35)}
+.fps h4{font-size:16px;font-weight:800;color:#fff}
+.fps p{font-size:10px;color:var(--text2);margin-top:3px}
+.fps.selected p{color:#c9a8ee}
 
 .btn-primary{position:relative;width:100%;padding:18px 22px;border-radius:14px;background:var(--purple);color:#fff;font-size:13.5px;font-weight:800;letter-spacing:.6px;display:flex;align-items:center;justify-content:center;gap:10px;overflow:hidden;transition:.18s;box-shadow:0 8px 24px rgba(84,37,143,.4);z-index:2}
 .btn-primary:hover{background:#6330a5;transform:translateY(-1px);box-shadow:0 12px 32px rgba(84,37,143,.55)}
@@ -236,6 +243,23 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .btn-upgrade::after{content:"";position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:shimmer 3s ease-in-out infinite}
 .btn-upgrade .ico{width:18px;height:18px;stroke:var(--gold);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px var(--gold));position:relative;z-index:2}
 
+/* MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;animation:fadeUp .25s ease}
+.modal-bg.show{display:flex}
+.modal{width:100%;max-width:420px;background:linear-gradient(180deg,#0e0a16 0%,#080709 100%);border:1px solid rgba(168,85,247,.4);border-radius:22px;padding:26px 22px;animation:popIn .3s ease;max-height:90vh;overflow-y:auto}
+@keyframes popIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-icon{width:56px;height:56px;border-radius:16px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);display:grid;place-items:center;margin:0 auto 16px;color:var(--gold);font-size:24px}
+.modal h3{font-size:17px;font-weight:800;color:#fff;text-align:center;margin-bottom:8px}
+.modal p{font-size:12.5px;color:var(--text2);text-align:center;line-height:1.6;margin-bottom:20px}
+.tool-btn{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;width:100%;text-align:left;margin-bottom:10px;transition:.2s;cursor:pointer;color:var(--text)}
+.tool-btn:hover{border-color:rgba(168,85,247,.5);transform:translateY(-1px)}
+.tool-btn .tb-ico{width:42px;height:42px;border-radius:11px;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.4);display:grid;place-items:center;color:#d8b4fe;font-size:18px;flex-shrink:0}
+.tool-btn .tb-text{flex:1}
+.tool-btn .tb-text b{font-size:13.5px;font-weight:700;color:#fff;display:block}
+.tool-btn .tb-text span{font-size:11px;color:var(--text2);display:block;margin-top:3px}
+.tool-btn .tb-arrow{color:var(--text2);font-size:18px}
+.modal-close{width:100%;padding:14px;border-radius:14px;background:transparent;border:1.5px solid var(--line);color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;margin-top:8px}
+
 @media(min-width:700px){
   body{background:#020202}
   .app{border-left:1px solid #101014;border-right:1px solid #101014;min-height:100vh}
@@ -298,7 +322,7 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       <div class="service-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="15" cy="15" r="3"/><path d="M5 5h3v3M16 16h3v3"/></svg></div>
       <b>Face Swap</b>
     </button>
-    <button class="service" onclick="goTo('enhance')">
+    <button class="service" onclick="goTo('video')">
       <div class="service-icon"><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg></div>
       <b>Upscale Video</b>
     </button>
@@ -343,6 +367,7 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
   </div>
 </section>
 
+<!-- ENHANCE PHOTO -->
 <section class="page" id="page-enhance">
   <header class="sub-header">
     <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
@@ -386,26 +411,59 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
   </button>
 </section>
 
-<section class="page" id="page-loading">
+<!-- UPSCALE VIDEO -->
+<section class="page" id="page-video">
   <header class="sub-header">
-    <button class="sub-back" onclick="cancelProcess()"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-    <div class="sub-title" id="loadingTitle">Enhancing...</div>
-    <div class="sub-chip" id="loadingChip">FREE</div>
+    <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+    <div class="sub-title"><svg class="st-ico" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>Upscale Video</div>
+    <div class="sub-chip" id="videoChip">FREE</div>
   </header>
 
-  <div class="loading-wrap">
-    <div class="orbit">
-      <div class="ring"></div>
-      <div class="ring2"></div>
-      <div class="core"><svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+  <label class="upload" for="videoInput">
+    <div class="upload-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg></div>
+    <b>Pilih Video</b>
+    <small>MP4, MOV, WEBM — maks 100MB · 1–60 detik</small>
+    <input type="file" id="videoInput" accept="video/*" hidden>
+  </label>
+
+  <div class="preview" id="videoPreview">
+    <video id="videoPreviewEl" controls muted></video>
+    <div class="preview-info">
+      <div><b id="videoName">-</b><span id="videoSize">-</span></div>
+      <button class="remove" onclick="resetVideo()"><svg class="ico" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     </div>
-    <div class="loading-status" id="loadingStatus">Menyiapkan...</div>
-    <div class="loading-sub" id="loadingSub">Estimasi: 4 detik</div>
-    <div class="progress"><i id="progressBar"></i></div>
-    <div style="font-size:22px;font-weight:800;color:#fff;margin-top:-8px;" id="progressPercent">0%</div>
   </div>
+
+  <div class="section-head"><h3>Output Resolution</h3></div>
+
+  <div class="res-grid">
+    <button class="res selected" data-vr="720" onclick="pickVideoRes(this)"><h4>720p</h4><p>HD Ready</p></button>
+    <button class="res" data-vr="1080" onclick="pickVideoRes(this)"><h4>1080p</h4><p>Full HD</p></button>
+    <button class="res locked" data-vr="1440" onclick="tryLocked(this)">
+      <div class="lock-badge"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <h4>2K</h4><p>Ultra HD</p>
+    </button>
+    <button class="res locked" data-vr="2160" onclick="tryLocked(this)">
+      <div class="lock-badge"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+      <h4>4K</h4><p>Ultra HD</p>
+    </button>
+  </div>
+
+  <div class="section-head"><h3>Frame Rate (FPS)</h3></div>
+
+  <div class="fps-grid">
+    <button class="fps" data-fps="24" onclick="pickFps(this)"><h4>24</h4><p>Cinematic</p></button>
+    <button class="fps selected" data-fps="30" onclick="pickFps(this)"><h4>30</h4><p>Standard</p></button>
+    <button class="fps" data-fps="60" onclick="pickFps(this)"><h4>60</h4><p>Smooth</p></button>
+  </div>
+
+  <button class="btn-primary" id="videoProcessBtn" disabled onclick="startVideoProcess()">
+    <svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+    MULAI UPSCALE
+  </button>
 </section>
 
+<!-- RESULT -->
 <section class="page" id="page-result">
   <header class="sub-header">
     <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
@@ -445,6 +503,7 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
   </button>
 </section>
 
+<!-- PREMIUM -->
 <section class="page" id="page-premium">
   <header class="sub-header">
     <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
@@ -541,6 +600,35 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
   </button>
 </nav>
 
+<!-- MODAL TOOLS -->
+<div class="modal-bg" id="toolsModal">
+  <div class="modal">
+    <div class="modal-icon">⚠️</div>
+    <h3>Info Upscale Video</h3>
+    <p>Upscale video akan diproses di tools gratis pihak ketiga. Video kamu akan di-upload ke server mereka (bukan server kami).</p>
+
+    <button class="tool-btn" onclick="openTool('https://upscayl.org')">
+      <div class="tb-ico">🌐</div>
+      <div class="tb-text"><b>Upscayl</b><span>Gratis · Open-source · Desktop</span></div>
+      <span class="tb-arrow">›</span>
+    </button>
+
+    <button class="tool-btn" onclick="openTool('https://www.media.io/video-enhancer.html')">
+      <div class="tb-ico">🌐</div>
+      <div class="tb-text"><b>Media.io</b><span>Gratis · Maks 5 menit · Online</span></div>
+      <span class="tb-arrow">›</span>
+    </button>
+
+    <button class="tool-btn" onclick="openTool('https://www.kapwing.com/tools/upscale-video')">
+      <div class="tb-ico">🌐</div>
+      <div class="tb-text"><b>Kapwing</b><span>Gratis · Editor video · Online</span></div>
+      <span class="tb-arrow">›</span>
+    </button>
+
+    <button class="modal-close" onclick="closeToolsModal()">Batal</button>
+  </div>
+</div>
+
 <div class="owner-panel" id="ownerPanel">
   <div class="owner-sheet">
     <div class="owner-header">
@@ -598,7 +686,7 @@ function goTo(name){
   const t=document.getElementById('page-'+name);
   if(t){t.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
   navs.forEach(n=>n.classList.toggle('active',n.dataset.nav===name));
-  const hideNav=['enhance','loading','result'].includes(name);
+  const hideNav=['enhance','loading','result','video'].includes(name);
   bottomNav.style.display=hideNav?'none':'grid';
   updateBg(name);
 }
@@ -639,6 +727,7 @@ function toast(msg){
   toastTimer=setTimeout(()=>el.classList.remove('show'),1800);
 }
 
+/* ============ ENHANCE PHOTO ============ */
 const fileInput=document.getElementById('fileInput');
 const preview=document.getElementById('preview');
 const previewImg=document.getElementById('previewImg');
@@ -676,7 +765,7 @@ function formatSize(b){
 
 function pickRes(el){
   if(el.classList.contains('locked')){tryLocked(el);return}
-  document.querySelectorAll('.res').forEach(r=>r.classList.remove('selected'));
+  document.querySelectorAll('#page-enhance .res').forEach(r=>r.classList.remove('selected'));
   el.classList.add('selected');
   currentRes=parseInt(el.dataset.r);
 }
@@ -722,6 +811,66 @@ function shareResult(){
   else toast('Share tidak didukung');
 }
 
+/* ============ UPSCALE VIDEO ============ */
+const videoInput=document.getElementById('videoInput');
+const videoPreview=document.getElementById('videoPreview');
+const videoPreviewEl=document.getElementById('videoPreviewEl');
+const videoName=document.getElementById('videoName');
+const videoSize=document.getElementById('videoSize');
+const videoProcessBtn=document.getElementById('videoProcessBtn');
+let currentVideo=null,currentVideoRes=720,currentFps=30;
+const MAX_VIDEO_SIZE=100*1024*1024;
+
+videoInput.addEventListener('change',e=>{
+  const f=e.target.files[0];
+  if(!f)return;
+  if(!f.type.startsWith('video/')){toast('File harus video');return}
+  if(f.size>MAX_VIDEO_SIZE){toast('Maks 100MB');return}
+  currentVideo=f;
+  videoPreviewEl.src=URL.createObjectURL(f);
+  videoName.textContent=f.name;
+  videoSize.textContent=formatSize(f.size);
+  videoPreview.classList.add('show');
+  videoProcessBtn.disabled=false;
+  toast('Video berhasil diupload');
+});
+
+function resetVideo(){
+  currentVideo=null;videoInput.value='';videoPreviewEl.src='';
+  videoPreview.classList.remove('show');
+  videoProcessBtn.disabled=true;
+  toast('Video dihapus');
+}
+
+function pickVideoRes(el){
+  if(el.classList.contains('locked')){tryLocked(el);return}
+  document.querySelectorAll('#page-video .res').forEach(r=>r.classList.remove('selected'));
+  el.classList.add('selected');
+  currentVideoRes=parseInt(el.dataset.vr);
+}
+
+function pickFps(el){
+  document.querySelectorAll('.fps').forEach(r=>r.classList.remove('selected'));
+  el.classList.add('selected');
+  currentFps=parseInt(el.dataset.fps);
+}
+
+function startVideoProcess(){
+  if(!currentVideo){toast('Upload video dulu');return}
+  document.getElementById('toolsModal').classList.add('show');
+}
+
+function closeToolsModal(){
+  document.getElementById('toolsModal').classList.remove('show');
+}
+
+function openTool(url){
+  window.open(url,'_blank');
+  closeToolsModal();
+  toast('Membuka tools...');
+}
+
+/* ============ MODE ============ */
 function applyMode(){
   document.body.dataset.mode=mode;
   const banner=document.getElementById('premiumBanner');
@@ -730,7 +879,7 @@ function applyMode(){
   const desc=document.getElementById('bannerDesc');
   const sub=document.getElementById('subStatus');
   const badge=document.getElementById('modeBadgeText');
-  const chips=['subChip','loadingChip','resultChip'];
+  const chips=['subChip','loadingChip','resultChip','videoChip'];
   if(mode==='premium'){
     banner.classList.remove('free');banner.classList.add('premium');
     icon.innerHTML='<svg class="ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/><path d="M3 17v2h18v-2"/></svg>';
@@ -750,7 +899,8 @@ function applyMode(){
     badge.textContent='FREE';
     chips.forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='FREE'});
     document.querySelectorAll('.res').forEach(r=>{
-      if(parseInt(r.dataset.r)>=1440)r.classList.add('locked');
+      const rv=parseInt(r.dataset.r||r.dataset.vr);
+      if(rv>=1440)r.classList.add('locked');
     });
     document.querySelectorAll('.lock-badge').forEach(b=>b.style.display='flex');
   }
@@ -758,6 +908,7 @@ function applyMode(){
   updateBg(currentPage);
 }
 
+/* ============ OWNER ============ */
 let secretTapCount=0,secretTapTimer;
 function handleSecretTap(){
   secretTapCount++;
@@ -805,6 +956,9 @@ function clearCache(){
 }
 document.getElementById('ownerPanel').addEventListener('click',e=>{
   if(e.target.id==='ownerPanel')closeOwnerPanel();
+});
+document.getElementById('toolsModal').addEventListener('click',e=>{
+  if(e.target.id==='toolsModal')closeToolsModal();
 });
 document.addEventListener('keydown',e=>{
   if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='o'){
