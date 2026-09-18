@@ -3,13 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GUSTAV HD — Button Library</title>
+<title>GUSTAV HD — Button Library (SVG)</title>
 <style>
-/* ============ ROOT ============ */
 :root{
   --bg:#050505;
   --panel:#0b0b0f;
-  --panel2:#101016;
   --line:#202027;
   --deep:#3b176d;
   --purple:#54258f;
@@ -31,115 +29,102 @@ body{
   -webkit-font-smoothing:antialiased;
   padding:32px 20px 60px;
 }
-.container{
-  max-width:640px;margin:0 auto;
-}
-h1{
-  font-size:24px;font-weight:800;color:#fff;
-  letter-spacing:-.7px;margin-bottom:8px;
-}
-.subtitle{
-  font-size:12px;color:var(--text2);
-  margin-bottom:32px;letter-spacing:.5px;
-}
+.container{max-width:640px;margin:0 auto}
+
+h1{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.7px;margin-bottom:6px}
+.subtitle{font-size:12px;color:var(--text2);margin-bottom:32px;letter-spacing:.5px}
 .section{margin-bottom:36px}
 .section-title{
   font-size:10.5px;color:var(--text2);
   letter-spacing:1.8px;text-transform:uppercase;
-  font-weight:700;margin-bottom:14px;
-  padding-left:4px;
+  font-weight:700;margin-bottom:14px;padding-left:4px;
 }
 
 /* ==================================================
-   ============ TOMBOL LIBRARY ======================
-   ================================================== */
+   SVG ICON BASE
+================================================== */
+.ico{
+  width:18px;
+  height:18px;
+  stroke:currentColor;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  fill:none;
+  flex-shrink:0;
+  display:block;
+}
+.ico.sm{width:16px;height:16px}
+.ico.lg{width:22px;height:22px}
+.ico.xl{width:26px;height:26px}
 
-/* ---------- TYPE 1: PRIMARY ---------- */
+/* ==================================================
+   TYPE 1: PRIMARY — Solid (ala e-commerce)
+================================================== */
 .btn-primary{
   position:relative;
   width:100%;
   padding:18px 22px;
-  border-radius:16px;
-  background:linear-gradient(145deg,#3b176d,#54258f);
-  border:1px solid rgba(109,61,184,.6);
-  color:#f0e6ff;
+  border-radius:14px;
+  background:#54258f;
+  border:0;
+  color:#fff;
   font-size:13.5px;
   font-weight:800;
-  letter-spacing:1.2px;
-  text-transform:uppercase;
+  letter-spacing:.6px;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:10px;
   cursor:pointer;
   overflow:hidden;
-  transition:transform .18s ease, box-shadow .25s ease;
-  box-shadow:
-    0 0 0 1px rgba(84,37,143,.15) inset,
-    0 10px 30px rgba(84,37,143,.4);
+  transition:transform .15s ease, background .2s ease, box-shadow .25s ease;
+  box-shadow:0 8px 24px rgba(84,37,143,.35);
   font-family:inherit;
 }
 .btn-primary:hover{
-  transform:translateY(-2px);
-  box-shadow:
-    0 0 0 1px rgba(109,61,184,.5) inset,
-    0 16px 40px rgba(84,37,143,.6);
+  background:#6330a5;
+  transform:translateY(-1px);
+  box-shadow:0 12px 30px rgba(84,37,143,.5);
 }
 .btn-primary:active{
-  transform:scale(.98) translateY(0);
-}
-.btn-primary .icon{
-  font-size:16px;
-  line-height:1;
-}
-/* Ripple */
-.btn-primary .ripple,
-.btn-secondary .ripple,
-.btn-danger .ripple{
-  position:absolute;
-  border-radius:50%;
-  background:rgba(255,255,255,.25);
-  transform:scale(0);
-  animation:ripple .6s ease-out;
-  pointer-events:none;
-}
-@keyframes ripple{
-  to{transform:scale(4);opacity:0}
+  transform:scale(.98);
 }
 
-/* ---------- TYPE 2: SECONDARY ---------- */
+/* ==================================================
+   TYPE 2: SECONDARY — Outline
+================================================== */
 .btn-secondary{
   position:relative;
   width:100%;
   padding:17px 22px;
-  border-radius:15px;
-  background:rgba(59,23,109,.15);
-  border:1px solid rgba(109,61,184,.4);
+  border-radius:14px;
+  background:transparent;
+  border:1.5px solid rgba(109,61,184,.5);
   color:#c9a8ee;
-  font-size:13px;
+   font-size:13px;
   font-weight:700;
-  letter-spacing:.4px;
-  display:flex;
-  align-items:center;
+  border letter-spacing:.3px;
+ -color display:flex;
+  align-items::center;
   justify-content:center;
-  gap:9px;
-  cursor:pointer;
-  overflow:hidden;
-  transition:all .2s ease;
+rg  gap:9px;
+ba  cursor:pointer;
+ ( overflow:hidden;
+  transition:all .2392s ease;
   font-family:inherit;
 }
-.btn-secondary:hover{
-  background:rgba(59,23,109,.3);
-  border-color:rgba(109,61,184,.7);
-  transform:translateY(-1px);
-  color:#e5d4fa;
+.btn-secondary,:hover{
+  background:rgba(6859,23,109,.25);
+ , border-color:#6d3db8;
+  color:#68e5d4fa;
+  transform:,.translateY(-1px);
 }
-.btn-secondary:active{
-  transform:scale(.98);
-}
-.btn-secondary .icon{font-size:15px;line-height:1}
+.btn-secondary55:active{transform:scale(.98)}
 
-/* ---------- TYPE 3: GHOST ---------- */
+/* ==================================================
+   TYPE 3: GHOST — Text saja
+================================================== */
 .btn-ghost{
   background:transparent;
   border:0;
@@ -160,22 +145,22 @@ h1{
   background:rgba(59,23,109,.25);
   color:#c9a8ee;
 }
-.btn-ghost:active{
-  transform:scale(.97);
-}
+.btn-ghost:active{transform:scale(.97)}
 
-/* ---------- TYPE 4: DANGER ---------- */
+/* ==================================================
+   TYPE 4: DANGER — Soft Merah
+================================================== */
 .btn-danger{
   position:relative;
   width:100%;
   padding:17px 22px;
-  border-radius:16px;
+  border-radius:14px;
   background:rgba(80,20,20,.25);
-  border:1px solid rgba(239,68,68,.25);
+  border:1px solid rgba(239,68,68,.3);
   color:#ef4444;
   font-size:13px;
   font-weight:700;
-  letter-spacing:.4px;
+  letter-spacing:.3px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -187,15 +172,14 @@ h1{
 }
 .btn-danger:hover{
   background:rgba(80,20,20,.4);
-  border-color:rgba(239,68,68,.5);
+);
   transform:translateY(-1px);
 }
-.btn-danger:active{
-  transform:scale(.98);
-}
-.btn-danger .icon{font-size:15px;line-height:1}
+.btn-danger:active{transform:scale(.98)}
 
-/* ---------- TYPE 5: ICON BUTTON ---------- */
+/* ==================================================
+   TYPE 5: ICON BUTTON
+================================================== */
 .btn-icon{
   width:46px;
   height:46px;
@@ -203,7 +187,6 @@ h1{
   background:var(--panel);
   border:1px solid var(--line);
   color:var(--text);
-  font-size:17px;
   display:grid;
   place-items:center;
   cursor:pointer;
@@ -211,27 +194,30 @@ h1{
   font-family:inherit;
   flex-shrink:0;
 }
+.btn-icon .ico{
+  width:20px;height:20px;
+  stroke-width:2;
+}
 .btn-icon:hover{
   border-color:var(--accent);
   transform:scale(1.06);
   color:#e5d4fa;
 }
-.btn-icon:active{
-  transform:scale(.94);
-}
-.btn-icon.small{
-  width:38px;height:38px;font-size:14px;
-}
+.btn-icon:active{transform:scale(.94)}
+.btn-icon.small{width:38px;height:38px}
+.btn-icon.small .ico{width:16px;height:16px}
 .btn-icon.danger:hover{
   border-color:var(--red);
   color:var(--red);
 }
 
-/* ---------- TYPE 6: PILL BUTTON (chip) ---------- */
+/* ==================================================
+   TYPE 6: PILL / CHIP
+================================================== */
 .btn-pill{
   padding:8px 14px;
   border-radius:999px;
-  background:rgba(59,23,109,.22);
+  background:rgba(59,23,109,.25);
   border:1px solid rgba(109,61,184,.5);
   color:#c9a8ee;
   font-size:10px;
@@ -241,252 +227,396 @@ h1{
   cursor:pointer;
   transition:all .2s ease;
   font-family:inherit;
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
 }
 .btn-pill:hover{
-  background:rgba(59,23,109,.4);
+  background:rgba(59,23,109,.45);
   border-color:var(--accent);
 }
 .btn-pill:active{transform:scale(.97)}
+.btn-pill .ico{width:12px;height:12px}
 
-/* ---------- TYPE 7: LOADING STATE ---------- */
+/* ==================================================
+   TYPE 7: LOADING
+================================================== */
 .btn-primary.loading{
   pointer-events:none;
-  opacity:.8;
+  opacity:.9;
 }
-.btn-primary .spinner{
+.spinner{
   width:16px;height:16px;
   border:2px solid rgba(255,255,255,.3);
   border-top-color:#fff;
   border-radius:50%;
-  animation:spin .8s linear infinite;
+  animation:spin .7s linear infinite;
   display:none;
+  flex-shrink:0;
 }
-.btn-primary.loading .spinner{display:inline-block}
-.btn-primary.loading .icon{display:none}
+.btn-primary.loading .spinner{display:block}
+.btn-primary.loading .ico{display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ---------- TYPE 8: SUCCESS STATE ---------- */
+/* ==================================================
+   TYPE 8: SUCCESS
+================================================== */
 .btn-primary.success{
-  background:linear-gradient(145deg,#15803d,#22c55e);
-  border-color:rgba(34,197,94,.6);
-  box-shadow:
-    0 0 0 1px rgba(34,197,94,.2) inset,
-    0 10px 30px rgba(34,197,94,.4);
+  background:#22c55e;
+  box-shadow:0 8px 24px rgba(34,197,94,.4);
 }
 
-/* ---------- TYPE 9: DISABLED ---------- */
+/* ==================================================
+   TYPE 9: DISABLED
+================================================== */
 .btn-primary:disabled,
 .btn-secondary:disabled{
-  background:#15151a;
+  background:#141419;
   border-color:var(--line);
   color:var(--muted);
   box-shadow:none;
   cursor:not-allowed;
   transform:none;
-  letter-spacing:.4px;
 }
-.btn-primary:disabled:hover{
+.btn-primary:disabled:hover,
+.btn-secondary:disabled:hover{
+  background:#141419;
   transform:none;
   box-shadow:none;
 }
-.btn-primary:disabled .icon{opacity:.5}
+.btn-primary:disabled .ico,
+.btn-secondary:disabled .ico{opacity:.5}
 
-/* ---------- GRID LAYOUT ---------- */
+/* ==================================================
+   LAYOUT
+================================================== */
 .btn-row{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
 .icon-row{
-  display:flex;gap:14px;align-items:center;
+  display:flex;gap:12px;align-items:center;
   flex-wrap:wrap;
 }
+.gap{height:12px}
 </style>
 </head>
 <body>
 <div class="container">
 
   <h1>GUSTAV HD</h1>
-  <p class="subtitle">Button Library — Preview semua tipe tombol</p>
+  <p class="subtitle">Button Library — dengan SVG Icons</p>
 
-  <!-- ==================== PRIMARY ==================== -->
+  <!-- ============ 1. PRIMARY ============ -->
   <div class="section">
     <div class="section-title">1. Primary — Tombol Utama</div>
 
     <button class="btn-primary">
-      <span class="icon">⚡</span>
-      Mulai Enhance
+      <svg class="ico" viewBox="0 0 24 24">
+        <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
+      </svg>
+      MULAI ENHANCE
     </button>
 
-    <div style="height:12px"></div>
+    <div class="gap"></div>
 
     <button class="btn-primary">
-      <span class="icon">⬇</span>
-      Simpan
+      <svg class="ico" viewBox="0 0 24 24">
+        <path d="M12 3v13"/>
+        <path d="M7 11l5 5 5-5"/>
+        <path d="M4 21h16"/>
+      </svg>
+      SIMPAN
     </button>
 
-    <div style="height:12px"></div>
+    <div class="gap"></div>
 
     <button class="btn-primary" disabled>
-      <span class="icon">⚡</span>
-      Mulai Enhance
+      <svg class="ico" viewBox="0 0 24 24">
+        <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
+      </svg>
+      MULAI ENHANCE
     </button>
   </div>
 
-  <!-- ==================== SECONDARY ==================== -->
+  <!-- ============ 2. SECONDARY ============ -->
   <div class="section">
     <div class="section-title">2. Secondary — Tombol Kedua</div>
 
     <div class="btn-row">
       <button class="btn-secondary">
-        <span class="icon">⇧</span>
+        <svg class="ico" viewBox="0 0 24 24">
+          <circle cx="18" cy="5" r="3"/>
+          <circle cx="6" cy="12" r="3"/>
+          <circle cx="18" cy="19" r="3"/>
+          <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>
+        </svg>
         Bagikan
       </button>
       <button class="btn-secondary">
-        <span class="icon">⟲</span>
+        <svg class="ico" viewBox="0 0 24 24">
+          <path d="M3 12a9 9 0 1 0 3-6.7"/>
+          <path d="M3 4v5h5"/>
+        </svg>
         Ulangi
       </button>
     </div>
 
-    <div style="height:12px"></div>
+    <div class="gap"></div>
 
     <button class="btn-secondary">
-      <span class="icon">⟲</span>
+      <svg class="ico" viewBox="0 0 24 24">
+        <path d="M3 12a9 9 0 1 0 3-6.7"/>
+        <path d="M3 4v5h5"/>
+      </svg>
       Ulangi Enhance
     </button>
   </div>
 
-  <!-- ==================== GHOST ==================== -->
+  <!-- ============ 3. GHOST ============ -->
   <div class="section">
-    <div class="section-title">3. Ghost — Tombol Ringan</div>
+    <div class="section-title">3. Ghost — Link Ringan</div>
 
     <div style="display:flex;justify-content:space-between;align-items:center;">
-      <span style="color:var(--text2);font-size:13px;">Lihat semua</span>
+      <span style="color:var(--text2);font-size:13px;">Services</span>
       <button class="btn-ghost">
-        See all →
+        See all
+        <svg class="ico sm" viewBox="0 0 24 24">
+          <path d="M5 12h14M13 6l6 6-6 6"/>
+        </svg>
       </button>
     </div>
 
-    <div style="height:8px"></div>
+    <div class="gap"></div>
 
     <button class="btn-ghost">Nanti</button>
     <button class="btn-ghost">Batal</button>
   </div>
 
-  <!-- ==================== DANGER ==================== -->
+  <!-- ============ 4. DANGER ============ -->
   <div class="section">
     <div class="section-title">4. Danger — Tombol Bahaya</div>
 
     <button class="btn-danger">
-      <span class="icon">⏻</span>
+      <svg class="ico" viewBox="0 0 24 24">
+        <path d="M12 3v10"/>
+        <path d="M18.4 6.6a9 9 0 1 1-12.8 0"/>
+      </svg>
       Log out
     </button>
   </div>
 
-  <!-- ==================== ICON ==================== -->
+  <!-- ============ 5. ICON ============ -->
   <div class="section">
     <div class="section-title">5. Icon Button</div>
 
     <div class="icon-row">
-      <button class="btn-icon">←</button>
-      <button class="btn-icon">✎</button>
-      <button class="btn-icon">✕</button>
-      <button class="btn-icon">🔇</button>
-      <button class="btn-icon">🔊</button>
-      <button class="btn-icon danger">⏻</button>
-    </div>
-
-    <div style="height:12px"></div>
-
-    <div class="icon-row">
-      <button class="btn-icon small">←</button>
-      <button class="btn-icon small">✎</button>
-      <button class="btn-icon small">✕</button>
+      <button class="btn-icon">
+        <svg class="ico" viewBox="0 0 24 24">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <button class="btn-icon">
+        <svg class="ico" viewBox="0 0 24 24">
+          <path d="M12 20h9"/>
+          <path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
+        </svg>
+      </button>
+      <button class="btn-icon">
+        <svg class="ico" viewBox="0 0 24 24">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+      <button class="btn-icon">
+        <svg class="ico" viewBox="0 0 24 24">
+          <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+          <path d="M22 9l-6 6M16 9l6 6"/>
+        </svg>
+      </button>
+      <button class="btn-icon">
+        <svg class="ico" viewBox="0 0 24 24">
+          <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+          <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
+          <path d="M19 5a9 9 0 0 1 0 14"/>
+        </svg>
+      </button>
+      <button class="btn-icon danger">
+        <svg class="ico" viewBox="0 0 24 24">
+          <path d="M12 3v10"/>
+          <path d="M18.4 6.6a9 9 0 1 1-12.8 0"/>
+        </svg>
+      </button>
     </div>
   </div>
 
-  <!-- ==================== PILL ==================== -->
+  <!-- ============ 6. PILL ============ -->
   <div class="section">
-    <div class="section-title">6. Pill — Chip & Badge</div>
+    <div class="section-title">6. Pill — Badge / Chip</div>
 
     <div class="icon-row">
       <button class="btn-pill">Free</button>
-      <button class="btn-pill">Premium</button>
-      <button class="btn-pill">4K Ultra HD</button>
-      <button class="btn-pill">Owner</button>
+      <button class="btn-pill">
+        <svg class="ico" viewBox="0 0 24 24">
+          <path d="M3 17l4-8 4 5 3-5 7 8"/>
+          <path d="M3 17h18"/>
+        </svg>
+        Premium
+      </button>
+      <button class="btn-pill">
+        <svg class="ico" viewBox="0 0 24 24">
+          <rect x="4" y="4" width="16" height="16" rx="2"/>
+          <path d="M9 9h6v6H9z"/>
+        </svg>
+        4K Ultra
+      </button>
     </div>
   </div>
 
-  <!-- ==================== LOADING & SUCCESS ==================== -->
+  <!-- ============ 7. LOADING & SUCCESS ============ -->
   <div class="section">
     <div class="section-title">7. Loading & Success State</div>
 
-    <button class="btn-primary" id="btnLoading" onclick="testLoading(this)">
+    <button class="btn-primary" onclick="testLoading(this)">
       <span class="spinner"></span>
-      <span class="icon">⚡</span>
-      Mulai Enhance
+      <svg class="ico" viewBox="0 0 24 24">
+        <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
+      </svg>
+      MULAI ENHANCE
     </button>
 
-    <div style="height:12px"></div>
+    <div class="gap"></div>
 
-    <button class="btn-primary" id="btnSuccess" onclick="testSuccess(this)">
-      <span class="icon">⬇</span>
-      Simpan
+    <button class="btn-primary" onclick="testSuccess(this)">
+      <svg class="ico" viewBox="0 0 24 24">
+        <path d="M12 3v13"/>
+        <path d="M7 11l5 5 5-5"/>
+        <path d="M4 21h16"/>
+      </svg>
+      SIMPAN
     </button>
   </div>
 
-  <!-- ==================== COMBINED ==================== -->
+  <!-- ============ 8. KOMBINASI ============ -->
   <div class="section">
-    <div class="section-title">8. Kombinasi — Seperti di Halaman 2C</div>
+    <div class="section-title">8. Kombinasi — Halaman 2C</div>
 
     <div class="btn-row">
       <button class="btn-secondary">
-        <span class="icon">⇧</span>
+        <svg class="ico" viewBox="0 0 24 24">
+          <circle cx="18" cy="5" r="3"/>
+          <circle cx="6" cy="12" r="3"/>
+          <circle cx="18" cy="19" r="3"/>
+          <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>
+        </svg>
         Bagikan
       </button>
       <button class="btn-primary" style="padding:17px 22px;font-size:12.5px;">
-        <span class="icon">⬇</span>
+        <svg class="ico" viewBox="0 0 24 24">
+          <path d="M12 3v13"/>
+          <path d="M7 11l5 5 5-5"/>
+          <path d="M4 21h16"/>
+        </svg>
         Simpan
       </button>
     </div>
 
-    <div style="height:12px"></div>
+    <div class="gap"></div>
 
     <button class="btn-secondary">
-      <span class="icon">⟲</span>
+      <svg class="ico" viewBox="0 0 24 24">
+        <path d="M3 12a9 9 0 1 0 3-6.7"/>
+        <path d="M3 4v5h5"/>
+      </svg>
       Ulangi Enhance
     </button>
+  </div>
+
+  <!-- ============ 9. BOTTOM NAV ICONS ============ -->
+  <div class="section">
+    <div class="section-title">9. Ikon Bottom Nav</div>
+
+    <div class="icon-row" style="justify-content:space-around;padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:20px;">
+      <div style="text-align:center;color:#c9a8ee;">
+        <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
+          <path d="M3 11l9-8 9 8v9a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-9z"/>
+        </svg>
+        <div style="font-size:10px;">Home</div>
+      </div>
+      <div style="text-align:center;color:#5a5a64;">
+        <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        <div style="font-size:10px;">Projects</div>
+      </div>
+      <div style="text-align:center;color:#5a5a64;">
+        <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3 2"/>
+        </svg>
+        <div style="font-size:10px;">History</div>
+      </div>
+      <div style="text-align:center;color:#5a5a64;">
+        <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>
+        </svg>
+        <div style="font-size:10px;">Profile</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 10. SERVICE ICONS ============ -->
+  <div class="section">
+    <div class="section-title">10. Ikon Services</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:18px;">
+        <svg class="ico xl" viewBox="0 0 24 24" style="color:#c9a8ee;margin-bottom:12px;">
+          <path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/>
+        </svg>
+        <div style="font-size:13.5px;font-weight:600;color:#fff;">Enhance Photo</div>
+      </div>
+      <div style="padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:18px;">
+        <svg class="ico xl" viewBox="0 0 24 24" style="color:#c9a8ee;margin-bottom:12px;">
+          <circle cx="9" cy="9" r="3"/>
+          <circle cx="15" cy="15" r="3"/>
+          <path d="M5 5h3v3M16 16h3v3"/>
+        </svg>
+        <div style="font-size:13.5px;font-weight:600;color:#fff;">Face Swap</div>
+      </div>
+      <div style="padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:18px;">
+        <svg class="ico xl" viewBox="0 0 24 24" style="color:#c9a8ee;margin-bottom:12px;">
+          <rect x="2" y="6" width="14" height="12" rx="2"/>
+          <path d="M16 10l6-3v10l-6-3"/>
+        </svg>
+        <div style="font-size:13.5px;font-weight:600;color:#fff;">Upscale Video</div>
+      </div>
+      <div style="padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:18px;">
+        <svg class="ico xl" viewBox="0 0 24 24" style="color:#c9a8ee;margin-bottom:12px;">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3 2"/>
+        </svg>
+        <div style="font-size:13.5px;font-weight:600;color:#fff;">Project History</div>
+      </div>
+    </div>
   </div>
 
 </div>
 
 <script>
-/* ============ RIPPLE EFFECT ============ */
-document.querySelectorAll('.btn-primary, .btn-secondary, .btn-danger').forEach(btn => {
-  btn.addEventListener('click', function(e){
-    if(this.disabled || this.classList.contains('loading')) return;
-
-    const rect = this.getBoundingClientRect();
-    const ripple = document.createElement('span');
-    ripple.className = 'ripple';
-    const size = Math.max(rect.width, rect.height);
-    ripple.style.width = ripple.style.height = size + 'px';
-    ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
-    ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
-    this.appendChild(ripple);
-    setTimeout(() => ripple.remove(), 600);
-  });
-});
-
 /* ============ TEST LOADING ============ */
 function testLoading(btn){
+  const original = btn.innerHTML;
   btn.classList.add('loading');
-  btn.innerHTML = `<span class="spinner"></span> Memproses...`;
+  btn.innerHTML = `<span class="spinner"></span> MEMPROSES...`;
 
   setTimeout(() => {
     btn.classList.remove('loading');
-    btn.innerHTML = `<span class="icon">⚡</span> Mulai Enhance`;
-    btn.style.pointerEvents = 'auto';
+    btn.innerHTML = original;
   }, 2500);
 }
 
@@ -494,7 +624,11 @@ function testLoading(btn){
 function testSuccess(btn){
   const original = btn.innerHTML;
   btn.classList.add('success');
-  btn.innerHTML = `<span class="icon">✓</span> Berhasil`;
+  btn.innerHTML = `
+    <svg class="ico" viewBox="0 0 24 24">
+      <path d="M5 12l5 5L20 7"/>
+    </svg>
+    BERHASIL`;
 
   setTimeout(() => {
     btn.classList.remove('success');
