@@ -3,21 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GUSTAV HD — Button Preview</title>
+<title>GUSTAV HD — Color Preview</title>
 <style>
 :root{
   --bg:#050505;
   --panel:#0b0b0f;
-  --panel2:#101016;
   --line:#202027;
-  --deep:#3b176d;
-  --purple:#54258f;
-  --accent:#6d3db8;
-  --green:#22c55e;
-  --red:#ef4444;
   --text:#e5e5e7;
   --text2:#8a8a94;
   --muted:#555560;
+  --green:#22c55e;
+  --red:#ef4444;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{
@@ -38,401 +34,261 @@ h1{
 }
 .subtitle{
   font-size:12px;color:var(--text2);
-  margin-bottom:36px;letter-spacing:.4px;
-}
-.section{margin-bottom:40px}
-.section-title{
-  font-size:10.5px;color:var(--text2);
-  letter-spacing:1.8px;text-transform:uppercase;
-  font-weight:700;margin-bottom:14px;padding-left:4px;
-  display:flex;align-items:center;gap:8px;
-}
-.section-title::before{
-  content:"";
-  width:3px;height:12px;
-  background:var(--accent);
-  border-radius:2px;
+  margin-bottom:32px;letter-spacing:.4px;
 }
 
-/* ==================================================
-   SVG ICON BASE
-================================================== */
-.ico{
-  width:18px;
-  height:18px;
-  stroke:currentColor;
-  stroke-width:2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  fill:none;
-  flex-shrink:0;
-  display:block;
+/* ============ VERSI CARD ============ */
+.versi{
+  margin-bottom:36px;
+  padding:24px 20px;
+  border-radius:20px;
+  background:var(--panel);
+  border:1px solid var(--line);
 }
-.ico.sm{width:15px;height:15px}
-.ico.lg{width:22px;height:22px}
-.ico.xl{width:26px;height:26px}
 
-/* ==================================================
-   TIPE 1 — PRIMARY (Ungu Solid)
-================================================== */
+.versi-header{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:6px;
+}
+.versi-header h2{
+  font-size:17px;font-weight:800;
+  color:#fff;letter-spacing:-.3px;
+}
+.versi-badge{
+  padding:4px 10px;border-radius:999px;
+  font-size:9px;font-weight:800;
+  letter-spacing:1.2px;text-transform:uppercase;
+}
+.versi-desc{
+  font-size:11.5px;color:var(--text2);
+  margin-bottom:20px;line-height:1.5;
+}
+
+/* Palette dots */
+.palette-row{
+  display:flex;gap:8px;margin-bottom:20px;
+  flex-wrap:wrap;
+}
+.dot{
+  width:36px;height:36px;border-radius:10px;
+  border:1px solid rgba(255,255,255,.1);
+  position:relative;
+  transition:.2s;
+}
+.dot:hover{transform:scale(1.1)}
+.dot span{
+  position:absolute;top:-20px;left:50%;
+  transform:translateX(-50%);
+  font-size:8px;color:var(--text2);
+  white-space:nowrap;font-family:monospace;
+  opacity:0;transition:.2s;
+  pointer-events:none;
+}
+.dot:hover span{opacity:1}
+
+/* Tombol preview */
 .btn-primary{
   position:relative;
   width:100%;
-  padding:18px 24px;
+  padding:16px 22px;
   border-radius:14px;
-  background:var(--purple);
   border:0;
   color:#fff;
-  font-size:13.5px;
+  font-size:13px;
   font-weight:800;
-  letter-spacing:.8px;
+  letter-spacing:.6px;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:10px;
+  gap:9px;
   cursor:pointer;
-  overflow:hidden;
   transition:all .18s ease;
-  box-shadow:0 8px 24px rgba(84,37,143,.4);
   font-family:inherit;
+  margin-bottom:10px;
 }
 .btn-primary:hover{
-  background:#6330a5;
   transform:translateY(-1px);
-  box-shadow:0 12px 32px rgba(84,37,143,.55);
 }
 .btn-primary:active{transform:scale(.98)}
-.btn-primary:disabled{
-  background:#141419;
-  color:var(--muted);
-  box-shadow:none;
-  cursor:not-allowed;
-  transform:none;
-}
-.btn-primary:disabled .ico{opacity:.5}
-.btn-primary:disabled:hover{
-  background:#141419;
-  transform:none;
-  box-shadow:none;
-}
 
-/* ==================================================
-   TIPE 2 — SECONDARY (Outline)
-================================================== */
 .btn-secondary{
-  position:relative;
   width:100%;
-  padding:17px 24px;
+  padding:14px 22px;
   border-radius:14px;
   background:transparent;
-  border:1.5px solid rgba(109,61,184,.5);
-  color:#c9a8ee;
-  font-size:13px;
+  font-size:12.5px;
   font-weight:700;
-  letter-spacing:.3px;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:9px;
+  gap:8px;
   cursor:pointer;
   transition:all .2s ease;
   font-family:inherit;
+  margin-bottom:14px;
 }
 .btn-secondary:hover{
-  background:rgba(59,23,109,.25);
-  border-color:var(--accent);
-  color:#e5d4fa;
   transform:translateY(-1px);
 }
-.btn-secondary:active{transform:scale(.98)}
 
-/* ==================================================
-   TIPE 3 — GHOST (Text saja)
-================================================== */
-.btn-ghost{
-  background:transparent;
-  border:0;
-  color:#a67fd0;
-  font-size:12.5px;
-  font-weight:600;
-  padding:9px 14px;
-  border-radius:10px;
-  cursor:pointer;
-  transition:all .2s ease;
-  letter-spacing:.3px;
-  font-family:inherit;
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
+/* Chip preview */
+.chip-row{
+  display:flex;gap:8px;margin-top:14px;
 }
-.btn-ghost:hover{
-  background:rgba(59,23,109,.25);
-  color:#c9a8ee;
+.chip{
+  padding:7px 12px;border-radius:999px;
+  font-size:9.5px;font-weight:800;
+  letter-spacing:1.2px;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:5px;
+  border:1px solid;
 }
-.btn-ghost:active{transform:scale(.97)}
 
-/* ==================================================
-   TIPE 4 — DANGER (Merah Soft)
-================================================== */
-.btn-danger{
-  position:relative;
-  width:100%;
-  padding:17px 24px;
-  border-radius:14px;
-  background:rgba(80,20,20,.25);
-  border:1px solid rgba(239,68,68,.3);
-  color:#ef4444;
-  font-size:13px;
-  font-weight:700;
-  letter-spacing:.3px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  cursor:pointer;
-  transition:all .2s ease;
-  font-family:inherit;
-}
-.btn-danger:hover{
-  background:rgba(80,20,20,.4);
-  border-color:rgba(239,68,68,.55);
-  transform:translateY(-1px);
-}
-.btn-danger:active{transform:scale(.98)}
-
-/* ==================================================
-   TIPE 5 — ICON BUTTON (Bulat)
-================================================== */
-.btn-icon{
-  width:46px;
-  height:46px;
-  border-radius:50%;
-  background:var(--panel);
-  border:1px solid var(--line);
-  color:var(--text);
-  display:grid;
-  place-items:center;
-  cursor:pointer;
-  transition:all .2s ease;
-  font-family:inherit;
-  flex-shrink:0;
-}
-.btn-icon .ico{width:20px;height:20px}
-.btn-icon:hover{
-  border-color:var(--accent);
-  transform:scale(1.06);
-  color:#e5d4fa;
-}
-.btn-icon:active{transform:scale(.94)}
-.btn-icon.small{width:38px;height:38px}
-.btn-icon.small .ico{width:16px;height:16px}
-.btn-icon.danger:hover{
-  border-color:var(--red);
-  color:var(--red);
+/* SVG */
+.ico{
+  width:18px;height:18px;
+  stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;
+  fill:none;flex-shrink:0;
 }
 
 /* ==================================================
-   TIPE 6 — PILL (Chip/Badge)
+   VERSI 1 — Deep Purple (yang sekarang)
 ================================================== */
-.btn-pill{
-  padding:8px 14px;
-  border-radius:999px;
-  background:rgba(59,23,109,.25);
-  border:1px solid rgba(109,61,184,.5);
-  color:#c9a8ee;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:1.2px;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:all .2s ease;
-  font-family:inherit;
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-}
-.btn-pill:hover{
-  background:rgba(59,23,109,.45);
-  border-color:var(--accent);
-}
-.btn-pill:active{transform:scale(.97)}
-.btn-pill .ico{width:12px;height:12px}
-.btn-pill.green{
-  background:rgba(34,197,94,.15);
-  border-color:rgba(34,197,94,.4);
-  color:#4ade80;
-}
-.btn-pill.purple{
+.v1 .versi-badge{
   background:linear-gradient(145deg,#3b176d,#54258f);
-  border-color:rgba(109,61,184,.6);
   color:#f0e6ff;
 }
-
-/* ==================================================
-   TIPE 7 — CARD BUTTON (Menu Services)
-================================================== */
-.btn-card{
-  padding:20px 18px;
-  border-radius:18px;
-  background:var(--panel);
-  border:1px solid var(--line);
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  text-align:left;
-  cursor:pointer;
-  transition:all .22s ease;
-  font-family:inherit;
-  min-height:120px;
-  justify-content:space-between;
-  color:var(--text);
-  width:100%;
+.v1 .btn-primary{
+  background:#54258f;
+  box-shadow:0 8px 24px rgba(84,37,143,.4);
 }
-.btn-card:hover{
-  border-color:rgba(109,61,184,.5);
-  transform:translateY(-2px);
-  background:#0e0d13;
+.v1 .btn-primary:hover{
+  background:#6330a5;
+  box-shadow:0 12px 32px rgba(84,37,143,.55);
 }
-.btn-card:active{transform:scale(.98)}
-.btn-card .card-icon{
-  width:42px;height:42px;border-radius:11px;
-  background:rgba(59,23,109,.25);
-  border:1px solid rgba(109,61,184,.35);
-  display:grid;place-items:center;
+.v1 .btn-secondary{
+  border:1.5px solid rgba(109,61,184,.5);
   color:#c9a8ee;
-  flex-shrink:0;
 }
-.btn-card .card-icon .ico{width:20px;height:20px}
-.btn-card .card-label{
-  font-size:13.5px;
-  font-weight:600;
-  color:#fff;
-  letter-spacing:-.1px;
-  line-height:1.35;
+.v1 .btn-secondary:hover{
+  background:rgba(59,23,109,.25);
+  border-color:#6d3db8;
 }
-
-/* ==================================================
-   TIPE 8 — RESOLUSI CARD
-================================================== */
-.btn-res{
-  padding:20px 18px;
-  border-radius:16px;
-  background:var(--panel);
-  border:1.5px solid var(--line);
-  cursor:pointer;
-  transition:all .2s ease;
-  font-family:inherit;
-  text-align:left;
-  color:var(--text);
-  width:100%;
-  position:relative;
-  overflow:hidden;
-}
-.btn-res:hover{
+.v1 .chip{
+  background:rgba(59,23,109,.25);
   border-color:rgba(109,61,184,.5);
+  color:#c9a8ee;
 }
-.btn-res:active{transform:scale(.97)}
-.btn-res.selected{
-  background:
-    radial-gradient(circle at 100% 0%, rgba(84,37,143,.4), transparent 70%),
-    linear-gradient(160deg,#1a0f2e,#0d0818);
-  border-color:var(--accent);
-  box-shadow:0 0 24px rgba(84,37,143,.35);
-}
-.btn-res.locked{
-  opacity:.55;
-  cursor:not-allowed;
-}
-.btn-res.locked:hover{
-  border-color:var(--line);
-  transform:none;
-}
-.btn-res h4{
-  font-size:19px;
-  font-weight:800;
+
+/* ==================================================
+   VERSI 2 — Violet Terang
+================================================== */
+.v2 .versi-badge{
+  background:linear-gradient(145deg,#6d28d9,#8b5cf6);
   color:#fff;
-  letter-spacing:-.4px;
-  display:flex;
-  align-items:center;
-  gap:8px;
 }
-.btn-res p{
-  font-size:10.5px;
-  color:var(--text2);
-  margin-top:5px;
-  letter-spacing:.3px;
+.v2 .btn-primary{
+  background:#6d28d9;
+  box-shadow:0 8px 24px rgba(109,40,217,.4);
 }
-.btn-res.selected p{color:#c9a8ee}
-.btn-res .lock-badge{
-  position:absolute;
-  top:12px;right:12px;
-  color:#555560;
+.v2 .btn-primary:hover{
+  background:#7c3aed;
+  box-shadow:0 12px 32px rgba(109,40,217,.55);
 }
-.btn-res .lock-badge .ico{width:14px;height:14px}
-
-/* ==================================================
-   TIPE 9 — LOADING & SUCCESS
-================================================== */
-.btn-primary.loading{
-  pointer-events:none;
-  opacity:.9;
+.v2 .btn-secondary{
+  border:1.5px solid rgba(139,92,246,.5);
+  color:#c4b5fd;
 }
-.spinner{
-  width:16px;height:16px;
-  border:2px solid rgba(255,255,255,.3);
-  border-top-color:#fff;
-  border-radius:50%;
-  animation:spin .7s linear infinite;
-  display:none;
-  flex-shrink:0;
+.v2 .btn-secondary:hover{
+  background:rgba(109,40,217,.25);
+  border-color:#8b5cf6;
 }
-.btn-primary.loading .spinner{display:block}
-.btn-primary.loading .ico{display:none}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-.btn-primary.success{
-  background:var(--green);
-  box-shadow:0 8px 24px rgba(34,197,94,.4);
+.v2 .chip{
+  background:rgba(109,40,217,.25);
+  border-color:rgba(139,92,246,.5);
+  color:#c4b5fd;
 }
 
 /* ==================================================
-   LAYOUT
+   VERSI 3 — Indigo / Ungu Kebiruan
 ================================================== */
-.btn-row{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+.v3 .versi-badge{
+  background:linear-gradient(145deg,#312e81,#4f46e5);
+  color:#e0e7ff;
 }
-.icon-row{
-  display:flex;gap:12px;align-items:center;
-  flex-wrap:wrap;
+.v3 .btn-primary{
+  background:#4338ca;
+  box-shadow:0 8px 24px rgba(67,56,202,.4);
 }
-.gap{height:12px}
-.gap-lg{height:20px}
+.v3 .btn-primary:hover{
+  background:#4f46e5;
+  box-shadow:0 12px 32px rgba(67,56,202,.55);
+}
+.v3 .btn-secondary{
+  border:1.5px solid rgba(79,70,229,.5);
+  color:#a5b4fc;
+}
+.v3 .btn-secondary:hover{
+  background:rgba(67,56,202,.25);
+  border-color:#6366f1;
+}
+.v3 .chip{
+  background:rgba(67,56,202,.25);
+  border-color:rgba(79,70,229,.5);
+  color:#a5b4fc;
+}
 
-/* Ripple */
-.ripple{
-  position:absolute;
-  border-radius:50%;
-  background:rgba(255,255,255,.3);
-  transform:scale(0);
-  animation:rippleAnim .6s ease-out;
-  pointer-events:none;
+/* ==================================================
+   VERSI 4 — Plum / Ungu Merah
+================================================== */
+.v4 .versi-badge{
+  background:linear-gradient(145deg,#7e1e5a,#a21caf);
+  color:#fce7f3;
 }
-@keyframes rippleAnim{
-  to{transform:scale(4);opacity:0}
+.v4 .btn-primary{
+  background:#86198f;
+  box-shadow:0 8px 24px rgba(134,25,143,.4);
+}
+.v4 .btn-primary:hover{
+  background:#a21caf;
+  box-shadow:0 12px 32px rgba(134,25,143,.55);
+}
+.v4 .btn-secondary{
+  border:1.5px solid rgba(162,28,175,.5);
+  color:#f0abfc;
+}
+.v4 .btn-secondary:hover{
+  background:rgba(134,25,143,.25);
+  border-color:#c026d3;
+}
+.v4 .chip{
+  background:rgba(134,25,143,.25);
+  border-color:rgba(162,28,175,.5);
+  color:#f0abfc;
 }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <h1>Button Preview</h1>
-  <p class="subtitle">Semua tombol yang akan dipakai di GUSTAV HD</p>
+  <h1>Color Preview</h1>
+  <p class="subtitle">Pilih palet ungu yang paling kamu suka 🎨</p>
 
-  <!-- ============ 1. PRIMARY ============ -->
-  <div class="section">
-    <div class="section-title">1. Primary — Tombol Utama</div>
+  <!-- ============ VERSI 1 ============ -->
+  <div class="versi v1">
+    <div class="versi-header">
+      <h2>1. Deep Purple</h2>
+      <span class="versi-badge">SEKARANG</span>
+    </div>
+    <p class="versi-desc">Ungu gelap pekat, kesan premium & kalem. Cocok untuk aplikasi AI/creative.</p>
+
+    <div class="palette-row">
+      <div class="dot" style="background:#3b176d;"><span>#3b176d</span></div>
+      <div class="dot" style="background:#54258f;"><span>#54258f</span></div>
+      <div class="dot" style="background:#6d3db8;"><span>#6d3db8</span></div>
+      <div class="dot" style="background:#a67fd0;"><span>#a67fd0</span></div>
+      <div class="dot" style="background:#c9a8ee;"><span>#c9a8ee</span></div>
+    </div>
 
     <button class="btn-primary">
       <svg class="ico" viewBox="0 0 24 24">
@@ -441,417 +297,143 @@ h1{
       MULAI ENHANCE
     </button>
 
-    <div class="gap"></div>
+    <button class="btn-secondary">
+      <svg class="ico" viewBox="0 0 24 24">
+        <circle cx="18" cy="5" r="3"/>
+        <circle cx="6" cy="12" r="3"/>
+        <circle cx="18" cy="19" r="3"/>
+        <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>
+      </svg>
+      Bagikan
+    </button>
+
+    <div class="chip-row">
+      <span class="chip">FREE</span>
+      <span class="chip">PREMIUM</span>
+      <span class="chip">4K ULTRA</span>
+    </div>
+  </div>
+
+  <!-- ============ VERSI 2 ============ -->
+  <div class="versi v2">
+    <div class="versi-header">
+      <h2>2. Violet Terang</h2>
+      <span class="versi-badge">LEBIH HIDUP</span>
+    </div>
+    <p class="versi-desc">Ungu lebih cerah & vibrant. Kesan modern, playful, lebih "menyala".</p>
+
+    <div class="palette-row">
+      <div class="dot" style="background:#6d28d9;"><span>#6d28d9</span></div>
+      <div class="dot" style="background:#7c3aed;"><span>#7c3aed</span></div>
+      <div class="dot" style="background:#8b5cf6;"><span>#8b5cf6</span></div>
+      <div class="dot" style="background:#a78bfa;"><span>#a78bfa</span></div>
+      <div class="dot" style="background:#c4b5fd;"><span>#c4b5fd</span></div>
+    </div>
 
     <button class="btn-primary">
       <svg class="ico" viewBox="0 0 24 24">
-        <path d="M12 3v13"/>
-        <path d="M7 11l5 5 5-5"/>
-        <path d="M4 21h16"/>
+        <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
       </svg>
-      SIMPAN
+      MULAI ENHANCE
     </button>
 
-    <div class="gap"></div>
+    <button class="btn-secondary">
+      <svg class="ico" viewBox="0 0 24 24">
+        <circle cx="18" cy="5" r="3"/>
+        <circle cx="6" cy="12" r="3"/>
+        <circle cx="18" cy="19" r="3"/>
+        <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>
+      </svg>
+      Bagikan
+    </button>
 
-    <button class="btn-primary" disabled>
+    <div class="chip-row">
+      <span class="chip">FREE</span>
+      <span class="chip">PREMIUM</span>
+      <span class="chip">4K ULTRA</span>
+    </div>
+  </div>
+
+  <!-- ============ VERSI 3 ============ -->
+  <div class="versi v3">
+    <div class="versi-header">
+      <h2>3. Indigo</h2>
+      <span class="versi-badge">KEBIRUAN</span>
+    </div>
+    <p class="versi-desc">Ungu ke arah biru. Kesan clean, teknologi, profesional.</p>
+
+    <div class="palette-row">
+      <div class="dot" style="background:#312e81;"><span>#312e81</span></div>
+      <div class="dot" style="background:#4338ca;"><span>#4338ca</span></div>
+      <div class="dot" style="background:#4f46e5;"><span>#4f46e5</span></div>
+      <div class="dot" style="background:#6366f1;"><span>#6366f1</span></div>
+      <div class="dot" style="background:#a5b4fc;"><span>#a5b4fc</span></div>
+    </div>
+
+    <button class="btn-primary">
       <svg class="ico" viewBox="0 0 24 24">
         <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
       </svg>
       MULAI ENHANCE
     </button>
 
-    <p style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">
-      ↑ disabled state
-    </p>
-  </div>
-
-  <!-- ============ 2. SECONDARY ============ -->
-  <div class="section">
-    <div class="section-title">2. Secondary — Tombol Kedua</div>
-
-    <div class="btn-row">
-      <button class="btn-secondary">
-        <svg class="ico" viewBox="0 0 24 24">
-          <circle cx="18" cy="5" r="3"/>
-          <circle cx="6" cy="12" r="3"/>
-          <circle cx="18" cy="19" r="3"/>
-          <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>
-        </svg>
-        Bagikan
-      </button>
-
-      <button class="btn-secondary">
-        <svg class="ico" viewBox="0 0 24 24">
-          <path d="M3 12a9 9 0 1 0 3-6.7"/>
-          <path d="M3 4v5h5"/>
-        </svg>
-        Ulangi
-      </button>
-    </div>
-
-    <div class="gap"></div>
-
     <button class="btn-secondary">
       <svg class="ico" viewBox="0 0 24 24">
-        <path d="M3 12a9 9 0 1 0 3-6.7"/>
-        <path d="M3 4v5h5"/>
+        <circle cx="18" cy="5" r="3"/>
+        <circle cx="6" cy="12" r="3"/>
+        <circle cx="18" cy="19" r="3"/>
+        <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>
       </svg>
-      Ulangi Enhance
+      Bagikan
     </button>
-  </div>
 
-  <!-- ============ 3. GHOST ============ -->
-  <div class="section">
-    <div class="section-title">3. Ghost — Link Ringan</div>
-
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;">
-      <span style="color:var(--text2);font-size:13px;">Services</span>
-      <button class="btn-ghost">
-        See all
-        <svg class="ico sm" viewBox="0 0 24 24">
-          <path d="M5 12h14M13 6l6 6-6 6"/>
-        </svg>
-      </button>
-    </div>
-
-    <div class="gap"></div>
-
-    <button class="btn-ghost">Nanti</button>
-    <button class="btn-ghost">Batal</button>
-  </div>
-
-  <!-- ============ 4. DANGER ============ -->
-  <div class="section">
-    <div class="section-title">4. Danger — Bahaya</div>
-
-    <button class="btn-danger">
-      <svg class="ico" viewBox="0 0 24 24">
-        <path d="M12 3v10"/>
-        <path d="M18.4 6.6a9 9 0 1 1-12.8 0"/>
-      </svg>
-      Log out
-    </button>
-  </div>
-
-  <!-- ============ 5. ICON BUTTON ============ -->
-  <div class="section">
-    <div class="section-title">5. Icon Button</div>
-
-    <div class="icon-row">
-      <button class="btn-icon" title="Back">
-        <svg class="ico" viewBox="0 0 24 24">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-      </button>
-      <button class="btn-icon" title="Edit">
-        <svg class="ico" viewBox="0 0 24 24">
-          <path d="M12 20h9"/>
-          <path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
-        </svg>
-      </button>
-      <button class="btn-icon" title="Close">
-        <svg class="ico" viewBox="0 0 24 24">
-          <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-      </button>
-      <button class="btn-icon" title="Mute">
-        <svg class="ico" viewBox="0 0 24 24">
-          <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-          <path d="M22 9l-6 6M16 9l6 6"/>
-        </svg>
-      </button>
-      <button class="btn-icon" title="Sound">
-        <svg class="ico" viewBox="0 0 24 24">
-          <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-          <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
-          <path d="M19 5a9 9 0 0 1 0 14"/>
-        </svg>
-      </button>
-      <button class="btn-icon danger" title="Logout">
-        <svg class="ico" viewBox="0 0 24 24">
-          <path d="M12 3v10"/>
-          <path d="M18.4 6.6a9 9 0 1 1-12.8 0"/>
-        </svg>
-      </button>
+    <div class="chip-row">
+      <span class="chip">FREE</span>
+      <span class="chip">PREMIUM</span>
+      <span class="chip">4K ULTRA</span>
     </div>
   </div>
 
-  <!-- ============ 6. PILL ============ -->
-  <div class="section">
-    <div class="section-title">6. Pill — Chip & Badge</div>
-
-    <div class="icon-row">
-      <button class="btn-pill green">
-        <svg class="ico" viewBox="0 0 24 24">
-          <path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/>
-        </svg>
-        Free
-      </button>
-
-      <button class="btn-pill purple">
-        <svg class="ico" viewBox="0 0 24 24">
-          <path d="M3 17l4-8 4 5 3-5 7 8"/>
-          <path d="M3 17h18"/>
-        </svg>
-        Premium
-      </button>
-
-      <button class="btn-pill">
-        <svg class="ico" viewBox="0 0 24 24">
-          <rect x="4" y="4" width="16" height="16" rx="2"/>
-          <path d="M9 9h6v6H9z"/>
-        </svg>
-        4K Ultra
-      </button>
+  <!-- ============ VERSI 4 ============ -->
+  <div class="versi v4">
+    <div class="versi-header">
+      <h2>4. Plum / Fuchsia</h2>
+      <span class="versi-badge">BERANI</span>
     </div>
-  </div>
+    <p class="versi-desc">Ungu ke arah merah/pink. Kesan berani, feminin, standout.</p>
 
-  <!-- ============ 7. CARD BUTTON ============ -->
-  <div class="section">
-    <div class="section-title">7. Card Button — Menu Services</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <button class="btn-card">
-        <div class="card-icon">
-          <svg class="ico" viewBox="0 0 24 24">
-            <path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/>
-          </svg>
-        </div>
-        <div class="card-label">Enhance Photo</div>
-      </button>
-
-      <button class="btn-card">
-        <div class="card-icon">
-          <svg class="ico" viewBox="0 0 24 24">
-            <circle cx="9" cy="9" r="3"/>
-            <circle cx="15" cy="15" r="3"/>
-            <path d="M5 5h3v3M16 16h3v3"/>
-          </svg>
-        </div>
-        <div class="card-label">Face Swap</div>
-      </button>
-
-      <button class="btn-card">
-        <div class="card-icon">
-          <svg class="ico" viewBox="0 0 24 24">
-            <rect x="2" y="6" width="14" height="12" rx="2"/>
-            <path d="M16 10l6-3v10l-6-3"/>
-          </svg>
-        </div>
-        <div class="card-label">Upscale Video</div>
-      </button>
-
-      <button class="btn-card">
-        <div class="card-icon">
-          <svg class="ico" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="9"/>
-            <path d="M12 7v5l3 2"/>
-          </svg>
-        </div>
-        <div class="card-label">Project History</div>
-      </button>
+    <div class="palette-row">
+      <div class="dot" style="background:#7e1e5a;"><span>#7e1e5a</span></div>
+      <div class="dot" style="background:#86198f;"><span>#86198f</span></div>
+      <div class="dot" style="background:#a21caf;"><span>#a21caf</span></div>
+      <div class="dot" style="background:#c026d3;"><span>#c026d3</span></div>
+      <div class="dot" style="background:#f0abfc;"><span>#f0abfc</span></div>
     </div>
-  </div>
 
-  <!-- ============ 8. RESOLUSI CARD ============ -->
-  <div class="section">
-    <div class="section-title">8. Resolusi Card</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <button class="btn-res">
-        <h4>720p</h4>
-        <p>HD Ready</p>
-      </button>
-
-      <button class="btn-res selected">
-        <h4>1080p</h4>
-        <p>Full HD</p>
-      </button>
-
-      <button class="btn-res locked">
-        <div class="lock-badge">
-          <svg class="ico" viewBox="0 0 24 24">
-            <rect x="4" y="11" width="16" height="10" rx="2"/>
-            <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
-          </svg>
-        </div>
-        <h4>2K</h4>
-        <p>Ultra HD</p>
-      </button>
-
-      <button class="btn-res locked">
-        <div class="lock-badge">
-          <svg class="ico" viewBox="0 0 24 24">
-            <rect x="4" y="11" width="16" height="10" rx="2"/>
-            <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
-          </svg>
-        </div>
-        <h4>4K</h4>
-        <p>Ultra HD</p>
-      </button>
-    </div>
-  </div>
-
-  <!-- ============ 9. LOADING & SUCCESS ============ -->
-  <div class="section">
-    <div class="section-title">9. Loading & Success State</div>
-
-    <button class="btn-primary" onclick="testLoading(this)">
-      <span class="spinner"></span>
+    <button class="btn-primary">
       <svg class="ico" viewBox="0 0 24 24">
         <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
       </svg>
       MULAI ENHANCE
     </button>
 
-    <p style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">
-      ↑ klik untuk lihat loading
-    </p>
-
-    <div class="gap-lg"></div>
-
-    <button class="btn-primary" onclick="testSuccess(this)">
-      <svg class="ico" viewBox="0 0 24 24">
-        <path d="M12 3v13"/>
-        <path d="M7 11l5 5 5-5"/>
-        <path d="M4 21h16"/>
-      </svg>
-      SIMPAN
-    </button>
-
-    <p style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">
-      ↑ klik untuk lihat success
-    </p>
-  </div>
-
-  <!-- ============ 10. KOMBINASI ============ -->
-  <div class="section">
-    <div class="section-title">10. Kombinasi — Halaman 2C</div>
-
-    <div class="btn-row">
-      <button class="btn-secondary">
-        <svg class="ico" viewBox="0 0 24 24">
-          <circle cx="18" cy="5" r="3"/>
-          <circle cx="6" cy="12" r="3"/>
-          <circle cx="18" cy="19" r="3"/>
-          <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>
-        </svg>
-        Bagikan
-      </button>
-
-      <button class="btn-primary" style="padding:17px 20px;font-size:12.5px;">
-        <svg class="ico" viewBox="0 0 24 24">
-          <path d="M12 3v13"/>
-          <path d="M7 11l5 5 5-5"/>
-          <path d="M4 21h16"/>
-        </svg>
-        Simpan
-      </button>
-    </div>
-
-    <div class="gap"></div>
-
     <button class="btn-secondary">
       <svg class="ico" viewBox="0 0 24 24">
-        <path d="M3 12a9 9 0 1 0 3-6.7"/>
-        <path d="M3 4v5h5"/>
+        <circle cx="18" cy="5" r="3"/>
+        <circle cx="6" cy="12" r="3"/>
+        <circle cx="18" cy="19" r="3"/>
+        <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/>
       </svg>
-      Ulangi Enhance
+      Bagikan
     </button>
-  </div>
 
-  <!-- ============ 11. BOTTOM NAV ============ -->
-  <div class="section">
-    <div class="section-title">11. Bottom Nav Preview</div>
-
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:12px 8px;">
-      <div style="text-align:center;color:#c9a8ee;">
-        <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
-          <path d="M3 11l9-8 9 8v9a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-9z"/>
-        </svg>
-        <div style="font-size:9.5px;font-weight:600;">Home</div>
-      </div>
-      <div style="text-align:center;color:#5a5a64;">
-        <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
-          <rect x="3" y="3" width="7" height="7" rx="1"/>
-          <rect x="14" y="3" width="7" height="7" rx="1"/>
-          <rect x="3" y="14" width="7" height="7" rx="1"/>
-          <rect x="14" y="14" width="7" height="7" rx="1"/>
-        </svg>
-        <div style="font-size:9.5px;font-weight:600;">Projects</div>
-      </div>
-      <div style="text-align:center;">
-        <div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(145deg,#a855f7,#7c3aed);margin:0 auto 4px;display:grid;place-items:center;box-shadow:0 0 20px rgba(168,85,247,.5);border:3px solid #0a0a0e;">
-          <svg class="ico" viewBox="0 0 24 24" style="color:#fff;">
-            <path d="M12 5v14M5 12h14"/>
-          </svg>
-        </div>
-      </div>
-      <div style="text-align:center;color:#5a5a64;">
-        <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M12 7v5l3 2"/>
-        </svg>
-        <div style="font-size:9.5px;font-weight:600;">History</div>
-      </div>
-      <div style="text-align:center;color:#5a5a64;">
-        <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
-          <circle cx="12" cy="8" r="4"/>
-          <path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>
-        </svg>
-        <div style="font-size:9.5px;font-weight:600;">Profile</div>
-      </div>
+    <div class="chip-row">
+      <span class="chip">FREE</span>
+      <span class="chip">PREMIUM</span>
+      <span class="chip">4K ULTRA</span>
     </div>
   </div>
 
 </div>
-
-<script>
-/* ============ RIPPLE EFFECT ============ */
-document.querySelectorAll('.btn-primary, .btn-secondary, .btn-danger').forEach(btn => {
-  btn.addEventListener('click', function(e){
-    if(this.disabled || this.classList.contains('loading')) return;
-
-    const rect = this.getBoundingClientRect();
-    const ripple = document.createElement('span');
-    ripple.className = 'ripple';
-    const size = Math.max(rect.width, rect.height);
-    ripple.style.width = ripple.style.height = size + 'px';
-    ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
-    ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
-    this.appendChild(ripple);
-    setTimeout(() => ripple.remove(), 600);
-  });
-});
-
-/* ============ TEST LOADING ============ */
-function testLoading(btn){
-  const original = btn.innerHTML;
-  btn.classList.add('loading');
-  btn.innerHTML = `<span class="spinner"></span> MEMPROSES...`;
-
-  setTimeout(() => {
-    btn.classList.remove('loading');
-    btn.innerHTML = original;
-  }, 2500);
-}
-
-/* ============ TEST SUCCESS ============ */
-function testSuccess(btn){
-  const original = btn.innerHTML;
-  btn.classList.add('success');
-  btn.innerHTML = `
-    <svg class="ico" viewBox="0 0 24 24">
-      <path d="M5 12l5 5L20 7"/>
-    </svg>
-    BERHASIL`;
-
-  setTimeout(() => {
-    btn.classList.remove('success');
-    btn.innerHTML = original;
-  }, 1800);
-}
-</script>
 </body>
 </html>
