@@ -6,508 +6,925 @@
 <title>GUSTAV HD</title>
 <style>
 /* ==================================================
-   ROOT — Palet Warna & Variable
+   ROOT
 ================================================== */
 :root{
-  /* Background */
   --bg:#050505;
   --panel:#0b0b0f;
   --panel2:#101016;
   --line:#202027;
-
-  /* Deep Purple — Tema Utama */
   --deep:#3b176d;
   --purple:#54258f;
   --accent:#6d3db8;
   --light:#a67fd0;
   --pale:#c9a8ee;
   --soft:#e5d4fa;
-
-  /* Neon Premium */
   --neon:#a855f7;
   --neon2:#c084fc;
   --neon-glow:#e9d5ff;
   --gold:#fbbf24;
-
-  /* Warna Fungsional */
   --green:#22c55e;
   --red:#ef4444;
   --text:#e5e5e7;
   --text2:#8a8a94;
   --muted:#555560;
-
-  /* Radius */
   --radius:20px;
-  --radius-sm:14px;
 }
-
-/* ==================================================
-   RESET & BASE
-================================================== */
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{
-  background:var(--bg);
-  color:var(--text);
+  background:var(--bg);color:var(--text);
   font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
-  font-size:14px;
-  line-height:1.5;
-  min-height:100vh;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+  font-size:14px;line-height:1.5;min-height:100vh;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-button{
-  font:inherit;
-  color:inherit;
-  border:0;
-  cursor:pointer;
-  background:none;
-}
+button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
 
-/* ==================================================
-   APP SHELL
-================================================== */
+/* APP SHELL */
 .app{
-  width:100%;
-  max-width:640px;
-  min-height:100vh;
-  margin:0 auto;
-  padding:32px 20px 130px;
-  position:relative;
+  width:100%;max-width:640px;min-height:100vh;
+  margin:0 auto;padding:32px 20px 130px;position:relative;
 }
-
-/* Background glow ungu */
 .app::before{
-  content:"";
-  position:fixed;
-  width:380px;
-  height:380px;
-  top:-160px;
-  right:-180px;
-  background:var(--deep);
-  filter:blur(150px);
-  opacity:.25;
-  pointer-events:none;
-  z-index:0;
+  content:"";position:fixed;width:380px;height:380px;
+  top:-160px;right:-180px;background:var(--deep);
+  filter:blur(150px);opacity:.25;pointer-events:none;z-index:0;
 }
 .app::after{
-  content:"";
-  position:fixed;
-  width:300px;
-  height:300px;
-  bottom:-120px;
-  left:-140px;
-  background:var(--purple);
-  filter:blur(150px);
-  opacity:.12;
-  pointer-events:none;
-  z-index:0;
+  content:"";position:fixed;width:300px;height:300px;
+  bottom:-120px;left:-140px;background:var(--purple);
+  filter:blur(150px);opacity:.12;pointer-events:none;z-index:0;
 }
 .app > *{position:relative;z-index:1}
 
-/* ==================================================
-   PAGE SYSTEM
-================================================== */
-.page{
-  display:none;
-  animation:fadeUp .35s ease;
-}
+/* PAGE */
+.page{display:none;animation:fadeUp .35s ease}
 .page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1;transform:translateY(0)}
+/* GREETING */
+.greeting{padding:8px 4px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.greeting-left small{font-size:11px;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
+.greeting-left h2{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.6px;margin-top:6px}
+.mode-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 12px;border-radius:999px;background:var(--panel);
+  border:1px solid var(--line);font-size:10px;font-weight:800;
+  letter-spacing:1px;text-transform:uppercase;color:var(--text2);
+  transition:.3s;flex-shrink:0;
+}
+.mode-badge .mb-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);transition:.3s}
+body[data-mode="premium"] .mode-badge .mb-dot{background:var(--neon);box-shadow:0 0 6px var(--neon)}
+body[data-mode="premium"] .mode-badge{color:#c9a8ee;border-color:rgba(109,61,184,.5);background:rgba(59,23,109,.25)}
+
+/* PREMIUM BANNER */
+.premium-banner{
+  border-radius:var(--radius);padding:18px 20px;
+  display:flex;align-items:center;gap:14px;margin-bottom:28px;
+  border:1px solid;transition:.3s;position:relative;overflow:hidden;cursor:pointer;
+}
+.premium-banner.free{
+  background:radial-gradient(circle at 100% 0%, rgba(34,197,94,.15), transparent 60%),
+    linear-gradient(160deg,#0a1a10 0%,#050a07 100%);
+  border-color:rgba(34,197,94,.3);
+}
+.premium-banner.free .banner-icon{background:linear-gradient(145deg,#22c55e,#15803d);box-shadow:0 0 20px rgba(34,197,94,.4)}
+.premium-banner.premium{
+  background:radial-gradient(circle at 100% 0%, rgba(168,85,247,.3), transparent 60%),
+    linear-gradient(160deg,#1a0f2e 0%,#0a0512 100%);
+  border-color:rgba(168,85,247,.5);
+}
+.premium-banner.premium .banner-icon{background:linear-gradient(145deg,var(--neon),var(--purple));box-shadow:0 0 20px rgba(168,85,247,.5)}
+.banner-icon{
+  width:46px;height:46px;border-radius:13px;display:grid;place-items:center;
+  color:#fff;flex-shrink:0;position:relative;z-index:1;
+}
+.banner-icon .ico{width:22px;height:22px;stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.banner-text{flex:1;min-width:0;position:relative;z-index:1}
+.banner-text b{font-size:14px;font-weight:700;color:#fff;display:block}
+.banner-text small{font-size:11px;color:var(--text2);display:block;margin-top:3px;line-height:1.4}
+.banner-arrow{color:var(--text2);font-size:20px;position:relative;z-index:1}
+
+/* SECTION HEAD */
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:0 4px 14px}
+.section-head h3{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.section-head a{font-size:11.5px;color:var(--text2);text-decoration:none;letter-spacing:.3px;transition:.2s;cursor:pointer}
+.section-head a:hover{color:#c9a8ee}
+
+/* SERVICES */
+.services{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
+.service{
+  padding:20px 18px;border-radius:18px;background:var(--panel);
+  border:1px solid var(--line);display:flex;flex-direction:column;
+  gap:14px;text-align:left;transition:.22s;min-height:120px;
+  justify-content:space-between;color:var(--text);cursor:pointer;
+}
+.service:hover{border-color:rgba(109,61,184,.4);transform:translateY(-2px)}
+.service:active{transform:scale(.98)}
+.service-icon{
+  width:42px;height:42px;border-radius:11px;display:grid;place-items:center;
+  flex-shrink:0;transition:.3s;
+}
+body[data-mode="free"] .service-icon{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#4ade80}
+body[data-mode="premium"] .service-icon{background:rgba(168,85,247,.22);border:1px solid rgba(168,85,247,.45);color:#d8b4fe}
+.service-icon .ico{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.service b{font-size:13.5px;font-weight:600;color:#fff;letter-spacing:-.1px;line-height:1.35}
+
+/* SETTINGS */
+.settings-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.setting-item{
+  display:flex;align-items:center;gap:14px;padding:16px 18px;
+  background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  width:100%;text-align:left;transition:.2s;cursor:pointer;
+}
+.setting-item:hover{border-color:rgba(109,61,184,.4);transform:translateY(-1px)}
+.setting-item .s-icon{
+  width:40px;height:40px;border-radius:11px;display:grid;place-items:center;
+  font-size:16px;flex-shrink:0;transition:.3s;
+}
+body[data-mode="free"] .setting-item .s-icon{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#4ade80}
+body[data-mode="premium"] .setting-item .s-icon{background:rgba(168,85,247,.22);border:1px solid rgba(168,85,247,.45);color:#d8b4fe}
+.setting-item .s-icon .ico{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.setting-item .s-text{flex:1;min-width:0}
+.setting-item .s-text b{font-size:13.5px;font-weight:700;color:#fff;display:block}
+.setting-item .s-text span{font-size:11.5px;color:var(--text2);display:block;margin-top:3px}
+.setting-item .s-arrow{color:var(--text2);font-size:20px;flex-shrink:0}
+
+/* LOGOUT */
+.logout{
+  width:100%;padding:16px;border-radius:16px;
+  background:rgba(80,20,20,.25);border:1px solid rgba(239,68,68,.25);
+  color:var(--red);font-size:13.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:.2s;margin-bottom:16px;
+}
+.logout:hover,.logout:active{background:rgba(80,20,20,.4);border-color:rgba(239,68,68,.5)}
+.logout .ico{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* SUB HEADER */
+.sub-header{display:flex;align-items:center;gap:14px;padding:4px 0 24px}
+.sub-back{
+  width:44px;height:44px;border-radius:50%;background:var(--panel);
+  border:1px solid var(--line);display:grid;place-items:center;
+  transition:.2s;flex-shrink:0;color:var(--text);
+}
+.sub-back:hover{border-color:var(--accent);transform:scale(1.05)}
+.sub-back:active{transform:scale(.95)}
+.sub-back .ico{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.sub-title{flex:1;display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;color:#fff;letter-spacing:-.4px}
+.sub-title .st-ico{color:var(--pale);width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.sub-chip{
+  padding:7px 12px;border-radius:999px;border:1px solid rgba(109,61,184,.5);
+  color:#c9a8ee;font-size:9.5px;font-weight:800;letter-spacing:1.2px;
+  background:rgba(59,23,109,.22);flex-shrink:0;
 }
 
-/* ==================================================
-   PLACEHOLDER — untuk tes halaman
-   (nanti diganti konten asli di tahap B-G)
-================================================== */
-.placeholder{
-  min-height:60vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:40px 20px;
-  gap:16px;
+/* UPLOAD */
+.upload{
+  display:block;border:1.5px dashed #2a2a33;border-radius:var(--radius);
+  padding:48px 24px;text-align:center;background:var(--panel);
+  transition:.25s;cursor:pointer;margin-bottom:18px;
 }
-.placeholder-icon{
-  width:80px;
-  height:80px;
-  border-radius:24px;
-  background:var(--panel);
-  border:1px solid var(--line);
-  display:grid;
-  place-items:center;
-  color:var(--accent);
-  font-size:32px;
-  margin-bottom:8px;
+.upload:hover,.upload:active{border-color:rgba(109,61,184,.6);background:#0e0d13}
+.upload-ico{
+  width:64px;height:64px;border-radius:17px;display:grid;place-items:center;
+  margin:0 auto 18px;transition:.3s;
 }
-.placeholder h2{
-  font-size:22px;
-  font-weight:800;
-  color:#fff;
-  letter-spacing:-.5px;
+body[data-mode="free"] .upload-ico{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#4ade80}
+body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px solid rgba(168,85,247,.45);color:#d8b4fe}
+.upload-ico .ico{width:28px;height:28px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.upload b{font-size:16px;display:block;color:#fff;font-weight:700}
+.upload small{font-size:12px;color:var(--text2);display:block;margin-top:8px}
+
+/* PREVIEW */
+.preview{
+  display:none;border-radius:var(--radius);overflow:hidden;
+  background:var(--panel);border:1px solid var(--line);
+  margin-bottom:20px;animation:fadeUp .3s ease;
 }
-.placeholder p{
-  font-size:13px;
-  color:var(--text2);
-  max-width:280px;
-  line-height:1.6;
+.preview.show{display:block}
+.preview img{width:100%;display:block;aspect-ratio:16/11;object-fit:cover;background:#111}
+.preview-info{
+  padding:16px 20px;display:flex;justify-content:space-between;
+  align-items:center;border-top:1px solid var(--line);gap:12px;
 }
-.placeholder .tag{
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
-  padding:6px 12px;
-  border-radius:999px;
-  background:rgba(59,23,109,.25);
-  border:1px solid rgba(109,61,184,.4);
-  color:#c9a8ee;
-  font-size:10px;
-  font-weight:700;
-  letter-spacing:1.2px;
-  text-transform:uppercase;
-  margin-top:12px;
+.preview-info b{font-size:13px;font-weight:600;color:#fff;display:block;word-break:break-all}
+.preview-info span{font-size:11.5px;color:var(--text2);display:block;margin-top:4px}
+.remove{
+  width:36px;height:36px;border-radius:11px;background:#1a1a20;
+  border:1px solid #2a2a33;display:grid;place-items:center;
+  transition:.2s;flex-shrink:0;color:#b8b8c0;
+}
+.remove:hover{color:#e07a7a;border-color:#3a2020}
+.remove .ico{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* RES GRID */
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+.res{
+  padding:22px 20px;border-radius:17px;background:var(--panel);
+  border:1.5px solid var(--line);text-align:left;transition:.22s;
+  color:var(--text);cursor:pointer;position:relative;overflow:hidden;
+}
+.res:hover{border-color:rgba(109,61,184,.4)}
+.res:active{transform:scale(.97)}
+.res.selected{
+  background:radial-gradient(circle at 100% 0%, rgba(84,37,143,.4), transparent 70%),
+    linear-gradient(160deg,#1a0f2e,#0d0818);
+  border-color:var(--accent);box-shadow:0 0 24px rgba(84,37,143,.35);
+}
+.res.locked{opacity:.55;cursor:not-allowed}
+.res.locked:hover{border-color:var(--line);transform:none}
+.res h4{font-size:20px;font-weight:800;letter-spacing:-.4px;color:#fff;display:flex;align-items:center;gap:8px}
+.res p{font-size:11px;color:var(--text2);margin-top:6px;letter-spacing:.3px}
+.res.selected p{color:#c9a8ee}
+.res .lock-badge{position:absolute;top:12px;right:12px;color:var(--muted)}
+.res .lock-badge .ico{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* PRIMARY BUTTON */
+.btn-primary{
+  position:relative;width:100%;padding:18px 22px;border-radius:14px;
+  background:var(--purple);border:0;color:#fff;font-size:13.5px;
+  font-weight:800;letter-spacing:.6px;display:flex;align-items:center;
+  justify-content:center;gap:10px;cursor:pointer;overflow:hidden;
+  transition:.18s ease;box-shadow:0 8px 24px rgba(84,37,143,.4);
+}
+.btn-primary:hover{background:#6330a5;transform:translateY(-1px);box-shadow:0 12px 32px rgba(84,37,143,.55)}
+.btn-primary:active{transform:scale(.98)}
+.btn-primary:disabled{background:#141419;color:var(--muted);box-shadow:none;cursor:not-allowed;transform:none}
+.btn-primary:disabled .ico{opacity:.5}
+.btn-primary:disabled:hover{background:#141419;transform:none;box-shadow:none}
+.btn-primary .ico{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* SECONDARY */
+.btn-secondary{
+  position:relative;width:100%;padding:17px 22px;border-radius:14px;
+  background:transparent;border:1.5px solid rgba(109,61,184,.5);
+  color:#c9a8ee;font-size:13px;font-weight:700;letter-spacing:.3px;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  cursor:pointer;transition:.2s ease;
+}
+.btn-secondary:hover{background:rgba(59,23,109,.25);border-color:var(--accent);color:#e5d4fa;transform:translateY(-1px)}
+.btn-secondary:active{transform:scale(.98)}
+.btn-secondary .ico{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* LOADING ANIMATION */
+.loading-wrap{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 20px;text-align:center;gap:24px;
+}
+.orbit{
+  width:180px;height:180px;position:relative;display:grid;place-items:center;
+}
+.orbit .ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:2px solid transparent;
+  border-top-color:var(--neon);border-right-color:rgba(168,85,247,.2);
+  animation:spin 3.5s linear infinite;
+}
+.orbit .ring2{
+  position:absolute;inset:14px;border-radius:50%;
+  border:2px solid transparent;
+  border-bottom-color:var(--neon2);border-left-color:rgba(192,132,252,.15);
+  animation:spin 5s linear infinite reverse;
+}
+.orbit .core{
+  width:90px;height:90px;border-radius:50%;
+  background:radial-gradient(circle at 50% 45%, var(--neon), var(--purple) 70%);
+  display:grid;place-items:center;
+  box-shadow:0 0 50px rgba(168,85,247,.8), inset 0 0 25px rgba(255,255,255,.15);
+  position:relative;z-index:1;
+  animation:corePulse 1.5s ease-in-out infinite;
+}
+.orbit .core .ico{width:38px;height:38px;stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px #fff)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes corePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+
+.loading-status{font-size:15px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.loading-sub{font-size:12px;color:var(--text2);margin-top:-16px}
+.progress{
+  width:100%;max-width:340px;height:8px;background:#17171c;
+  border-radius:10px;overflow:hidden;margin-top:8px;
+}
+.progress i{
+  display:block;height:100%;width:0%;
+  background:linear-gradient(90deg,var(--purple),var(--neon));
+  border-radius:10px;transition:width .3s ease;
+  box-shadow:0 0 12px rgba(168,85,247,.6);
 }
 
-/* ==================================================
-   BOTTOM NAV — Fixed
-================================================== */
+/* RESULT INFO */
+.result-card{
+  border-radius:var(--radius);overflow:hidden;background:var(--panel);
+  border:1px solid var(--line);margin-bottom:20px;
+}
+.result-card img{width:100%;display:block;aspect-ratio:16/11;object-fit:cover;background:#111}
+.result-info{
+  padding:16px 20px;border-top:1px solid var(--line);
+  display:flex;flex-direction:column;gap:10px;
+}
+.result-row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
+.result-row span{color:var(--text2)}
+.result-row b{color:#fff;font-weight:700}
+.result-status{
+  display:flex;align-items:center;gap:8px;color:var(--green);
+  font-size:13px;font-weight:700;margin-bottom:18px;padding:0 4px;
+}
+.result-status .ico{width:18px;height:18px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* TOAST */
+.toast{
+  position:fixed;left:50%;bottom:110px;transform:translate(-50%,16px);
+  background:rgba(16,16,22,.96);border:1px solid rgba(109,61,184,.35);
+  border-radius:14px;padding:12px 18px;font-size:12.5px;color:var(--soft);
+  opacity:0;pointer-events:none;transition:.28s;white-space:nowrap;
+  z-index:100;box-shadow:0 10px 30px rgba(0,0,0,.6);font-weight:600;
+  backdrop-filter:blur(12px);
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* BOTTOM NAV */
 .bottom-nav{
-  position:fixed;
-  left:50%;
-  bottom:14px;
-  transform:translateX(-50%);
-  width:min(calc(100% - 24px), 616px);
-  padding:10px 12px;
-  border-radius:24px;
-  background:rgba(10,10,14,.92);
-  border:1px solid #24242b;
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  align-items:center;
-  z-index:50;
-  box-shadow:0 12px 40px rgba(0,0,0,.6);
+  position:fixed;left:50%;bottom:14px;transform:translateX(-50%);
+  width:min(calc(100% - 24px), 616px);padding:10px 12px;border-radius:24px;
+  background:rgba(10,10,14,.92);border:1px solid #24242b;
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  display:grid;grid-template-columns:repeat(5,1fr);align-items:center;
+  z-index:50;box-shadow:0 12px 40px rgba(0,0,0,.6);
 }
-
-/* Menu biasa */
 .nav{
-  background:none;
-  padding:8px 2px;
-  border-radius:14px;
-  color:#5a5a64;
-  font-size:9.5px;
-  font-weight:600;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:4px;
-  transition:.2s;
-  letter-spacing:.3px;
-  font-family:inherit;
+  background:none;padding:8px 2px;border-radius:14px;color:#5a5a64;
+  font-size:9.5px;font-weight:600;display:flex;flex-direction:column;
+  align-items:center;gap:4px;transition:.2s;letter-spacing:.3px;
 }
 .nav:hover{color:#9a7fc0}
 .nav.active{color:var(--pale)}
+.nav .ico{width:22px;height:22px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:block}
 
-.nav .ico{
-  width:22px;
-  height:22px;
-  stroke:currentColor;
-  stroke-width:2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  fill:none;
-  display:block;
-}
-
-/* ==================================================
-   FAB PREMIUM — Neon + Glow Pulse
-================================================== */
+/* FAB PREMIUM */
 .fab-premium{
-  position:relative;
-  width:52px;
-  height:52px;
-  border-radius:50%;
+  position:relative;width:52px;height:52px;border-radius:50%;
   background:linear-gradient(145deg, var(--neon), var(--neon2));
-  display:grid;
-  place-items:center;
-  margin:0 auto;
-  border:3px solid #0a0a0e;
-  cursor:pointer;
-  transition:transform .2s ease;
+  display:grid;place-items:center;margin:0 auto;border:3px solid #0a0a0e;
+  cursor:pointer;transition:transform .2s ease;
   animation:glowPulse 2s ease-in-out infinite;
 }
-.fab-premium .ico{
-  width:24px;
-  height:24px;
-  stroke:var(--gold);
-  stroke-width:2.2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  fill:none;
-  filter:drop-shadow(0 0 4px var(--gold));
-}
-.fab-premium:hover{
-  transform:scale(1.06);
-}
-.fab-premium:active{
-  transform:scale(.95);
-  animation-play-state:paused;
-}
-
-/* Efek glow pulse — pelan & elegan */
+.fab-premium .ico{width:24px;height:24px;stroke:var(--gold);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px var(--gold))}
+.fab-premium:hover{transform:scale(1.06)}
+.fab-premium:active{transform:scale(.95);animation-play-state:paused}
 @keyframes glowPulse{
-  0%, 100%{
-    box-shadow:
-      0 0 18px rgba(168, 85, 247, .5),
-      0 0 36px rgba(168, 85, 247, .25);
-    transform:scale(1);
-  }
-  50%{
-    box-shadow:
-      0 0 28px rgba(168, 85, 247, .85),
-      0 0 56px rgba(168, 85, 247, .45),
-      0 0 80px rgba(168, 85, 247, .15);
-    transform:scale(1.04);
-  }
+  0%,100%{box-shadow:0 0 18px rgba(168,85,247,.5),0 0 36px rgba(168,85,247,.25);transform:scale(1)}
+  50%{box-shadow:0 0 28px rgba(168,85,247,.85),0 0 56px rgba(168,85,247,.45),0 0 80px rgba(168,85,247,.15);transform:scale(1.04)}
 }
 
-/* ==================================================
-   TOAST
-================================================== */
-.toast{
-  position:fixed;
-  left:50%;
-  bottom:110px;
-  transform:translate(-50%,16px);
-  background:rgba(16,16,22,.96);
-  border:1px solid rgba(109,61,184,.35);
-  border-radius:14px;
-  padding:12px 18px;
-  font-size:12.5px;
-  color:var(--soft);
-  opacity:0;
-  pointer-events:none;
-  transition:.28s;
-  white-space:nowrap;
-  z-index:100;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
-  font-weight:600;
-  backdrop-filter:blur(12px);
+/* OWNER */
+.owner-indicator{
+  position:fixed;top:20px;left:20px;padding:7px 12px;border-radius:999px;
+  background:linear-gradient(145deg,var(--neon),var(--purple));
+  color:#fff;font-size:9.5px;font-weight:800;letter-spacing:1.2px;
+  z-index:60;display:none;align-items:center;gap:6px;
+  box-shadow:0 0 20px rgba(168,85,247,.55);cursor:pointer;
 }
-.toast.show{
-  opacity:1;
-  transform:translate(-50%,0);
+.owner-indicator.show{display:inline-flex}
+.owner-indicator .oi-dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.5s infinite}
+@keyframes pulse{50%{opacity:.4}}
+
+.owner-panel{
+  position:fixed;inset:0;background:rgba(0,0,0,.85);
+  backdrop-filter:blur(8px);z-index:200;display:none;
+  align-items:flex-end;justify-content:center;
+}
+.owner-panel.show{display:flex}
+.owner-sheet{
+  width:100%;max-width:560px;
+  background:linear-gradient(180deg,#0e0a16 0%,#080709 100%);
+  border-top:1px solid rgba(168,85,247,.5);
+  border-radius:26px 26px 0 0;padding:26px 22px 30px;
+  animation:slideUp .3s ease;max-height:90vh;overflow-y:auto;
+}
+@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.owner-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.owner-header h3{font-size:17px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px}
+.owner-header h3 .badge-owner{
+  padding:4px 10px;border-radius:999px;
+  background:linear-gradient(145deg,var(--neon),var(--purple));
+  font-size:9px;font-weight:800;letter-spacing:1.2px;color:#fff;
+}
+.owner-close{
+  width:34px;height:34px;border-radius:50%;background:var(--panel);
+  border:1px solid var(--line);display:grid;place-items:center;
+  font-size:15px;color:var(--text);transition:.2s;
+}
+.owner-close:hover{border-color:var(--red);color:var(--red)}
+.owner-sub{font-size:12px;color:var(--text2);margin-bottom:22px;line-height:1.55}
+.owner-section{margin-bottom:20px}
+.owner-section h4{font-size:10.5px;color:var(--text2);letter-spacing:1.8px;text-transform:uppercase;font-weight:700;margin:0 2px 10px}
+.owner-mode-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.owner-mode-btn{
+  padding:16px 14px;border-radius:14px;background:var(--panel);
+  border:1px solid var(--line);text-align:left;transition:.2s;color:var(--text);
+}
+.owner-mode-btn:hover{border-color:rgba(168,85,247,.5)}
+.owner-mode-btn.selected{
+  background:linear-gradient(145deg,#1a0f2e,#0d0818);
+  border-color:var(--neon);box-shadow:0 0 20px rgba(168,85,247,.4);
+}
+.owner-mode-btn .om-ico{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-size:14px;margin-bottom:10px}
+.owner-mode-btn.free .om-ico{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#4ade80}
+.owner-mode-btn.premium .om-ico{background:rgba(168,85,247,.25);border:1px solid rgba(168,85,247,.45);color:#d8b4fe}
+.owner-mode-btn b{font-size:13px;font-weight:700;color:#fff;display:block;letter-spacing:-.1px}
+.owner-mode-btn small{font-size:10.5px;color:var(--text2);display:block;margin-top:3px}
+.owner-action{
+  display:flex;align-items:center;gap:14px;padding:15px 16px;
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:14px;width:100%;text-align:left;margin-bottom:8px;transition:.2s;
+}
+.owner-action:hover{border-color:rgba(168,85,247,.5);transform:translateY(-1px)}
+.owner-action .oa-ico{
+  width:38px;height:38px;border-radius:10px;background:rgba(168,85,247,.2);
+  border:1px solid rgba(168,85,247,.35);display:grid;place-items:center;
+  color:#d8b4fe;font-size:15px;flex-shrink:0;
+}
+.owner-action .oa-text{flex:1}
+.owner-action .oa-text b{font-size:13px;font-weight:700;color:#fff;display:block}
+.owner-action .oa-text span{font-size:11px;color:var(--text2);display:block;margin-top:3px}
+.owner-action .oa-arrow{color:var(--text2);font-size:18px}
+.owner-action.danger{border-color:rgba(239,68,68,.3)}
+.owner-action.danger .oa-ico{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.35);color:var(--red)}
+.owner-action.danger .oa-text b{color:var(--red)}
+
+/* SECRET TRIGGER */
+.secret-trigger{
+  text-align:center;margin-top:20px;padding:8px 16px;
+  display:inline-block;font-size:10px;color:#1a1a20;
+  cursor:pointer;user-select:none;letter-spacing:1px;
 }
 
-/* ==================================================
-   RESPONSIVE
-================================================== */
+/* RESPONSIVE */
 @media(min-width:700px){
   body{background:#020202}
-  .app{
-    border-left:1px solid #101014;
-    border-right:1px solid #101014;
-    background:#050505;
-    min-height:100vh;
-  }
+  .app{border-left:1px solid #101014;border-right:1px solid #101014;background:#050505;min-height:100vh}
 }
 @media(max-width:380px){
   .app{padding:24px 16px 130px}
-  .placeholder h2{font-size:20px}
+  .greeting-left h2{font-size:21px}
   .fab-premium{width:48px;height:48px}
+  .res h4{font-size:18px}
 }
 </style>
 </head>
-<body>
+<body data-mode="free">
+
+<button class="owner-indicator" id="ownerIndicator" onclick="openOwnerPanel()">
+  <span class="oi-dot"></span> OWNER MODE
+</button>
 
 <main class="app">
 
-  <!-- ============ HALAMAN 1: HOME ============ -->
+  <!-- ============ HOME ============ -->
   <section class="page active" id="page-home">
-    <div class="placeholder">
-      <div class="placeholder-icon">⌂</div>
-      <span class="tag">TAHAP A — KERANGKA</span>
-      <h2>Halaman Home</h2>
-      <p>Konten akan diisi di <b>Tahap B</b>: Greeting, Banner Premium, Services, Settings.</p>
+    <div class="greeting">
+      <div class="greeting-left">
+        <small>Welcome back</small>
+        <h2>Hello, User!</h2>
+      </div>
+      <div class="mode-badge" id="modeBadge">
+        <span class="mb-dot"></span>
+        <span id="modeBadgeText">FREE</span>
+      </div>
+    </div>
+
+    <div class="premium-banner free" id="premiumBanner" onclick="goTo('premium')">
+      <div class="banner-icon" id="bannerIcon">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
+      </div>
+      <div class="banner-text">
+        <b id="bannerTitle">GUSTAV HD PREMIUM</b>
+        <small id="bannerDesc">Unlock unlimited AI magic. Pro models, 4K exports & priority queue.</small>
+      </div>
+      <div class="banner-arrow">›</div>
+    </div>
+
+    <div class="section-head">
+      <h3>Services</h3>
+      <a onclick="toast('Lihat semua')">See all →</a>
+    </div>
+
+    <div class="services">
+      <button class="service" onclick="goTo('enhance')">
+        <div class="service-icon">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
+        </div>
+        <b>Enhance Photo</b>
+      </button>
+      <button class="service" onclick="toast('Face Swap')">
+        <div class="service-icon">
+          <svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="15" cy="15" r="3"/><path d="M5 5h3v3M16 16h3v3"/></svg>
+        </div>
+        <b>Face Swap</b>
+      </button>
+      <button class="service" onclick="goTo('enhance')">
+        <div class="service-icon">
+          <svg class="ico" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>
+        </div>
+        <b>Upscale Video</b>
+      </button>
+      <button class="service" onclick="goTo('projects')">
+        <div class="service-icon">
+          <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </div>
+        <b>Project History</b>
+      </button>
+    </div>
+
+    <div class="section-head"><h3>Settings</h3></div>
+
+    <div class="settings-list">
+      <button class="setting-item" onclick="toast('Account Profile')">
+        <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div>
+        <div class="s-text"><b>Account Profile</b><span>Name, email and avatar</span></div>
+        <span class="s-arrow">›</span>
+      </button>
+      <button class="setting-item" onclick="goTo('premium')">
+        <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/></svg></div>
+        <div class="s-text"><b>Manage Premium</b><span id="subStatus">Free Plan</span></div>
+        <span class="s-arrow">›</span>
+      </button>
+      <button class="setting-item" onclick="toast('Language')">
+        <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2 3 2 15 0 18"/></svg></div>
+        <div class="s-text"><b>Language</b><span>English (US)</span></div>
+        <span class="s-arrow">›</span>
+      </button>
+      <button class="setting-item" onclick="toast('Privacy Policy')">
+        <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-4 8-8 8s-8-3-8-8V7l8-4z"/></svg></div>
+        <div class="s-text"><b>Privacy Policy</b><span>Opens in a new tab</span></div>
+        <span class="s-arrow">↗</span>
+      </button>
+    </div>
+
+    <button class="logout" onclick="toast('Log out')">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M12 3v10"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg>
+      Log out
+    </button>
+
+    <div style="text-align:center;margin-top:20px;">
+      <div class="secret-trigger" onclick="handleSecretTap()">GUSTAV LIZARD</div>
     </div>
   </section>
 
-  <!-- ============ HALAMAN 2A: ENHANCE INPUT ============ -->
+  <!-- ============ ENHANCE (2A) ============ -->
   <section class="page" id="page-enhance">
-    <div class="placeholder">
-      <div class="placeholder-icon">✦</div>
-      <span class="tag">TAHAP C</span>
-      <h2>Enhance Photo</h2>
-      <p>Halaman input: upload foto, pilih resolusi, tombol proses.</p>
+    <header class="sub-header">
+      <button class="sub-back" onclick="goTo('home')">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="sub-title">
+        <svg class="st-ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
+        Enhance Photo
+      </div>
+      <div class="sub-chip" id="subChip">FREE</div>
+    </header>
+
+    <label class="upload" for="fileInput">
+      <div class="upload-ico">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg>
+      </div>
+      <b>Pilih Foto</b>
+      <small>JPG, PNG, WEBP — maks 10MB</small>
+      <input type="file" id="fileInput" accept="image/*" hidden>
+    </label>
+
+    <div class="preview" id="preview">
+      <img id="previewImg" alt="preview">
+      <div class="preview-info">
+        <div>
+          <b id="fileName">-</b>
+          <span id="fileSize">-</span>
+        </div>
+        <button class="remove" onclick="resetUpload()">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
     </div>
+
+    <div class="section-head"><h3>Output Resolution</h3><span></span></div>
+
+    <div class="res-grid">
+      <button class="res selected" data-r="720" onclick="pickRes(this)">
+        <h4>720p</h4><p>HD Ready</p>
+      </button>
+      <button class="res" data-r="1080" onclick="pickRes(this)">
+        <h4>1080p</h4><p>Full HD</p>
+      </button>
+      <button class="res locked" data-r="1440" onclick="tryLocked(this)">
+        <div class="lock-badge">
+          <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        </div>
+        <h4>2K</h4><p>Ultra HD</p>
+      </button>
+      <button class="res locked" data-r="2160" onclick="tryLocked(this)">
+        <div class="lock-badge">
+          <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+        </div>
+        <h4>4K</h4><p>Ultra HD</p>
+      </button>
+    </div>
+
+    <button class="btn-primary" id="processBtn" disabled onclick="startProcess()">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+      MULAI ENHANCE
+    </button>
   </section>
 
-  <!-- ============ HALAMAN 2B: LOADING ============ -->
+  <!-- ============ LOADING (2B) ============ -->
   <section class="page" id="page-loading">
-    <div class="placeholder">
-      <div class="placeholder-icon">⚡</div>
-      <span class="tag">TAHAP D</span>
-      <h2>Loading</h2>
-      <p>Animasi loading + musik + progress bar.</p>
+    <header class="sub-header">
+      <button class="sub-back" onclick="cancelProcess()">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="sub-title" id="loadingTitle">Enhancing...</div>
+      <div class="sub-chip" id="loadingChip">FREE</div>
+    </header>
+
+    <div class="loading-wrap">
+      <div class="orbit">
+        <div class="ring"></div>
+        <div class="ring2"></div>
+        <div class="core">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        </div>
+      </div>
+
+      <div class="loading-status" id="loadingStatus">Menyiapkan...</div>
+      <div class="loading-sub" id="loadingSub">Estimasi: 4 detik</div>
+
+      <div class="progress">
+        <i id="progressBar"></i>
+      </div>
+
+      <div style="font-size:22px;font-weight:800;color:#fff;margin-top:-8px;" id="progressPercent">0%</div>
     </div>
   </section>
 
-  <!-- ============ HALAMAN 2C: HASIL ============ -->
+  <!-- ============ RESULT (2C) ============ -->
   <section class="page" id="page-result">
-    <div class="placeholder">
-      <div class="placeholder-icon">✓</div>
-      <span class="tag">TAHAP E</span>
-      <h2>Hasil Enhance</h2>
-      <p>Foto hasil + tombol simpan & bagikan.</p>
+    <header class="sub-header">
+      <button class="sub-back" onclick="goTo('home')">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="sub-title">
+        <svg class="st-ico" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
+        Hasil Enhance
+      </div>
+      <div class="sub-chip" id="resultChip">FREE</div>
+    </header>
+
+    <div class="result-status">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
+      Berhasil di-enhance
     </div>
+
+    <div class="result-card">
+      <img id="resultImg" alt="result">
+      <div class="result-info">
+        <div class="result-row"><span>Resolusi</span><b id="resultRes">4K (3840×2160)</b></div>
+        <div class="result-row"><span>Ukuran</span><b id="resultSize">2.4 MB</b></div>
+        <div class="result-row"><span>Waktu</span><b id="resultTime">3.2 detik</b></div>
+        <div class="result-row"><span>Format</span><b>JPG</b></div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+      <button class="btn-secondary" onclick="shareResult()">
+        <svg class="ico" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+        Bagikan
+      </button>
+      <button class="btn-primary" style="padding:17px 20px;font-size:12.5px;" onclick="saveResult()">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M12 3v13M7 11l5 5 5-5M4 21h16"/></svg>
+        Simpan
+      </button>
+    </div>
+
+    <button class="btn-secondary" onclick="goTo('enhance')">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
+      Ulangi Enhance
+    </button>
   </section>
 
-  <!-- ============ HALAMAN PREMIUM ============ -->
+  <!-- ============ PREMIUM ============ -->
   <section class="page" id="page-premium">
-    <div class="placeholder">
-      <div class="placeholder-icon">♛</div>
-      <span class="tag">TAHAP F</span>
-      <h2>Upgrade Premium</h2>
-      <p>Halaman premium dengan efek neon + glow pulse.</p>
+    <header class="sub-header">
+      <button class="sub-back" onclick="goTo('home')">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+      <div class="sub-title">
+        <svg class="st-ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/></svg>
+        Premium
+      </div>
+      <div class="sub-chip">♛</div>
+    </header>
+
+    <div style="text-align:center;padding:20px 0 30px;">
+      <div class="fab-premium" style="width:80px;height:80px;margin-bottom:20px;">
+        <svg class="ico" viewBox="0 0 24 24" style="width:36px;height:36px;"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/><path d="M3 17v2h18v-2"/></svg>
+      </div>
+      <h2 style="font-size:26px;font-weight:800;color:#fff;letter-spacing:-.7px;">Upgrade to Premium</h2>
+      <p style="font-size:13px;color:var(--text2);margin-top:10px;max-width:340px;margin-left:auto;margin-right:auto;line-height:1.6;">
+        Unlock semua fitur & akses kualitas tertinggi
+      </p>
+    </div>
+
+    <div class="settings-list">
+      <div class="setting-item">
+        <div class="s-icon" style="background:rgba(168,85,247,.22);border-color:rgba(168,85,247,.45);color:#d8b4fe;">
+          <svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+        </div>
+        <div class="s-text"><b>4K Ultra HD</b><span>Resolusi tertinggi untuk hasil maksimal</span></div>
+      </div>
+      <div class="setting-item">
+        <div class="s-icon" style="background:rgba(168,85,247,.22);border-color:rgba(168,85,247,.45);color:#d8b4fe;">
+          <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5 5l14 14"/></svg>
+        </div>
+        <div class="s-text"><b>Tanpa Watermark</b><span>Hasil bersih tanpa logo</span></div>
+      </div>
+      <div class="setting-item">
+        <div class="s-icon" style="background:rgba(168,85,247,.22);border-color:rgba(168,85,247,.45);color:#d8b4fe;">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+        </div>
+        <div class="s-text"><b>Priority Lane</b><span>Antrian cepat, tanpa menunggu</span></div>
+      </div>
+      <div class="setting-item">
+        <div class="s-icon" style="background:rgba(168,85,247,.22);border-color:rgba(168,85,247,.45);color:#d8b4fe;">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
+        </div>
+        <div class="s-text"><b>Unlimited Enhance</b><span>Tanpa batas harian</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <button class="fab-premium" style="width:100%;height:auto;border-radius:16px;padding:18px;animation:glowPulse 2s ease-in-out infinite;"
+              onclick="toast('Fitur premium segera hadir')">
+        <span style="display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;font-size:13.5px;letter-spacing:.6px;text-transform:uppercase;">
+          <svg class="ico" viewBox="0 0 24 24" style="width:18px;height:18px;stroke:#fbbf24;"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
+          UPGRADE SEKARANG
+        </span>
+      </button>
+
+      <div style="height:12px"></div>
+
+      <button class="btn-secondary" onclick="toast('Lihat harga')">
+        Lihat Harga
+      </button>
     </div>
   </section>
 
-  <!-- ============ HALAMAN PROJECTS ============ -->
+  <!-- ============ PROJECTS ============ -->
   <section class="page" id="page-projects">
-    <div class="placeholder">
-      <div class="placeholder-icon">▤</div>
-      <span class="tag">COMING SOON</span>
-      <h2>Projects</h2>
-      <p>Daftar hasil enhance yang tersimpan.</p>
+    <div style="text-align:center;padding:100px 26px;">
+      <div style="width:80px;height:80px;border-radius:22px;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;margin:0 auto 24px;color:var(--accent);">
+        <svg style="width:34px;height:34px;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+      </div>
+      <h4 style="font-size:17px;font-weight:700;color:#fff;">Belum ada project</h4>
+      <p style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.55;">Hasil enhance kamu akan muncul di sini.</p>
     </div>
   </section>
 
-  <!-- ============ HALAMAN HISTORY ============ -->
+  <!-- ============ HISTORY ============ -->
   <section class="page" id="page-history">
-    <div class="placeholder">
-      <div class="placeholder-icon">◷</div>
-      <span class="tag">COMING SOON</span>
-      <h2>History</h2>
-      <p>Riwayat aktivitas kamu.</p>
+    <div style="text-align:center;padding:100px 26px;">
+      <div style="width:80px;height:80px;border-radius:22px;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;margin:0 auto 24px;color:var(--accent);">
+        <svg style="width:34px;height:34px;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3 2"/>
+        </svg>
+      </div>
+      <h4 style="font-size:17px;font-weight:700;color:#fff;">Belum ada riwayat</h4>
+      <p style="font-size:13px;color:var(--text2);margin-top:10px;line-height:1.55;">Aktivitas kamu akan muncul di sini.</p>
     </div>
   </section>
 
-  <!-- ============ HALAMAN PROFILE ============ -->
+  <!-- ============ PROFILE ============ -->
   <section class="page" id="page-profile">
-    <div class="placeholder">
-      <div class="placeholder-icon">○</div>
-      <span class="tag">TAHAP B</span>
-      <h2>Profile</h2>
-      <p>Halaman profil: akun, statistik, pengaturan.</p>
+    <div style="text-align:center;padding:40px 24px;border-radius:var(--radius);background:var(--panel);border:1px solid var(--line);margin-bottom:20px;">
+      <div style="width:92px;height:92px;border-radius:50%;background:linear-gradient(145deg,#3b176d,#1a1226);border:1px solid rgba(109,61,184,.5);display:grid;place-items:center;margin:0 auto 20px;font-size:34px;font-weight:800;color:var(--soft);box-shadow:0 0 32px rgba(84,37,143,.35);">G</div>
+      <h4 style="font-size:18px;font-weight:700;color:#fff;">Guest User</h4>
+      <p style="font-size:12.5px;color:var(--text2);margin-top:6px;">Free Member</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);border-radius:var(--radius);background:var(--panel);border:1px solid var(--line);overflow:hidden;margin-bottom:28px;">
+      <div style="padding:26px 10px;text-align:center;border-right:1px solid var(--line);">
+        <b style="font-size:22px;font-weight:800;color:#fff;display:block;">0</b>
+        <span style="font-size:10.5px;color:var(--text2);margin-top:7px;display:block;letter-spacing:.8px;text-transform:uppercase;font-weight:600;">Enhance</span>
+      </div>
+      <div style="padding:26px 10px;text-align:center;border-right:1px solid var(--line);">
+        <b style="font-size:22px;font-weight:800;color:#fff;display:block;">0</b>
+        <span style="font-size:10.5px;color:var(--text2);margin-top:7px;display:block;letter-spacing:.8px;text-transform:uppercase;font-weight:600;">Kredit</span>
+      </div>
+      <div style="padding:26px 10px;text-align:center;">
+        <b style="font-size:22px;font-weight:800;color:#fff;display:block;">3</b>
+        <span style="font-size:10.5px;color:var(--text2);margin-top:7px;display:block;letter-spacing:.8px;text-transform:uppercase;font-weight:600;">Limit/hari</span>
+      </div>
     </div>
   </section>
 
 </main>
 
 <!-- ============ BOTTOM NAV ============ -->
-<nav class="bottom-nav">
-
-  <!-- Home -->
-  <button class="nav active" data-nav="home">
-    <svg class="ico" viewBox="0 0 24 24">
-      <path d="M3 11l9-8 9 8v9a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-9z"/>
-    </svg>
+<nav class="bottom-nav" id="bottomNav">
+  <button class="nav active" data-nav="home" onclick="goTo('home')">
+    <svg class="ico" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-9z"/></svg>
     <span>Home</span>
   </button>
-
-  <!-- Projects -->
-  <button class="nav" data-nav="projects">
-    <svg class="ico" viewBox="0 0 24 24">
-      <rect x="3" y="3" width="7" height="7" rx="1"/>
-      <rect x="14" y="3" width="7" height="7" rx="1"/>
-      <rect x="3" y="14" width="7" height="7" rx="1"/>
-      <rect x="14" y="14" width="7" height="7" rx="1"/>
-    </svg>
+  <button class="nav" data-nav="projects" onclick="goTo('projects')">
+    <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
     <span>Projects</span>
   </button>
-
-  <!-- Premium FAB -->
-  <button class="fab-premium" data-nav="premium" title="Upgrade Premium">
-    <svg class="ico" viewBox="0 0 24 24">
-      <path d="M3 17l4-8 4 5 3-5 7 8"/>
-      <path d="M3 17h18"/>
-      <path d="M3 17v2h18v-2"/>
-    </svg>
+  <button class="fab-premium" data-nav="premium" onclick="goTo('premium')" title="Upgrade Premium">
+    <svg class="ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/><path d="M3 17v2h18v-2"/></svg>
   </button>
-
-  <!-- History -->
-  <button class="nav" data-nav="history">
-    <svg class="ico" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="9"/>
-      <path d="M12 7v5l3 2"/>
-    </svg>
+  <button class="nav" data-nav="history" onclick="goTo('history')">
+    <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
     <span>History</span>
   </button>
-
-  <!-- Profile -->
-  <button class="nav" data-nav="profile">
-    <svg class="ico" viewBox="0 0 24 24">
-      <circle cx="12" cy="8" r="4"/>
-      <path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>
-    </svg>
+  <button class="nav" data-nav="profile" onclick="goTo('profile')">
+    <svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
     <span>Profile</span>
   </button>
-
 </nav>
 
-<!-- ============ TOAST ============ -->
+<!-- ============ OWNER PANEL ============ -->
+<div class="owner-panel" id="ownerPanel">
+  <div class="owner-sheet">
+    <div class="owner-header">
+      <h3>Owner Panel <span class="badge-owner">ADMIN</span></h3>
+      <button class="owner-close" onclick="closeOwnerPanel()">✕</button>
+    </div>
+    <p class="owner-sub">Panel khusus owner. Perubahan di sini hanya tersimpan di sesi ini.</p>
+
+    <div class="owner-section">
+      <h4>Mode Aplikasi</h4>
+      <div class="owner-mode-row">
+        <button class="owner-mode-btn free selected" id="btnFree" onclick="setMode('free')">
+          <div class="om-ico">✦</div>
+          <b>Free Mode</b>
+          <small>Limit 3/hari</small>
+        </button>
+        <button class="owner-mode-btn premium" id="btnPremium" onclick="setMode('premium')">
+          <div class="om-ico">♛</div>
+          <b>Premium Mode</b>
+          <small>Unlimited</small>
+        </button>
+      </div>
+    </div>
+
+    <div class="owner-section">
+      <h4>Developer Tools</h4>
+      <button class="owner-action" onclick="resetLimit()">
+        <div class="oa-ico">↻</div>
+        <div class="oa-text"><b>Reset Daily Limit</b><span>Kembalikan limit harian</span></div>
+        <span class="oa-arrow">›</span>
+      </button>
+      <button class="owner-action" onclick="clearCache()">
+        <div class="oa-ico">⌫</div>
+        <div class="oa-text"><b>Clear Cache</b><span>Hapus data lokal</span></div>
+        <span class="oa-arrow">›</span>
+      </button>
+      <button class="owner-action danger" onclick="logoutOwner()">
+        <div class="oa-ico">⏻</div>
+        <div class="oa-text"><b>Keluar Owner Mode</b><span>Kembali sebagai user</span></div>
+        <span class="oa-arrow">›</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-/* ==================================================
-   NAVIGASI ANTAR HALAMAN
-================================================== */
+/* ============ NAVIGASI ============ */
 const pages = document.querySelectorAll('.page');
-const nav navs  = document.querySelectorAll('.nav');
+const navs = document.querySelectorAll('.nav');
+const bottomNav = document.getElementById('bottomNav');
 
 function goTo(pageName){
-  // Sembunyikan semua halaman
   pages.forEach(p => p.classList.remove('active'));
-
-  // Tampilkan halaman target
   const target = document.getElementById('page-' + pageName);
   if(target){
     target.classList.add('active');
-    window.scrollTo({top:0, behavior:'
-smooth'});
+    window.scrollTo({top:0, behavior:'smooth'});
   }
+  navs.forEach(n => n.classList.toggle('active', n.dataset.nav === pageName));
 
-  // Update state bottom  navs.forEach(n => {
-    n.classList.toggle('active', n.dataset.nav === pageName);
-  });
+  // Sembunyikan bottom nav di halaman 2A/2B/2C
+  const hideNav = ['enhance','loading','result'].includes(pageName);
+  bottomNav.style.display = hideNav ? 'none' : 'grid';
 }
 
-// Event listener untuk semua tombol navigasi
-document.querySelectorAll('[data-nav]').forEach(el => {
-  el.addEventListener('click', () => {
-    const page = el.dataset.nav;
-    goTo(page);
-    if(page !== 'home'){
-      const label = el.querySelector('span')?.textContent || page;
-      toast(label);
-    }
-  });
-});
-
-/* ==================================================
-   TOAST
-================================================== */
+/* ============ TOAST ============ */
 let toastTimer;
 function toast(msg){
   const el = document.getElementById('toast');
@@ -517,13 +934,267 @@ function toast(msg){
   toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
 }
 
-/* ==================================================
-   INIT
-================================================== */
-console.log('%c GUSTAV HD ', 'background:#54258f;color:#fff;padding:4px 8px;border-radius:4px;font-weight:bold');
-console.log('Tahap A — Kerangka siap ✅');
-console.log('Selanjutnya: Tahap B — Halaman Home');
-</script>
+/* ============ UPLOAD ============ */
+const fileInput = document.getElementById('fileInput');
+const preview = document.getElementById('preview');
+const previewImg = document.getElementById('previewImg');
+const fileNameEl = document.getElementById('fileName');
+const fileSizeEl = document.getElementById('fileSize');
+const processBtn = document.getElementById('processBtn');
+let currentFile = null;
+let currentRes = 720;
+const MAX_SIZE = 10 * 1024 * 1024;
 
+fileInput.addEventListener('change', e => {
+  const f = e.target.files[0];
+  if(!f) return;
+  if(!f.type.startsWith('image/')){ toast('File harus gambar'); return; }
+  if(f.size > MAX_SIZE){ toast('Maks 10MB'); return; }
+
+  currentFile = f;
+  previewImg.src = URL.createObjectURL(f);
+  fileNameEl.textContent = f.name;
+  fileSizeEl.textContent = formatSize(f.size);
+  preview.classList.add('show');
+  processBtn.disabled = false;
+  toast('Foto berhasil diupload');
+});
+
+function resetUpload(){
+  currentFile = null;
+  fileInput.value = '';
+  previewImg.src = '';
+  preview.classList.remove('show');
+  processBtn.disabled = true;
+  toast('Foto dihapus');
+}
+
+function formatSize(b){
+  if(b < 1024) return b + ' B';
+  if(b < 1048576) return (b/1024).toFixed(1) + ' KB';
+  return (b/1048576).toFixed(2) + ' MB';
+}
+
+/* ============ RESOLUSI ============ */
+function pickRes(el){
+  if(el.classList.contains('locked')){
+    tryLocked(el);
+    return;
+  }
+  document.querySelectorAll('.res').forEach(r => r.classList.remove('selected'));
+  el.classList.add('selected');
+  currentRes = parseInt(el.dataset.r);
+}
+
+function tryLocked(el){
+  if(mode === 'premium') return;
+  toast('Upgrade ke Premium untuk membuka');
+}
+
+/* ============ PROSES ============ */
+function startProcess(){
+  if(!currentFile){ toast('Upload foto dulu'); return; }
+
+  goTo('loading');
+  const label = currentRes >= 2160 ? '4K' : currentRes >= 1440 ? '2K' : currentRes + 'p';
+  document.getElementById('loadingChip').textContent = mode === 'premium' ? 'PREMIUM' : 'FREE';
+
+  let progress = 0;
+  const duration = mode === 'premium' ? 2000 : 4000;
+  const step = 50;
+  const increment = 100 / (duration / step);
+
+  const statuses = [
+    {max:30, text:'Menyiapkan...'},
+    {max:70, text:'Enhancing...'},
+    {max:99, text:'Menyelesaikan...'},
+    {max:100, text:'Selesai!'}
+  ];
+
+  const interval = setInterval(() => {
+    progress += increment;
+    if(progress > 100) progress = 100;
+
+    document.getElementById('progressBar').style.width = progress + '%';
+    document.getElementById('progressPercent').textContent = Math.floor(progress) + '%';
+
+    for(const s of statuses){
+      if(progress <= s.max){
+        document.getElementById('loadingStatus').textContent = s.text;
+        break;
+      }
+    }
+
+    const remaining = Math.ceil((100 - progress) / increment * step / 1000);
+    document.getElementById('loadingSub').textContent = progress < 100
+      ? `Estimasi: ${remaining} detik`
+      : `Memproses ${label}...`;
+
+    if(progress >= 100){
+      clearInterval(interval);
+      setTimeout(() => {
+        showResult(label);
+      }, 500);
+    }
+  }, step);
+}
+
+function cancelProcess(){
+  if(confirm('Batal proses?')){
+    goTo('enhance');
+  }
+}
+
+/* ============ HASIL ============ */
+function showResult(label){
+  document.getElementById('resultImg').src = previewImg.src;
+  document.getElementById('resultRes').textContent = label + ' (' + getResolutionSize(currentRes) + ')';
+  document.getElementById('resultSize').textContent = currentFile ? formatSize(currentFile.size * 1.5) : '2.4 MB';
+  document.getElementById('resultTime').textContent = (mode === 'premium' ? '1.6' : '3.2') + ' detik';
+  document.getElementById('resultChip').textContent = mode === 'premium' ? 'PREMIUM' : 'FREE';
+  goTo('result');
+}
+
+function getResolutionSize(r){
+  const map = {720:'1280×720', 1080:'1920×1080', 1440:'2560×1440', 2160:'3840×2160'};
+  return map[r] || '1280×720';
+}
+
+/* ============ SIMPAN & BAGIKAN ============ */
+function saveResult(){
+  toast('Foto disimpan ke galeri');
+}
+
+function shareResult(){
+  if(navigator.share){
+    navigator.share({ title: 'GUSTAV HD', text: 'Hasil enhance dari GUSTAV HD' })
+      .catch(() => {});
+  } else {
+    toast('Share tidak didukung');
+  }
+}
+
+/* ============ MODE FREE ↔ PREMIUM ============ */
+let mode = 'free';
+let isOwner = false;
+
+function applyMode(){
+  document.body.dataset.mode = mode;
+  const banner = document.getElementById('premiumBanner');
+  const icon = document.getElementById('bannerIcon');
+  const title = document.getElementById('bannerTitle');
+  const desc = document.getElementById('bannerDesc');
+  const sub = document.getElementById('subStatus');
+  const badge = document.getElementById('modeBadgeText');
+  const chips = ['subChip','loadingChip','resultChip'];
+
+  if(mode === 'premium'){
+    banner.classList.remove('free'); banner.classList.add('premium');
+    icon.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/><path d="M3 17v2h18v-2"/></svg>';
+    title.textContent = 'PREMIUM ACTIVATED';
+    desc.textContent = 'selamat menikmati!';
+    sub.textContent = 'Premium Active - Tahunan';
+    badge.textContent = 'PREMIUM';
+    chips.forEach(id => { const el = document.getElementById(id); if(el) el.textContent = 'PREMIUM'; });
+    document.querySelectorAll('.res').forEach(r => r.classList.remove('locked'));
+    document.querySelectorAll('.lock-badge').forEach(b => b.style.display = 'none');
+  } else {
+    banner.classList.remove('premium'); banner.classList.add('free');
+    icon.innerHTML = '<svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>';
+    title.textContent = 'GUSTAV HD PREMIUM';
+    desc.textContent = 'Unlock unlimited AI magic. Pro models, 4K exports & priority queue.';
+    sub.textContent = 'Free Plan';
+    badge.textContent = 'FREE';
+    chips.forEach(id => { const el = document.getElementById(id); if(el) el.textContent = 'FREE'; });
+    document.querySelectorAll('.res').forEach(r => {
+      const rv = parseInt(r.dataset.r);
+      if(rv >= 1440) r.classList.add('locked');
+    });
+    document.querySelectorAll('.lock-badge').forEach(b => b.style.display = 'flex');
+  }
+}
+
+/* ============ OWNER SYSTEM ============ */
+let secretTapCount = 0;
+let secretTapTimer;
+function handleSecretTap(){
+  secretTapCount++;
+  clearTimeout(secretTapTimer);
+  secretTapTimer = setTimeout(() => { secretTapCount = 0; }, 1500);
+  if(secretTapCount >= 5){
+    secretTapCount = 0;
+    askOwnerCode();
+  }
+}
+
+const OWNER_CODE = 'GUSTAV2026';
+
+function askOwnerCode(){
+  const input = prompt('Masukkan kode owner:');
+  if(input === null) return;
+  if(input.trim() === OWNER_CODE){
+    activateOwner();
+  } else {
+    toast('Kode salah');
+  }
+}
+
+function activateOwner(silent){
+  isOwner = true;
+  document.getElementById('ownerIndicator').classList.add('show');
+  if(!silent) toast('Owner mode aktif ✦');
+}
+
+function logoutOwner(){
+  isOwner = false;
+  document.getElementById('ownerIndicator').classList.remove('show');
+  closeOwnerPanel();
+  toast('Keluar owner mode');
+}
+
+function openOwnerPanel(){
+  if(!isOwner){ toast('Akses ditolak'); return; }
+  document.getElementById('ownerPanel').classList.add('show');
+  syncOwnerUI();
+}
+function closeOwnerPanel(){
+  document.getElementById('ownerPanel').classList.remove('show');
+}
+function setMode(newMode){
+  if(!isOwner){ toast('Hanya owner'); return; }
+  if(mode === newMode) return;
+  mode = newMode;
+  applyMode();
+  toast(newMode === 'premium' ? 'Premium mode aktif ♛' : 'Free mode aktif');
+}
+function syncOwnerUI(){
+  document.getElementById('btnFree').classList.toggle('selected', mode === 'free');
+  document.getElementById('btnPremium').classList.toggle('selected', mode === 'premium');
+}
+function resetLimit(){ toast('Daily limit direset'); }
+function clearCache(){
+  if(confirm('Hapus semua data?')){
+    localStorage.clear();
+    toast('Cache dibersihkan');
+  }
+}
+
+document.getElementById('ownerPanel').addEventListener('click', e => {
+  if(e.target.id === 'ownerPanel') closeOwnerPanel();
+});
+
+document.addEventListener('keydown', e => {
+  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'o'){
+    e.preventDefault();
+    if(isOwner) openOwnerPanel();
+    else askOwnerCode();
+  }
+});
+
+/* ============ INIT ============ */
+applyMode();
+const params = new URLSearchParams(window.location.search);
+if(params.get('owner') === '1') activateOwner(true);
+</script>
 </body>
 </html>
