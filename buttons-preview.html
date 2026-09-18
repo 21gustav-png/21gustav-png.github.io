@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GUSTAV HD — Button Library (SVG)</title>
+<title>GUSTAV HD — Button Preview</title>
 <style>
 :root{
   --bg:#050505;
   --panel:#0b0b0f;
+  --panel2:#101016;
   --line:#202027;
   --deep:#3b176d;
   --purple:#54258f;
@@ -27,17 +28,30 @@ body{
   line-height:1.5;
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
-  padding:32px 20px 60px;
+  padding:28px 20px 60px;
 }
 .container{max-width:640px;margin:0 auto}
 
-h1{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.7px;margin-bottom:6px}
-.subtitle{font-size:12px;color:var(--text2);margin-bottom:32px;letter-spacing:.5px}
-.section{margin-bottom:36px}
+h1{
+  font-size:22px;font-weight:800;color:#fff;
+  letter-spacing:-.6px;margin-bottom:6px;
+}
+.subtitle{
+  font-size:12px;color:var(--text2);
+  margin-bottom:36px;letter-spacing:.4px;
+}
+.section{margin-bottom:40px}
 .section-title{
   font-size:10.5px;color:var(--text2);
   letter-spacing:1.8px;text-transform:uppercase;
   font-weight:700;margin-bottom:14px;padding-left:4px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-title::before{
+  content:"";
+  width:3px;height:12px;
+  background:var(--accent);
+  border-radius:2px;
 }
 
 /* ==================================================
@@ -54,76 +68,86 @@ h1{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.7px;margin-bottom:
   flex-shrink:0;
   display:block;
 }
-.ico.sm{width:16px;height:16px}
+.ico.sm{width:15px;height:15px}
 .ico.lg{width:22px;height:22px}
 .ico.xl{width:26px;height:26px}
 
 /* ==================================================
-   TYPE 1: PRIMARY — Solid (ala e-commerce)
+   TIPE 1 — PRIMARY (Ungu Solid)
 ================================================== */
 .btn-primary{
   position:relative;
   width:100%;
-  padding:18px 22px;
+  padding:18px 24px;
   border-radius:14px;
-  background:#54258f;
+  background:var(--purple);
   border:0;
   color:#fff;
   font-size:13.5px;
   font-weight:800;
-  letter-spacing:.6px;
+  letter-spacing:.8px;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:10px;
   cursor:pointer;
   overflow:hidden;
-  transition:transform .15s ease, background .2s ease, box-shadow .25s ease;
-  box-shadow:0 8px 24px rgba(84,37,143,.35);
+  transition:all .18s ease;
+  box-shadow:0 8px 24px rgba(84,37,143,.4);
   font-family:inherit;
 }
 .btn-primary:hover{
   background:#6330a5;
   transform:translateY(-1px);
-  box-shadow:0 12px 30px rgba(84,37,143,.5);
+  box-shadow:0 12px 32px rgba(84,37,143,.55);
 }
-.btn-primary:active{
-  transform:scale(.98);
+.btn-primary:active{transform:scale(.98)}
+.btn-primary:disabled{
+  background:#141419;
+  color:var(--muted);
+  box-shadow:none;
+  cursor:not-allowed;
+  transform:none;
+}
+.btn-primary:disabled .ico{opacity:.5}
+.btn-primary:disabled:hover{
+  background:#141419;
+  transform:none;
+  box-shadow:none;
 }
 
 /* ==================================================
-   TYPE 2: SECONDARY — Outline
+   TIPE 2 — SECONDARY (Outline)
 ================================================== */
 .btn-secondary{
   position:relative;
   width:100%;
-  padding:17px 22px;
+  padding:17px 24px;
   border-radius:14px;
   background:transparent;
   border:1.5px solid rgba(109,61,184,.5);
   color:#c9a8ee;
-   font-size:13px;
+  font-size:13px;
   font-weight:700;
-  border letter-spacing:.3px;
- -color display:flex;
-  align-items::center;
+  letter-spacing:.3px;
+  display:flex;
+  align-items:center;
   justify-content:center;
-rg  gap:9px;
-ba  cursor:pointer;
- ( overflow:hidden;
-  transition:all .2392s ease;
+  gap:9px;
+  cursor:pointer;
+  transition:all .2s ease;
   font-family:inherit;
 }
-.btn-secondary,:hover{
-  background:rgba(6859,23,109,.25);
- , border-color:#6d3db8;
-  color:#68e5d4fa;
-  transform:,.translateY(-1px);
+.btn-secondary:hover{
+  background:rgba(59,23,109,.25);
+  border-color:var(--accent);
+  color:#e5d4fa;
+  transform:translateY(-1px);
 }
-.btn-secondary55:active{transform:scale(.98)}
+.btn-secondary:active{transform:scale(.98)}
 
 /* ==================================================
-   TYPE 3: GHOST — Text saja
+   TIPE 3 — GHOST (Text saja)
 ================================================== */
 .btn-ghost{
   background:transparent;
@@ -148,12 +172,12 @@ ba  cursor:pointer;
 .btn-ghost:active{transform:scale(.97)}
 
 /* ==================================================
-   TYPE 4: DANGER — Soft Merah
+   TIPE 4 — DANGER (Merah Soft)
 ================================================== */
 .btn-danger{
   position:relative;
   width:100%;
-  padding:17px 22px;
+  padding:17px 24px;
   border-radius:14px;
   background:rgba(80,20,20,.25);
   border:1px solid rgba(239,68,68,.3);
@@ -166,19 +190,18 @@ ba  cursor:pointer;
   justify-content:center;
   gap:9px;
   cursor:pointer;
-  overflow:hidden;
   transition:all .2s ease;
   font-family:inherit;
 }
 .btn-danger:hover{
   background:rgba(80,20,20,.4);
-);
+  border-color:rgba(239,68,68,.55);
   transform:translateY(-1px);
 }
 .btn-danger:active{transform:scale(.98)}
 
 /* ==================================================
-   TYPE 5: ICON BUTTON
+   TIPE 5 — ICON BUTTON (Bulat)
 ================================================== */
 .btn-icon{
   width:46px;
@@ -194,10 +217,7 @@ ba  cursor:pointer;
   font-family:inherit;
   flex-shrink:0;
 }
-.btn-icon .ico{
-  width:20px;height:20px;
-  stroke-width:2;
-}
+.btn-icon .ico{width:20px;height:20px}
 .btn-icon:hover{
   border-color:var(--accent);
   transform:scale(1.06);
@@ -212,7 +232,7 @@ ba  cursor:pointer;
 }
 
 /* ==================================================
-   TYPE 6: PILL / CHIP
+   TIPE 6 — PILL (Chip/Badge)
 ================================================== */
 .btn-pill{
   padding:8px 14px;
@@ -237,9 +257,121 @@ ba  cursor:pointer;
 }
 .btn-pill:active{transform:scale(.97)}
 .btn-pill .ico{width:12px;height:12px}
+.btn-pill.green{
+  background:rgba(34,197,94,.15);
+  border-color:rgba(34,197,94,.4);
+  color:#4ade80;
+}
+.btn-pill.purple{
+  background:linear-gradient(145deg,#3b176d,#54258f);
+  border-color:rgba(109,61,184,.6);
+  color:#f0e6ff;
+}
 
 /* ==================================================
-   TYPE 7: LOADING
+   TIPE 7 — CARD BUTTON (Menu Services)
+================================================== */
+.btn-card{
+  padding:20px 18px;
+  border-radius:18px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  text-align:left;
+  cursor:pointer;
+  transition:all .22s ease;
+  font-family:inherit;
+  min-height:120px;
+  justify-content:space-between;
+  color:var(--text);
+  width:100%;
+}
+.btn-card:hover{
+  border-color:rgba(109,61,184,.5);
+  transform:translateY(-2px);
+  background:#0e0d13;
+}
+.btn-card:active{transform:scale(.98)}
+.btn-card .card-icon{
+  width:42px;height:42px;border-radius:11px;
+  background:rgba(59,23,109,.25);
+  border:1px solid rgba(109,61,184,.35);
+  display:grid;place-items:center;
+  color:#c9a8ee;
+  flex-shrink:0;
+}
+.btn-card .card-icon .ico{width:20px;height:20px}
+.btn-card .card-label{
+  font-size:13.5px;
+  font-weight:600;
+  color:#fff;
+  letter-spacing:-.1px;
+  line-height:1.35;
+}
+
+/* ==================================================
+   TIPE 8 — RESOLUSI CARD
+================================================== */
+.btn-res{
+  padding:20px 18px;
+  border-radius:16px;
+  background:var(--panel);
+  border:1.5px solid var(--line);
+  cursor:pointer;
+  transition:all .2s ease;
+  font-family:inherit;
+  text-align:left;
+  color:var(--text);
+  width:100%;
+  position:relative;
+  overflow:hidden;
+}
+.btn-res:hover{
+  border-color:rgba(109,61,184,.5);
+}
+.btn-res:active{transform:scale(.97)}
+.btn-res.selected{
+  background:
+    radial-gradient(circle at 100% 0%, rgba(84,37,143,.4), transparent 70%),
+    linear-gradient(160deg,#1a0f2e,#0d0818);
+  border-color:var(--accent);
+  box-shadow:0 0 24px rgba(84,37,143,.35);
+}
+.btn-res.locked{
+  opacity:.55;
+  cursor:not-allowed;
+}
+.btn-res.locked:hover{
+  border-color:var(--line);
+  transform:none;
+}
+.btn-res h4{
+  font-size:19px;
+  font-weight:800;
+  color:#fff;
+  letter-spacing:-.4px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.btn-res p{
+  font-size:10.5px;
+  color:var(--text2);
+  margin-top:5px;
+  letter-spacing:.3px;
+}
+.btn-res.selected p{color:#c9a8ee}
+.btn-res .lock-badge{
+  position:absolute;
+  top:12px;right:12px;
+  color:#555560;
+}
+.btn-res .lock-badge .ico{width:14px;height:14px}
+
+/* ==================================================
+   TIPE 9 — LOADING & SUCCESS
 ================================================== */
 .btn-primary.loading{
   pointer-events:none;
@@ -258,34 +390,10 @@ ba  cursor:pointer;
 .btn-primary.loading .ico{display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ==================================================
-   TYPE 8: SUCCESS
-================================================== */
 .btn-primary.success{
-  background:#22c55e;
+  background:var(--green);
   box-shadow:0 8px 24px rgba(34,197,94,.4);
 }
-
-/* ==================================================
-   TYPE 9: DISABLED
-================================================== */
-.btn-primary:disabled,
-.btn-secondary:disabled{
-  background:#141419;
-  border-color:var(--line);
-  color:var(--muted);
-  box-shadow:none;
-  cursor:not-allowed;
-  transform:none;
-}
-.btn-primary:disabled:hover,
-.btn-secondary:disabled:hover{
-  background:#141419;
-  transform:none;
-  box-shadow:none;
-}
-.btn-primary:disabled .ico,
-.btn-secondary:disabled .ico{opacity:.5}
 
 /* ==================================================
    LAYOUT
@@ -300,13 +408,27 @@ ba  cursor:pointer;
   flex-wrap:wrap;
 }
 .gap{height:12px}
+.gap-lg{height:20px}
+
+/* Ripple */
+.ripple{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,.3);
+  transform:scale(0);
+  animation:rippleAnim .6s ease-out;
+  pointer-events:none;
+}
+@keyframes rippleAnim{
+  to{transform:scale(4);opacity:0}
+}
 </style>
 </head>
 <body>
 <div class="container">
 
-  <h1>GUSTAV HD</h1>
-  <p class="subtitle">Button Library — dengan SVG Icons</p>
+  <h1>Button Preview</h1>
+  <p class="subtitle">Semua tombol yang akan dipakai di GUSTAV HD</p>
 
   <!-- ============ 1. PRIMARY ============ -->
   <div class="section">
@@ -338,6 +460,10 @@ ba  cursor:pointer;
       </svg>
       MULAI ENHANCE
     </button>
+
+    <p style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">
+      ↑ disabled state
+    </p>
   </div>
 
   <!-- ============ 2. SECONDARY ============ -->
@@ -354,6 +480,7 @@ ba  cursor:pointer;
         </svg>
         Bagikan
       </button>
+
       <button class="btn-secondary">
         <svg class="ico" viewBox="0 0 24 24">
           <path d="M3 12a9 9 0 1 0 3-6.7"/>
@@ -378,7 +505,7 @@ ba  cursor:pointer;
   <div class="section">
     <div class="section-title">3. Ghost — Link Ringan</div>
 
-    <div style="display:flex;justify-content:space-between;align-items:center;">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;">
       <span style="color:var(--text2);font-size:13px;">Services</span>
       <button class="btn-ghost">
         See all
@@ -396,7 +523,7 @@ ba  cursor:pointer;
 
   <!-- ============ 4. DANGER ============ -->
   <div class="section">
-    <div class="section-title">4. Danger — Tombol Bahaya</div>
+    <div class="section-title">4. Danger — Bahaya</div>
 
     <button class="btn-danger">
       <svg class="ico" viewBox="0 0 24 24">
@@ -407,41 +534,41 @@ ba  cursor:pointer;
     </button>
   </div>
 
-  <!-- ============ 5. ICON ============ -->
+  <!-- ============ 5. ICON BUTTON ============ -->
   <div class="section">
     <div class="section-title">5. Icon Button</div>
 
     <div class="icon-row">
-      <button class="btn-icon">
+      <button class="btn-icon" title="Back">
         <svg class="ico" viewBox="0 0 24 24">
           <path d="M19 12H5M12 19l-7-7 7-7"/>
         </svg>
       </button>
-      <button class="btn-icon">
+      <button class="btn-icon" title="Edit">
         <svg class="ico" viewBox="0 0 24 24">
           <path d="M12 20h9"/>
           <path d="M16.5 3.5a2.1 2.1 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/>
         </svg>
       </button>
-      <button class="btn-icon">
+      <button class="btn-icon" title="Close">
         <svg class="ico" viewBox="0 0 24 24">
           <path d="M18 6L6 18M6 6l12 12"/>
         </svg>
       </button>
-      <button class="btn-icon">
+      <button class="btn-icon" title="Mute">
         <svg class="ico" viewBox="0 0 24 24">
           <path d="M11 5L6 9H2v6h4l5 4V5z"/>
           <path d="M22 9l-6 6M16 9l6 6"/>
         </svg>
       </button>
-      <button class="btn-icon">
+      <button class="btn-icon" title="Sound">
         <svg class="ico" viewBox="0 0 24 24">
           <path d="M11 5L6 9H2v6h4l5 4V5z"/>
           <path d="M15.5 8.5a5 5 0 0 1 0 7"/>
           <path d="M19 5a9 9 0 0 1 0 14"/>
         </svg>
       </button>
-      <button class="btn-icon danger">
+      <button class="btn-icon danger" title="Logout">
         <svg class="ico" viewBox="0 0 24 24">
           <path d="M12 3v10"/>
           <path d="M18.4 6.6a9 9 0 1 1-12.8 0"/>
@@ -452,17 +579,24 @@ ba  cursor:pointer;
 
   <!-- ============ 6. PILL ============ -->
   <div class="section">
-    <div class="section-title">6. Pill — Badge / Chip</div>
+    <div class="section-title">6. Pill — Chip & Badge</div>
 
     <div class="icon-row">
-      <button class="btn-pill">Free</button>
-      <button class="btn-pill">
+      <button class="btn-pill green">
+        <svg class="ico" viewBox="0 0 24 24">
+          <path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/>
+        </svg>
+        Free
+      </button>
+
+      <button class="btn-pill purple">
         <svg class="ico" viewBox="0 0 24 24">
           <path d="M3 17l4-8 4 5 3-5 7 8"/>
           <path d="M3 17h18"/>
         </svg>
         Premium
       </button>
+
       <button class="btn-pill">
         <svg class="ico" viewBox="0 0 24 24">
           <rect x="4" y="4" width="16" height="16" rx="2"/>
@@ -473,9 +607,95 @@ ba  cursor:pointer;
     </div>
   </div>
 
-  <!-- ============ 7. LOADING & SUCCESS ============ -->
+  <!-- ============ 7. CARD BUTTON ============ -->
   <div class="section">
-    <div class="section-title">7. Loading & Success State</div>
+    <div class="section-title">7. Card Button — Menu Services</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <button class="btn-card">
+        <div class="card-icon">
+          <svg class="ico" viewBox="0 0 24 24">
+            <path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/>
+          </svg>
+        </div>
+        <div class="card-label">Enhance Photo</div>
+      </button>
+
+      <button class="btn-card">
+        <div class="card-icon">
+          <svg class="ico" viewBox="0 0 24 24">
+            <circle cx="9" cy="9" r="3"/>
+            <circle cx="15" cy="15" r="3"/>
+            <path d="M5 5h3v3M16 16h3v3"/>
+          </svg>
+        </div>
+        <div class="card-label">Face Swap</div>
+      </button>
+
+      <button class="btn-card">
+        <div class="card-icon">
+          <svg class="ico" viewBox="0 0 24 24">
+            <rect x="2" y="6" width="14" height="12" rx="2"/>
+            <path d="M16 10l6-3v10l-6-3"/>
+          </svg>
+        </div>
+        <div class="card-label">Upscale Video</div>
+      </button>
+
+      <button class="btn-card">
+        <div class="card-icon">
+          <svg class="ico" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+          </svg>
+        </div>
+        <div class="card-label">Project History</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ 8. RESOLUSI CARD ============ -->
+  <div class="section">
+    <div class="section-title">8. Resolusi Card</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <button class="btn-res">
+        <h4>720p</h4>
+        <p>HD Ready</p>
+      </button>
+
+      <button class="btn-res selected">
+        <h4>1080p</h4>
+        <p>Full HD</p>
+      </button>
+
+      <button class="btn-res locked">
+        <div class="lock-badge">
+          <svg class="ico" viewBox="0 0 24 24">
+            <rect x="4" y="11" width="16" height="10" rx="2"/>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+          </svg>
+        </div>
+        <h4>2K</h4>
+        <p>Ultra HD</p>
+      </button>
+
+      <button class="btn-res locked">
+        <div class="lock-badge">
+          <svg class="ico" viewBox="0 0 24 24">
+            <rect x="4" y="11" width="16" height="10" rx="2"/>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+          </svg>
+        </div>
+        <h4>4K</h4>
+        <p>Ultra HD</p>
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ 9. LOADING & SUCCESS ============ -->
+  <div class="section">
+    <div class="section-title">9. Loading & Success State</div>
 
     <button class="btn-primary" onclick="testLoading(this)">
       <span class="spinner"></span>
@@ -485,7 +705,11 @@ ba  cursor:pointer;
       MULAI ENHANCE
     </button>
 
-    <div class="gap"></div>
+    <p style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">
+      ↑ klik untuk lihat loading
+    </p>
+
+    <div class="gap-lg"></div>
 
     <button class="btn-primary" onclick="testSuccess(this)">
       <svg class="ico" viewBox="0 0 24 24">
@@ -495,11 +719,15 @@ ba  cursor:pointer;
       </svg>
       SIMPAN
     </button>
+
+    <p style="font-size:11px;color:var(--text2);margin-top:8px;text-align:center;">
+      ↑ klik untuk lihat success
+    </p>
   </div>
 
-  <!-- ============ 8. KOMBINASI ============ -->
+  <!-- ============ 10. KOMBINASI ============ -->
   <div class="section">
-    <div class="section-title">8. Kombinasi — Halaman 2C</div>
+    <div class="section-title">10. Kombinasi — Halaman 2C</div>
 
     <div class="btn-row">
       <button class="btn-secondary">
@@ -511,7 +739,8 @@ ba  cursor:pointer;
         </svg>
         Bagikan
       </button>
-      <button class="btn-primary" style="padding:17px 22px;font-size:12.5px;">
+
+      <button class="btn-primary" style="padding:17px 20px;font-size:12.5px;">
         <svg class="ico" viewBox="0 0 24 24">
           <path d="M12 3v13"/>
           <path d="M7 11l5 5 5-5"/>
@@ -532,16 +761,16 @@ ba  cursor:pointer;
     </button>
   </div>
 
-  <!-- ============ 9. BOTTOM NAV ICONS ============ -->
+  <!-- ============ 11. BOTTOM NAV ============ -->
   <div class="section">
-    <div class="section-title">9. Ikon Bottom Nav</div>
+    <div class="section-title">11. Bottom Nav Preview</div>
 
-    <div class="icon-row" style="justify-content:space-around;padding:16px;background:var(--panel);border:1px solid var(--line);border-radius:20px;">
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:12px 8px;">
       <div style="text-align:center;color:#c9a8ee;">
         <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
           <path d="M3 11l9-8 9 8v9a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-9z"/>
         </svg>
-        <div style="font-size:10px;">Home</div>
+        <div style="font-size:9.5px;font-weight:600;">Home</div>
       </div>
       <div style="text-align:center;color:#5a5a64;">
         <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
@@ -550,57 +779,28 @@ ba  cursor:pointer;
           <rect x="3" y="14" width="7" height="7" rx="1"/>
           <rect x="14" y="14" width="7" height="7" rx="1"/>
         </svg>
-        <div style="font-size:10px;">Projects</div>
+        <div style="font-size:9.5px;font-weight:600;">Projects</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(145deg,#a855f7,#7c3aed);margin:0 auto 4px;display:grid;place-items:center;box-shadow:0 0 20px rgba(168,85,247,.5);border:3px solid #0a0a0e;">
+          <svg class="ico" viewBox="0 0 24 24" style="color:#fff;">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+        </div>
       </div>
       <div style="text-align:center;color:#5a5a64;">
         <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
           <circle cx="12" cy="12" r="9"/>
           <path d="M12 7v5l3 2"/>
         </svg>
-        <div style="font-size:10px;">History</div>
+        <div style="font-size:9.5px;font-weight:600;">History</div>
       </div>
       <div style="text-align:center;color:#5a5a64;">
         <svg class="ico lg" viewBox="0 0 24 24" style="margin:0 auto 4px;">
           <circle cx="12" cy="8" r="4"/>
           <path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>
         </svg>
-        <div style="font-size:10px;">Profile</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============ 10. SERVICE ICONS ============ -->
-  <div class="section">
-    <div class="section-title">10. Ikon Services</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div style="padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:18px;">
-        <svg class="ico xl" viewBox="0 0 24 24" style="color:#c9a8ee;margin-bottom:12px;">
-          <path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/>
-        </svg>
-        <div style="font-size:13.5px;font-weight:600;color:#fff;">Enhance Photo</div>
-      </div>
-      <div style="padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:18px;">
-        <svg class="ico xl" viewBox="0 0 24 24" style="color:#c9a8ee;margin-bottom:12px;">
-          <circle cx="9" cy="9" r="3"/>
-          <circle cx="15" cy="15" r="3"/>
-          <path d="M5 5h3v3M16 16h3v3"/>
-        </svg>
-        <div style="font-size:13.5px;font-weight:600;color:#fff;">Face Swap</div>
-      </div>
-      <div style="padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:18px;">
-        <svg class="ico xl" viewBox="0 0 24 24" style="color:#c9a8ee;margin-bottom:12px;">
-          <rect x="2" y="6" width="14" height="12" rx="2"/>
-          <path d="M16 10l6-3v10l-6-3"/>
-        </svg>
-        <div style="font-size:13.5px;font-weight:600;color:#fff;">Upscale Video</div>
-      </div>
-      <div style="padding:20px;background:var(--panel);border:1px solid var(--line);border-radius:18px;">
-        <svg class="ico xl" viewBox="0 0 24 24" style="color:#c9a8ee;margin-bottom:12px;">
-          <circle cx="12" cy="12" r="9"/>
-          <path d="M12 7v5l3 2"/>
-        </svg>
-        <div style="font-size:13.5px;font-weight:600;color:#fff;">Project History</div>
+        <div style="font-size:9.5px;font-weight:600;">Profile</div>
       </div>
     </div>
   </div>
@@ -608,6 +808,23 @@ ba  cursor:pointer;
 </div>
 
 <script>
+/* ============ RIPPLE EFFECT ============ */
+document.querySelectorAll('.btn-primary, .btn-secondary, .btn-danger').forEach(btn => {
+  btn.addEventListener('click', function(e){
+    if(this.disabled || this.classList.contains('loading')) return;
+
+    const rect = this.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+    ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+});
+
 /* ============ TEST LOADING ============ */
 function testLoading(btn){
   const original = btn.innerHTML;
