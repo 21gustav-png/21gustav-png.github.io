@@ -5,19 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>GUSTAV HD</title>
 <style>
-:root{
-  --bg:#050505;--panel:#0b0b0f;--line:#202027;
-  --deep:#3b176d;--purple:#54258f;--accent:#6d3db8;
-  --pale:#c9a8ee;--soft:#e5d4fa;
-  --neon:#a855f7;--neon2:#c084fc;--gold:#fbbf24;
-  --green:#22c55e;--red:#ef4444;
-  --text:#e5e5e7;--text2:#8a8a94;--muted:#555560;--radius:20px;
-}
+:root{--bg:#050505;--panel:#0b0b0f;--line:#202027;--deep:#3b176d;--purple:#54258f;--accent:#6d3db8;--pale:#c9a8ee;--soft:#e5d4fa;--neon:#a855f7;--neon2:#c084fc;--gold:#fbbf24;--green:#22c55e;--red:#ef4444;--text:#e5e5e7;--text2:#8a8a94;--muted:#555560;--radius:20px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;font-size:14px;line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
-
 .bg-animation{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;display:none}
 .bg-animation.show{display:block}
 .nebula{position:absolute;top:-20%;left:-20%;width:140%;height:140%;background:radial-gradient(circle at 30% 40%,rgba(84,37,143,.35) 0%,transparent 40%),radial-gradient(circle at 70% 60%,rgba(168,85,247,.25) 0%,transparent 45%),radial-gradient(circle at 50% 80%,rgba(59,23,109,.3) 0%,transparent 40%);filter:blur(60px);animation:nebulaMove 25s ease-in-out infinite;will-change:transform}
@@ -26,12 +18,10 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
 .star{position:absolute;border-radius:50%;background:#c9a8ee;box-shadow:0 0 6px rgba(201,168,238,.8),0 0 12px rgba(168,85,247,.4);animation:starMove linear infinite,starTwinkle ease-in-out infinite;will-change:transform,opacity}
 @keyframes starMove{0%{transform:translateY(-10vh)}100%{transform:translateY(110vh)}}
 @keyframes starTwinkle{0%,100%{opacity:.3}50%{opacity:1}}
-
 .app{width:100%;max-width:640px;min-height:100vh;margin:0 auto;padding:32px 20px 130px;position:relative;z-index:1}
 .page{display:none;animation:fadeUp .35s ease}
 .page.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-
 .greeting{padding:8px 4px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .greeting small{font-size:11px;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
 .greeting h2{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.6px;margin-top:6px}
@@ -39,7 +29,6 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
 .mode-badge .mb-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);transition:.3s}
 body[data-mode="premium"] .mode-badge .mb-dot{background:var(--neon);box-shadow:0 0 6px var(--neon)}
 body[data-mode="premium"] .mode-badge{color:#c9a8ee;border-color:rgba(109,61,184,.5);background:rgba(59,23,109,.25)}
-
 .premium-banner{border-radius:var(--radius);padding:18px 20px;display:flex;align-items:center;gap:14px;margin-bottom:28px;border:1px solid;transition:.3s;position:relative;overflow:hidden;cursor:pointer;z-index:2}
 .premium-banner.free{background:radial-gradient(circle at 100% 0%,rgba(34,197,94,.15),transparent 60%),linear-gradient(160deg,#0a1a10 0%,#050a07 100%);border-color:rgba(34,197,94,.3)}
 .premium-banner.free .banner-icon{background:linear-gradient(145deg,#22c55e,#15803d);box-shadow:0 0 20px rgba(34,197,94,.4)}
@@ -52,12 +41,10 @@ body[data-mode="premium"] .mode-badge{color:#c9a8ee;border-color:rgba(109,61,184
 .banner-text b{font-size:14px;font-weight:700;color:#fff;display:block}
 .banner-text small{font-size:11px;color:var(--text2);display:block;margin-top:3px;line-height:1.4}
 .banner-arrow{color:var(--text2);font-size:20px}
-
 .section-head{display:flex;align-items:center;justify-content:space-between;margin:0 4px 14px}
 .section-head h3{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.2px}
 .section-head a{font-size:11.5px;color:var(--text2);letter-spacing:.3px;cursor:pointer;transition:.2s}
 .section-head a:hover{color:#c9a8ee}
-
 .services{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
 .service{padding:20px 18px;border-radius:18px;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;gap:14px;text-align:left;transition:.22s;min-height:120px;justify-content:space-between;cursor:pointer;z-index:2}
 .service:hover{border-color:rgba(109,61,184,.4);transform:translateY(-2px)}
@@ -67,7 +54,6 @@ body[data-mode="free"] .service-icon{background:rgba(34,197,94,.12);border:1px s
 body[data-mode="premium"] .service-icon{background:rgba(168,85,247,.22);border:1px solid rgba(168,85,247,.45);color:#d8b4fe}
 .service-icon .ico{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .service b{font-size:13.5px;font-weight:600;color:#fff;line-height:1.35}
-
 .settings-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .setting-item{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--panel);border:1px solid var(--line);border-radius:16px;width:100%;text-align:left;transition:.2s;cursor:pointer;z-index:2}
 .setting-item:hover{border-color:rgba(109,61,184,.4);transform:translateY(-1px)}
@@ -79,11 +65,9 @@ body[data-mode="premium"] .setting-item .s-icon{background:rgba(168,85,247,.22);
 .setting-item .s-text b{font-size:13.5px;font-weight:700;color:#fff;display:block}
 .setting-item .s-text span{font-size:11.5px;color:var(--text2);display:block;margin-top:3px}
 .setting-item .s-arrow{color:var(--text2);font-size:20px}
-
 .logout{width:100%;padding:16px;border-radius:16px;background:rgba(80,20,20,.25);border:1px solid rgba(239,68,68,.25);color:var(--red);font-size:13.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s;margin-bottom:16px;z-index:2;position:relative}
 .logout:hover{background:rgba(80,20,20,.4);border-color:rgba(239,68,68,.5)}
 .logout .ico{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-
 .sub-header{display:flex;align-items:center;gap:14px;padding:4px 0 24px}
 .sub-back{width:44px;height:44px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;transition:.2s;flex-shrink:0}
 .sub-back:hover{border-color:var(--accent);transform:scale(1.05)}
@@ -91,7 +75,6 @@ body[data-mode="premium"] .setting-item .s-icon{background:rgba(168,85,247,.22);
 .sub-title{flex:1;display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;color:#fff;letter-spacing:-.4px}
 .sub-title .st-ico{color:var(--pale);width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .sub-chip{padding:7px 12px;border-radius:999px;border:1px solid rgba(109,61,184,.5);color:#c9a8ee;font-size:9.5px;font-weight:800;letter-spacing:1.2px;background:rgba(59,23,109,.22);flex-shrink:0}
-
 .upload{display:block;border:1.5px dashed #2a2a33;border-radius:var(--radius);padding:48px 24px;text-align:center;background:var(--panel);transition:.25s;cursor:pointer;margin-bottom:18px}
 .upload:hover{border-color:rgba(109,61,184,.6);background:#0e0d13}
 .upload-ico{width:64px;height:64px;border-radius:17px;display:grid;place-items:center;margin:0 auto 18px;transition:.3s}
@@ -100,7 +83,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .upload-ico .ico{width:28px;height:28px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .upload b{font-size:16px;display:block;color:#fff;font-weight:700}
 .upload small{font-size:12px;color:var(--text2);display:block;margin-top:8px}
-
 .preview{display:none;border-radius:var(--radius);overflow:hidden;background:var(--panel);border:1px solid var(--line);margin-bottom:20px}
 .preview.show{display:block}
 .preview img,.preview video{width:100%;display:block;aspect-ratio:16/11;object-fit:cover;background:#111}
@@ -110,7 +92,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .remove{width:36px;height:36px;border-radius:11px;background:#1a1a20;border:1px solid #2a2a33;display:grid;place-items:center;transition:.2s;flex-shrink:0;color:#b8b8c0}
 .remove:hover{color:#e07a7a;border-color:#3a2020}
 .remove .ico{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-
 .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
 .res{padding:22px 20px;border-radius:17px;background:var(--panel);border:1.5px solid var(--line);text-align:left;transition:.22s;cursor:pointer;position:relative;overflow:hidden}
 .res:hover{border-color:rgba(109,61,184,.4)}
@@ -123,7 +104,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .res.selected p{color:#c9a8ee}
 .res .lock-badge{position:absolute;top:12px;right:12px;color:var(--muted)}
 .res .lock-badge .ico{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-
 .fps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
 .fps{padding:16px 12px;border-radius:14px;background:var(--panel);border:1.5px solid var(--line);text-align:center;transition:.2s;cursor:pointer}
 .fps:hover{border-color:rgba(109,61,184,.4)}
@@ -132,7 +112,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .fps h4{font-size:16px;font-weight:800;color:#fff}
 .fps p{font-size:10px;color:var(--text2);margin-top:3px}
 .fps.selected p{color:#c9a8ee}
-
 .btn-primary{position:relative;width:100%;padding:18px 22px;border-radius:14px;background:var(--purple);color:#fff;font-size:13.5px;font-weight:800;letter-spacing:.6px;display:flex;align-items:center;justify-content:center;gap:10px;overflow:hidden;transition:.18s;box-shadow:0 8px 24px rgba(84,37,143,.4);z-index:2}
 .btn-primary:hover{background:#6330a5;transform:translateY(-1px);box-shadow:0 12px 32px rgba(84,37,143,.55)}
 .btn-primary:active{transform:scale(.98)}
@@ -143,7 +122,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .btn-secondary:hover{background:rgba(59,23,109,.25);border-color:var(--accent);color:#e5d4fa;transform:translateY(-1px)}
 .btn-secondary:active{transform:scale(.98)}
 .btn-secondary .ico{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-
 .loading-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;gap:24px}
 .orbit{width:180px;height:180px;position:relative;display:grid;place-items:center}
 .orbit .ring{position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:var(--neon);border-right-color:rgba(168,85,247,.2);animation:spin 3.5s linear infinite}
@@ -156,7 +134,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .loading-sub{font-size:12px;color:var(--text2);margin-top:-16px}
 .progress{width:100%;max-width:340px;height:8px;background:#17171c;border-radius:10px;overflow:hidden;margin-top:8px}
 .progress i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--neon));border-radius:10px;transition:width .3s;box-shadow:0 0 12px rgba(168,85,247,.6)}
-
 .result-card{border-radius:var(--radius);overflow:hidden;background:var(--panel);border:1px solid var(--line);margin-bottom:20px}
 .result-card img{width:100%;display:block;aspect-ratio:16/11;object-fit:cover;background:#111}
 .result-info{padding:16px 20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
@@ -165,10 +142,8 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .result-row b{color:#fff;font-weight:700}
 .result-status{display:flex;align-items:center;gap:8px;color:var(--green);font-size:13px;font-weight:700;margin-bottom:18px;padding:0 4px}
 .result-status .ico{width:18px;height:18px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
-
 .toast{position:fixed;left:50%;bottom:110px;transform:translate(-50%,16px);background:rgba(16,16,22,.96);border:1px solid rgba(109,61,184,.35);border-radius:14px;padding:12px 18px;font-size:12.5px;color:var(--soft);opacity:0;pointer-events:none;transition:.28s;white-space:nowrap;z-index:100;box-shadow:0 10px 30px rgba(0,0,0,.6);font-weight:600;backdrop-filter:blur(12px)}
 .toast.show{opacity:1;transform:translate(-50%,0)}
-
 .bottom-nav{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);width:min(calc(100% - 24px),616px);padding:10px 12px;border-radius:24px;background:rgba(10,10,14,.92);border:1px solid #24242b;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);display:grid;grid-template-columns:repeat(5,1fr);align-items:center;z-index:50;box-shadow:0 12px 40px rgba(0,0,0,.6)}
 .nav{padding:8px 2px;border-radius:14px;color:#5a5a64;font-size:9.5px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:4px;transition:.2s;cursor:pointer}
 .nav:hover{color:#9a7fc0}
@@ -183,7 +158,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 @keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(168,85,247,.6),0 0 40px rgba(168,85,247,.3);transform:scale(1);filter:brightness(1)}50%{box-shadow:0 0 35px rgba(168,85,247,1),0 0 70px rgba(168,85,247,.6),0 0 100px rgba(168,85,247,.3);transform:scale(1.08);filter:brightness(1.2)}}
 @keyframes fabRingSpin{to{transform:rotate(360deg)}}
 @keyframes shimmer{0%{left:-100%}100%{left:200%}}
-
 .owner-indicator{position:fixed;top:20px;left:20px;padding:7px 12px;border-radius:999px;background:linear-gradient(145deg,var(--neon),var(--purple));color:#fff;font-size:9.5px;font-weight:800;letter-spacing:1.2px;z-index:60;display:none;align-items:center;gap:6px;box-shadow:0 0 20px rgba(168,85,247,.55);cursor:pointer}
 .owner-indicator.show{display:inline-flex}
 .owner-indicator .oi-dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.5s infinite}
@@ -242,8 +216,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .btn-upgrade{width:100%;padding:18px;border-radius:16px;background:linear-gradient(145deg,var(--neon),var(--neon2));color:#fff;font-size:13.5px;font-weight:800;letter-spacing:.6px;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;animation:glowPulse 2s ease-in-out infinite;border:3px solid #0a0a0e;cursor:pointer}
 .btn-upgrade::after{content:"";position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:shimmer 3s ease-in-out infinite}
 .btn-upgrade .ico{width:18px;height:18px;stroke:var(--gold);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px var(--gold));position:relative;z-index:2}
-
-/* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;animation:fadeUp .25s ease}
 .modal-bg.show{display:flex}
 .modal{width:100%;max-width:420px;background:linear-gradient(180deg,#0e0a16 0%,#080709 100%);border:1px solid rgba(168,85,247,.4);border-radius:22px;padding:26px 22px;animation:popIn .3s ease;max-height:90vh;overflow-y:auto}
@@ -259,17 +231,8 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 .tool-btn .tb-text span{font-size:11px;color:var(--text2);display:block;margin-top:3px}
 .tool-btn .tb-arrow{color:var(--text2);font-size:18px}
 .modal-close{width:100%;padding:14px;border-radius:14px;background:transparent;border:1.5px solid var(--line);color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;margin-top:8px}
-
-@media(min-width:700px){
-  body{background:#020202}
-  .app{border-left:1px solid #101014;border-right:1px solid #101014;min-height:100vh}
-}
-@media(max-width:380px){
-  .app{padding:24px 16px 130px}
-  .greeting h2{font-size:21px}
-  .fab-premium{width:48px;height:48px}
-  .res h4{font-size:18px}
-}
+@media(min-width:700px){body{background:#020202}.app{border-left:1px solid #101014;border-right:1px solid #101014;min-height:100vh}}
+@media(max-width:380px){.app{padding:24px 16px 130px}.greeting h2{font-size:21px}.fab-premium{width:48px;height:48px}.res h4{font-size:18px}}
 </style>
 </head>
 <body data-mode="free">
@@ -287,32 +250,15 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 
 <section class="page active" id="page-home">
   <div class="greeting">
-    <div>
-      <small>Welcome back</small>
-      <h2>Hello, User!</h2>
-    </div>
-    <div class="mode-badge" id="modeBadge">
-      <span class="mb-dot"></span>
-      <span id="modeBadgeText">FREE</span>
-    </div>
+    <div><small>Welcome back</small><h2>Hello, User!</h2></div>
+    <div class="mode-badge" id="modeBadge"><span class="mb-dot"></span><span id="modeBadgeText">FREE</span></div>
   </div>
-
   <div class="premium-banner free" id="premiumBanner" onclick="goTo('premium')">
-    <div class="banner-icon" id="bannerIcon">
-      <svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
-    </div>
-    <div class="banner-text">
-      <b id="bannerTitle">GUSTAV HD PREMIUM</b>
-      <small id="bannerDesc">Unlock unlimited AI magic. Pro models, 4K exports & priority queue.</small>
-    </div>
+    <div class="banner-icon" id="bannerIcon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg></div>
+    <div class="banner-text"><b id="bannerTitle">GUSTAV HD PREMIUM</b><small id="bannerDesc">Unlock unlimited AI magic. Pro models, 4K exports & priority queue.</small></div>
     <div class="banner-arrow">›</div>
   </div>
-
-  <div class="section-head">
-    <h3>Services</h3>
-    <a onclick="toast('Lihat semua')">See all →</a>
-  </div>
-
+  <div class="section-head"><h3>Services</h3><a onclick="toast('Lihat semua')">See all →</a></div>
   <div class="services">
     <button class="service" onclick="goTo('enhance')">
       <div class="service-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg></div>
@@ -331,9 +277,7 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       <b>Project History</b>
     </button>
   </div>
-
   <div class="section-head"><h3>Settings</h3></div>
-
   <div class="settings-list">
     <button class="setting-item" onclick="toast('Account Profile')">
       <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div>
@@ -356,32 +300,25 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       <span class="s-arrow">↗</span>
     </button>
   </div>
-
   <button class="logout" onclick="toast('Log out')">
     <svg class="ico" viewBox="0 0 24 24"><path d="M12 3v10"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg>
     Log out
   </button>
-
-  <div style="text-align:center;margin-top:20px;">
-    <div class="secret-trigger" onclick="handleSecretTap()">GUSTAV LIZARD</div>
-  </div>
+  <div style="text-align:center;margin-top:20px;"><div class="secret-trigger" onclick="handleSecretTap()">GUSTAV LIZARD</div></div>
 </section>
 
-<!-- ENHANCE PHOTO -->
 <section class="page" id="page-enhance">
   <header class="sub-header">
     <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
     <div class="sub-title"><svg class="st-ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>Enhance Photo</div>
     <div class="sub-chip" id="subChip">FREE</div>
   </header>
-
   <label class="upload" for="fileInput">
     <div class="upload-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg></div>
     <b>Pilih Foto</b>
     <small>JPG, PNG, WEBP — maks 10MB</small>
     <input type="file" id="fileInput" accept="image/*" hidden>
   </label>
-
   <div class="preview" id="preview">
     <img id="previewImg" alt="preview">
     <div class="preview-info">
@@ -389,9 +326,7 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       <button class="remove" onclick="resetUpload()"><svg class="ico" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     </div>
   </div>
-
   <div class="section-head"><h3>Output Resolution</h3></div>
-
   <div class="res-grid">
     <button class="res selected" data-r="720" onclick="pickRes(this)"><h4>720p</h4><p>HD Ready</p></button>
     <button class="res" data-r="1080" onclick="pickRes(this)"><h4>1080p</h4><p>Full HD</p></button>
@@ -404,28 +339,43 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       <h4>4K</h4><p>Ultra HD</p>
     </button>
   </div>
-
   <button class="btn-primary" id="processBtn" disabled onclick="startProcess()">
     <svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
     MULAI ENHANCE
   </button>
 </section>
 
-<!-- UPSCALE VIDEO -->
+<section class="page" id="page-loading">
+  <header class="sub-header">
+    <button class="sub-back" onclick="cancelProcess()"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+    <div class="sub-title" id="loadingTitle">Enhancing...</div>
+    <div class="sub-chip" id="loadingChip">FREE</div>
+  </header>
+  <div class="loading-wrap">
+    <div class="orbit">
+      <div class="ring"></div>
+      <div class="ring2"></div>
+      <div class="core"><svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+    </div>
+    <div class="loading-status" id="loadingStatus">Menyiapkan...</div>
+    <div class="loading-sub" id="loadingSub">Estimasi: 4 detik</div>
+    <div class="progress"><i id="progressBar"></i></div>
+    <div style="font-size:22px;font-weight:800;color:#fff;margin-top:-8px;" id="progressPercent">0%</div>
+  </div>
+</section>
+
 <section class="page" id="page-video">
   <header class="sub-header">
     <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
     <div class="sub-title"><svg class="st-ico" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>Upscale Video</div>
     <div class="sub-chip" id="videoChip">FREE</div>
   </header>
-
   <label class="upload" for="videoInput">
     <div class="upload-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg></div>
     <b>Pilih Video</b>
     <small>MP4, MOV, WEBM — maks 100MB · 1–60 detik</small>
     <input type="file" id="videoInput" accept="video/*" hidden>
   </label>
-
   <div class="preview" id="videoPreview">
     <video id="videoPreviewEl" controls muted></video>
     <div class="preview-info">
@@ -433,9 +383,7 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       <button class="remove" onclick="resetVideo()"><svg class="ico" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
     </div>
   </div>
-
   <div class="section-head"><h3>Output Resolution</h3></div>
-
   <div class="res-grid">
     <button class="res selected" data-vr="720" onclick="pickVideoRes(this)"><h4>720p</h4><p>HD Ready</p></button>
     <button class="res" data-vr="1080" onclick="pickVideoRes(this)"><h4>1080p</h4><p>Full HD</p></button>
@@ -448,34 +396,25 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       <h4>4K</h4><p>Ultra HD</p>
     </button>
   </div>
-
   <div class="section-head"><h3>Frame Rate (FPS)</h3></div>
-
   <div class="fps-grid">
     <button class="fps" data-fps="24" onclick="pickFps(this)"><h4>24</h4><p>Cinematic</p></button>
     <button class="fps selected" data-fps="30" onclick="pickFps(this)"><h4>30</h4><p>Standard</p></button>
     <button class="fps" data-fps="60" onclick="pickFps(this)"><h4>60</h4><p>Smooth</p></button>
   </div>
-
   <button class="btn-primary" id="videoProcessBtn" disabled onclick="startVideoProcess()">
     <svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
     MULAI UPSCALE
   </button>
 </section>
 
-<!-- RESULT -->
 <section class="page" id="page-result">
   <header class="sub-header">
     <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
     <div class="sub-title"><svg class="st-ico" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>Hasil Enhance</div>
     <div class="sub-chip" id="resultChip">FREE</div>
   </header>
-
-  <div class="result-status">
-    <svg class="ico" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
-    Berhasil di-enhance
-  </div>
-
+  <div class="result-status"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>Berhasil di-enhance</div>
   <div class="result-card">
     <img id="resultImg" alt="result">
     <div class="result-info">
@@ -485,7 +424,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       <div class="result-row"><span>Format</span><b>JPG</b></div>
     </div>
   </div>
-
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
     <button class="btn-secondary" onclick="shareResult()">
       <svg class="ico" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
@@ -496,27 +434,23 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       Simpan
     </button>
   </div>
-
   <button class="btn-secondary" onclick="goTo('enhance')">
     <svg class="ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
     Ulangi Enhance
   </button>
 </section>
 
-<!-- PREMIUM -->
 <section class="page" id="page-premium">
   <header class="sub-header">
     <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
     <div class="sub-title"><svg class="st-ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/></svg>Premium</div>
     <div class="sub-chip">♛</div>
   </header>
-
   <div class="premium-hero">
     <div class="fab-premium"><span class="fab-ring"></span><svg class="ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/><path d="M3 17v2h18v-2"/></svg></div>
     <h2>Upgrade to Premium</h2>
     <p>Unlock semua fitur & akses kualitas tertinggi</p>
   </div>
-
   <div class="settings-list">
     <div class="setting-item">
       <div class="s-icon" style="background:rgba(168,85,247,.22);border-color:rgba(168,85,247,.45);color:#d8b4fe;"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
@@ -535,7 +469,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       <div class="s-text"><b>Unlimited Enhance</b><span>Tanpa batas harian</span></div>
     </div>
   </div>
-
   <div style="margin-top:20px;">
     <button class="btn-upgrade" onclick="toast('Fitur premium segera hadir')">
       <svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
@@ -549,16 +482,14 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 <section class="page" id="page-projects">
   <div class="empty-state">
     <div class="empty-ico"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
-    <h4>Belum ada project</h4>
-    <p>Hasil enhance kamu akan muncul di sini.</p>
+    <h4>Belum ada project</h4><p>Hasil enhance kamu akan muncul di sini.</p>
   </div>
 </section>
 
 <section class="page" id="page-history">
   <div class="empty-state">
     <div class="empty-ico"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-    <h4>Belum ada riwayat</h4>
-    <p>Aktivitas kamu akan muncul di sini.</p>
+    <h4>Belum ada riwayat</h4><p>Aktivitas kamu akan muncul di sini.</p>
   </div>
 </section>
 
@@ -600,31 +531,26 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
   </button>
 </nav>
 
-<!-- MODAL TOOLS -->
 <div class="modal-bg" id="toolsModal">
   <div class="modal">
     <div class="modal-icon">⚠️</div>
     <h3>Info Upscale Video</h3>
     <p>Upscale video akan diproses di tools gratis pihak ketiga. Video kamu akan di-upload ke server mereka (bukan server kami).</p>
-
     <button class="tool-btn" onclick="openTool('https://upscayl.org')">
       <div class="tb-ico">🌐</div>
       <div class="tb-text"><b>Upscayl</b><span>Gratis · Open-source · Desktop</span></div>
       <span class="tb-arrow">›</span>
     </button>
-
     <button class="tool-btn" onclick="openTool('https://www.media.io/video-enhancer.html')">
       <div class="tb-ico">🌐</div>
       <div class="tb-text"><b>Media.io</b><span>Gratis · Maks 5 menit · Online</span></div>
       <span class="tb-arrow">›</span>
     </button>
-
     <button class="tool-btn" onclick="openTool('https://www.kapwing.com/tools/upscale-video')">
       <div class="tb-ico">🌐</div>
       <div class="tb-text"><b>Kapwing</b><span>Gratis · Editor video · Online</span></div>
       <span class="tb-arrow">›</span>
     </button>
-
     <button class="modal-close" onclick="closeToolsModal()">Batal</button>
   </div>
 </div>
@@ -636,7 +562,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       <button class="owner-close" onclick="closeOwnerPanel()">✕</button>
     </div>
     <p class="owner-sub">Panel khusus owner. Perubahan di sini hanya tersimpan di sesi ini.</p>
-
     <div class="owner-section">
       <h4>Mode Aplikasi</h4>
       <div class="owner-mode-row">
@@ -648,7 +573,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
         </button>
       </div>
     </div>
-
     <div class="owner-section">
       <h4>Developer Tools</h4>
       <button class="owner-action" onclick="resetLimit()">
@@ -727,7 +651,7 @@ function toast(msg){
   toastTimer=setTimeout(()=>el.classList.remove('show'),1800);
 }
 
-/* ============ ENHANCE PHOTO ============ */
+/* ENHANCE PHOTO */
 const fileInput=document.getElementById('fileInput');
 const preview=document.getElementById('preview');
 const previewImg=document.getElementById('previewImg');
@@ -811,7 +735,7 @@ function shareResult(){
   else toast('Share tidak didukung');
 }
 
-/* ============ UPSCALE VIDEO ============ */
+/* UPSCALE VIDEO */
 const videoInput=document.getElementById('videoInput');
 const videoPreview=document.getElementById('videoPreview');
 const videoPreviewEl=document.getElementById('videoPreviewEl');
@@ -841,36 +765,31 @@ function resetVideo(){
   videoProcessBtn.disabled=true;
   toast('Video dihapus');
 }
-
 function pickVideoRes(el){
   if(el.classList.contains('locked')){tryLocked(el);return}
   document.querySelectorAll('#page-video .res').forEach(r=>r.classList.remove('selected'));
   el.classList.add('selected');
   currentVideoRes=parseInt(el.dataset.vr);
 }
-
 function pickFps(el){
   document.querySelectorAll('.fps').forEach(r=>r.classList.remove('selected'));
   el.classList.add('selected');
   currentFps=parseInt(el.dataset.fps);
 }
-
 function startVideoProcess(){
   if(!currentVideo){toast('Upload video dulu');return}
   document.getElementById('toolsModal').classList.add('show');
 }
-
 function closeToolsModal(){
   document.getElementById('toolsModal').classList.remove('show');
 }
-
 function openTool(url){
   window.open(url,'_blank');
   closeToolsModal();
   toast('Membuka tools...');
 }
 
-/* ============ MODE ============ */
+/* MODE */
 function applyMode(){
   document.body.dataset.mode=mode;
   const banner=document.getElementById('premiumBanner');
@@ -908,7 +827,7 @@ function applyMode(){
   updateBg(currentPage);
 }
 
-/* ============ OWNER ============ */
+/* OWNER */
 let secretTapCount=0,secretTapTimer;
 function handleSecretTap(){
   secretTapCount++;
