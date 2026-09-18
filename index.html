@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>GUSTAV HD</title>
 <style>
-/* ============ ROOT ============ */
 :root{
   --bg:#050505;
   --panel:#0b0b0f;
@@ -14,11 +13,12 @@
   --deep:#3b176d;
   --purple:#54258f;
   --accent:#6d3db8;
+  --green:#22c55e;
   --text:#e5e5e7;
   --text2:#8a8a94;
   --muted:#555560;
-  --radius:24px;
-  --radius-sm:14px;
+  --danger:#ef4444;
+  --radius:20px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
@@ -26,8 +26,8 @@ body{
   background:var(--bg);
   color:var(--text);
   font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
-  font-size:14.5px;
-  line-height:1.55;
+  font-size:14px;
+  line-height:1.5;
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
@@ -40,7 +40,7 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
   max-width:640px;
   min-height:100vh;
   margin:0 auto;
-  padding:36px 26px 130px;
+  padding:24px 20px 120px;
   position:relative;
 }
 .app::before{
@@ -49,7 +49,7 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
   top:-160px;right:-180px;
   background:var(--deep);
   filter:blur(150px);
-  opacity:.28;
+  opacity:.25;
   pointer-events:none;z-index:0;
 }
 .app::after{
@@ -58,423 +58,269 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
   bottom:-120px;left:-140px;
   background:var(--purple);
   filter:blur(150px);
-  opacity:.14;
+  opacity:.12;
   pointer-events:none;z-index:0;
 }
 .app > *{position:relative;z-index:1}
 
-/* ============ PAGE TRANSITION ============ */
-.page{display:none;animation:fadeUp .35s ease}
+/* ============ PAGE ============ */
+.page{display:none;animation:fadeUp .3s ease}
 .page.active{display:block}
 @keyframes fadeUp{
-  from{opacity:0;transform:translateY(10px)}
+  from{opacity:0;transform:translateY(8px)}
   to{opacity:1;transform:translateY(0)}
 }
 
-/* ============ HEADER ============ */
-.top{
+/* ============ PROFILE HEADER ============ */
+.profile-header{
   display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:36px;gap:14px;
+  padding:8px 4px 20px;
 }
-.brand small{
-  display:block;color:var(--text2);
-  font-size:10.5px;letter-spacing:2.8px;
-  text-transform:uppercase;font-weight:600;margin-bottom:6px;
-}
-.brand h1{
-  font-size:26px;font-weight:800;
-  letter-spacing:-.9px;color:#fff;
-}
-.avatar{
-  width:50px;height:50px;border-radius:15px;
-  background:linear-gradient(145deg,#1a1226,#0d0a13);
+.profile-header .back,
+.profile-header .edit{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--panel);
   border:1px solid var(--line);
   display:grid;place-items:center;
-  font-weight:800;font-size:17px;color:#c9a8ee;
-  box-shadow:
-    0 0 0 1px rgba(84,37,143,.08) inset,
-    0 0 24px rgba(84,37,143,.18);
-  flex-shrink:0;
+  font-size:17px;color:var(--text);
+  transition:.2s;
+}
+.profile-header .back:hover,
+.profile-header .edit:hover{
+  border-color:var(--accent);
+  transform:scale(1.05);
+}
+.profile-header .center{text-align:center;flex:1}
+.profile-header .center b{
+  font-size:16px;font-weight:700;color:#fff;display:block;
+}
+.profile-header .center small{
+  font-size:11px;color:var(--text2);display:block;margin-top:3px;
+  letter-spacing:.5px;
 }
 
-/* ============ HERO ============ */
-.hero{
+/* ============ GREETING ============ */
+.greeting{
+  padding:8px 4px 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.greeting-left small{
+  font-size:11px;color:var(--text2);
+  letter-spacing:1.5px;text-transform:uppercase;font-weight:600;
+}
+.greeting-left h2{
+  font-size:22px;font-weight:800;color:#fff;
+  letter-spacing:-.5px;margin-top:6px;
+}
+/* Badge mode kecil (read-only untuk user, hanya owner yang bisa ganti) */
+.mode-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 12px;border-radius:999px;
+  background:var(--panel);
   border:1px solid var(--line);
+  font-size:10px;font-weight:800;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--text2);
+  transition:.3s;
+  flex-shrink:0;
+}
+.mode-badge .mb-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 6px var(--green);
+  transition:.3s;
+}
+body[data-mode="premium"] .mode-badge .mb-dot{
+  background:#a855f7;
+  box-shadow:0 0 6px #a855f7;
+}
+body[data-mode="premium"] .mode-badge{
+  color:#c9a8ee;
+  border-color:rgba(109,61,184,.5);
+  background:rgba(59,23,109,.25);
+}
+
+/* ============ PREMIUM BANNER ============ */
+.premium-banner{
+  border-radius:var(--radius);
+  padding:18px 20px;
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:28px;
+  border:1px solid;
+  transition:.3s;
+  position:relative;
+  overflow:hidden;
+}
+.premium-banner.free{
   background:
-    radial-gradient(circle at 85% 15%, rgba(84,37,143,.35), transparent 55%),
-    linear-gradient(160deg,#0f0c16 0%,#080809 100%);
-  border-radius:28px;
-  padding:42px 32px 38px;
-  min-height:300px;
-  position:relative;overflow:hidden;
-  margin-bottom:38px;
-  display:flex;flex-direction:column;justify-content:center;
+    radial-gradient(circle at 100% 0%, rgba(34,197,94,.15), transparent 60%),
+    linear-gradient(160deg,#0a1a10 0%,#050a07 100%);
+  border-color:rgba(34,197,94,.3);
 }
-.hero::after{
-  content:"";position:absolute;
-  width:220px;height:220px;
-  right:-100px;top:-100px;border-radius:50%;
-  background:var(--accent);filter:blur(100px);
-  opacity:.22;pointer-events:none;
+.premium-banner.free .banner-icon{
+  background:linear-gradient(145deg,#22c55e,#15803d);
+  box-shadow:0 0 20px rgba(34,197,94,.4);
 }
-.tag{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:9px 15px;border-radius:999px;
-  background:rgba(59,23,109,.28);
-  border:1px solid rgba(109,61,184,.35);
-  color:#c9a8ee;font-size:10.5px;font-weight:700;
-  letter-spacing:1.6px;margin-bottom:26px;
-  position:relative;z-index:1;width:fit-content;
+.premium-banner.premium{
+  background:
+    radial-gradient(circle at 100% 0%, rgba(109,61,184,.3), transparent 60%),
+    linear-gradient(160deg,#1a0f2e 0%,#0a0512 100%);
+  border-color:rgba(109,61,184,.5);
 }
-.dot{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--accent);
-  box-shadow:0 0 8px var(--accent);
-  animation:pulse 2s infinite;
+.premium-banner.premium .banner-icon{
+  background:linear-gradient(145deg,#a855f7,#6d3db8);
+  box-shadow:0 0 20px rgba(168,85,247,.5);
 }
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.hero h2{
-  font-size:38px;line-height:1.1;
-  letter-spacing:-1.6px;font-weight:800;color:#fff;
-  max-width:400px;position:relative;z-index:1;
+.banner-icon{
+  width:46px;height:46px;border-radius:13px;
+  display:grid;place-items:center;
+  font-size:20px;color:#fff;
+  flex-shrink:0;position:relative;z-index:1;
 }
-.hero p{
-  font-size:14.5px;color:var(--text2);
-  line-height:1.65;margin-top:16px;max-width:400px;
-  position:relative;z-index:1;
-}
-.hero-btn{
-  margin-top:30px;padding:16px 26px;
-  border-radius:15px;
-  background:linear-gradient(145deg,#1d1428,#120d1c);
-  border:1px solid rgba(109,61,184,.4);
-  font-size:13.5px;font-weight:700;color:#e5d4fa;
-  position:relative;z-index:1;transition:.2s;
-  box-shadow:
-    0 0 0 1px rgba(84,37,143,.15) inset,
-    0 8px 24px rgba(84,37,143,.18);
-  width:fit-content;
-}
-.hero-btn:hover,.hero-btn:active{
-  transform:translateY(-1px);
-  border-color:var(--accent);
-  box-shadow:
-    0 0 0 1px rgba(109,61,184,.4) inset,
-    0 12px 32px rgba(84,37,143,.35);
-}
+.banner-text{flex:1;min-width:0;position:relative;z-index:1}
+.banner-text b{font-size:14px;font-weight:700;color:#fff;display:block}
+.banner-text small{font-size:11px;color:var(--text2);display:block;margin-top:3px;line-height:1.4}
+.banner-arrow{color:var(--text2);font-size:20px;position:relative;z-index:1}
 
 /* ============ SECTION HEAD ============ */
 .section-head{
   display:flex;align-items:center;justify-content:space-between;
-  margin:38px 4px 18px;
+  margin:0 4px 14px;
 }
-.section-head h3{font-size:17px;font-weight:700;letter-spacing:-.2px;color:#fff}
-.section-head span{
-  font-size:11px;color:var(--text2);
-  letter-spacing:.5px;text-transform:uppercase;font-weight:600;
+.section-head h3{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.section-head a{
+  font-size:11.5px;color:var(--text2);
+  text-decoration:none;letter-spacing:.3px;transition:.2s;
 }
+.section-head a:hover{color:#c9a8ee}
 
-/* ============ TOOLS ============ */
-.tools{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.tool{
-  min-height:250px;padding:26px 24px;
-  border-radius:var(--radius);
-  background:linear-gradient(160deg,#0e0d12 0%,#0a0a0d 100%);
+/* ============ SERVICES ============ */
+.services{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;margin-bottom:32px;
+}
+.service{
+  padding:20px 18px;
+  border-radius:18px;
+  background:var(--panel);
   border:1px solid var(--line);
-  display:flex;flex-direction:column;justify-content:space-between;
-  text-align:left;transition:.22s;position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+  gap:14px;text-align:left;
+  transition:.22s;min-height:120px;
+  justify-content:space-between;
 }
-.tool::before{
-  content:"";position:absolute;inset:0;
-  background:radial-gradient(circle at 50% 0%, rgba(84,37,143,.12), transparent 70%);
-  opacity:0;transition:.3s;
-}
-.tool:hover::before,.tool:active::before{opacity:1}
-.tool:active{
-  transform:scale(.98);
-  border-color:rgba(109,61,184,.5);
-  box-shadow:0 0 24px rgba(84,37,143,.25);
-}
-.tool .icon{
-  width:46px;height:46px;border-radius:13px;
-  background:rgba(59,23,109,.22);
-  border:1px solid rgba(109,61,184,.3);
+.service:hover{border-color:rgba(109,61,184,.4);transform:translateY(-2px)}
+.service:active{transform:scale(.98)}
+.service-icon{
+  width:40px;height:40px;border-radius:11px;
   display:grid;place-items:center;
-  color:#a67fd0;font-size:19px;
-  position:relative;z-index:1;
+  font-size:17px;flex-shrink:0;
+  transition:.3s;
 }
-.tool-body{position:relative;z-index:1}
-.tool h4{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.2px}
-.tool p{font-size:12px;color:var(--text2);margin-top:7px;line-height:1.5}
-.tool b{display:block;font-size:10.5px;color:#8a5fbf;margin-top:12px;letter-spacing:.9px;font-weight:700}
+body[data-mode="free"] .service-icon{
+  background:rgba(34,197,94,.12);
+  border:1px solid rgba(34,197,94,.25);
+  color:#4ade80;
+}
+body[data-mode="premium"] .service-icon{
+  background:rgba(109,61,184,.22);
+  border:1px solid rgba(109,61,184,.4);
+  color:#c9a8ee;
+}
+.service b{font-size:13.5px;font-weight:600;color:#fff;letter-spacing:-.1px;line-height:1.35}
 
-/* ============ PREMIUM ============ */
-.premium{
-  padding:26px;border-radius:var(--radius);
-  border:1px solid rgba(59,23,109,.5);
-  background:
-    radial-gradient(circle at 100% 0%, rgba(84,37,143,.3), transparent 60%),
-    linear-gradient(160deg,#0e0a16 0%,#080709 100%);
-  display:flex;align-items:center;justify-content:space-between;
-  gap:16px;box-shadow:0 0 0 1px rgba(84,37,143,.08) inset;
+/* ============ SETTINGS ============ */
+.settings-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.setting-item{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 18px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+  width:100%;text-align:left;
+  transition:.2s;
 }
-.premium h4{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.2px}
-.premium p{font-size:12px;color:var(--text2);margin-top:7px;line-height:1.55;max-width:300px}
-.upgrade{
-  padding:14px 22px;border-radius:13px;
-  background:linear-gradient(145deg,#3b176d,#54258f);
-  border:1px solid rgba(109,61,184,.6);
-  font-size:11.5px;font-weight:800;letter-spacing:1.2px;
-  color:#f0e6ff;white-space:nowrap;transition:.2s;flex-shrink:0;
-  box-shadow:0 6px 20px rgba(84,37,143,.35);
+.setting-item:hover{border-color:rgba(109,61,184,.4);transform:translateY(-1px)}
+.setting-item .s-icon{
+  width:40px;height:40px;border-radius:11px;
+  display:grid;place-items:center;
+  font-size:16px;flex-shrink:0;transition:.3s;
 }
-.upgrade:hover,.upgrade:active{
-  transform:translateY(-1px);
-  box-shadow:0 10px 28px rgba(84,37,143,.5);
+body[data-mode="free"] .setting-item .s-icon{
+  background:rgba(34,197,94,.12);
+  border:1px solid rgba(34,197,94,.25);
+  color:#4ade80;
 }
+body[data-mode="premium"] .setting-item .s-icon{
+  background:rgba(109,61,184,.22);
+  border:1px solid rgba(109,61,184,.4);
+  color:#c9a8ee;
+}
+.setting-item .s-text{flex:1;min-width:0}
+.setting-item .s-text b{font-size:13.5px;font-weight:700;color:#fff;display:block}
+.setting-item .s-text span{font-size:11.5px;color:var(--text2);display:block;margin-top:3px}
+.setting-item .s-arrow{color:var(--text2);font-size:20px;flex-shrink:0}
 
-/* ============ PLAN ============ */
-.plan{
-  margin-top:16px;border:1px solid var(--line);
-  background:var(--panel);border-radius:var(--radius);
-  padding:24px 26px;
+/* ============ LOGOUT ============ */
+.logout{
+  width:100%;padding:16px;border-radius:16px;
+  background:rgba(80,20,20,.25);
+  border:1px solid rgba(239,68,68,.25);
+  color:#ef4444;font-size:13.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:.2s;margin-bottom:16px;
 }
-.plan-row{display:flex;align-items:center;justify-content:space-between}
-.plan-title{font-size:15px;font-weight:700;color:#fff}
-.plan-count{font-size:12.5px;color:#a67fd0;font-weight:600}
-.progress{height:7px;background:#17171c;border-radius:10px;margin-top:16px;overflow:hidden}
-.progress i{
-  display:block;width:33%;height:100%;
-  background:linear-gradient(90deg,#3b176d,#6d3db8);
-  border-radius:10px;box-shadow:0 0 12px rgba(109,61,184,.6);
+.logout:hover,.logout:active{
+  background:rgba(80,20,20,.4);
+  border-color:rgba(239,68,68,.5);
 }
-
-/* ============ FOOTER NOTE ============ */
-.footer-note{
-  text-align:center;font-size:11px;color:var(--muted);
-  letter-spacing:1.8px;margin-top:48px;text-transform:uppercase;
-}
+.logout span{font-size:15px}
 
 /* ============ BOTTOM NAV ============ */
 .bottom-nav{
-  position:fixed;left:50%;bottom:16px;
+  position:fixed;left:50%;bottom:14px;
   transform:translateX(-50%);
-  width:min(calc(100% - 32px), 616px);
-  padding:11px 10px;border-radius:24px;
-  background:rgba(10,10,14,.88);
+  width:min(calc(100% - 24px), 616px);
+  padding:10px 12px;border-radius:24px;
+  background:rgba(10,10,14,.9);
   border:1px solid #24242b;
   backdrop-filter:blur(22px);
   -webkit-backdrop-filter:blur(22px);
-  display:grid;grid-template-columns:repeat(4,1fr);
-  z-index:50;box-shadow:0 12px 40px rgba(0,0,0,.6);
+  display:grid;grid-template-columns:repeat(5,1fr);
+  align-items:center;z-index:50;
+  box-shadow:0 12px 40px rgba(0,0,0,.6);
 }
 .nav{
-  background:none;padding:11px 2px;border-radius:17px;
-  color:#5a5a64;font-size:10px;font-weight:600;
+  background:none;padding:8px 2px;border-radius:14px;
+  color:#5a5a64;font-size:9.5px;font-weight:600;
   display:flex;flex-direction:column;align-items:center;
-  gap:6px;transition:.2s;letter-spacing:.3px;
+  gap:4px;transition:.2s;letter-spacing:.3px;
 }
-.nav-ico{font-size:18px;line-height:1;display:block}
+.nav-ico{font-size:17px;line-height:1;display:block}
+.nav.active{color:#c9a8ee}
 .nav:hover{color:#9a7fc0}
-.nav.active{
-  color:#c9a8ee;
-  background:linear-gradient(145deg,rgba(59,23,109,.55),rgba(84,37,143,.35));
-  box-shadow:0 0 0 1px rgba(109,61,184,.25) inset;
-}
-
-/* ============ BACK BUTTON ============ */
-.back-btn{
-  width:46px;height:46px;border-radius:14px;
-  background:var(--panel);border:1px solid var(--line);
+.fab{
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(145deg,#a855f7,#7c3aed);
   display:grid;place-items:center;
-  font-size:17px;color:var(--text);
-  transition:.2s;flex-shrink:0;
+  color:#fff;font-size:24px;font-weight:300;
+  margin:0 auto;
+  box-shadow:0 0 22px rgba(168,85,247,.55);
+  transition:.22s;border:3px solid #0a0a0e;
 }
-.back-btn:active{transform:scale(.95);border-color:var(--accent)}
-
-/* ============ PAGE TITLE ============ */
-.page-title{
-  display:flex;align-items:center;gap:10px;
-  font-size:17px;font-weight:700;color:#fff;
-  letter-spacing:-.2px;flex:1;
+.fab:hover,.fab:active{
+  transform:scale(1.06);
+  box-shadow:0 0 30px rgba(168,85,247,.75);
 }
-.page-title .ico{color:#a67fd0;font-size:18px}
-.chip{
-  padding:8px 14px;border-radius:999px;
-  border:1px solid rgba(109,61,184,.5);
-  color:#c9a8ee;font-size:10px;font-weight:800;
-  letter-spacing:1.3px;background:rgba(59,23,109,.22);
-  flex-shrink:0;
-}
-
-/* ============ UPLOAD ============ */
-.upload{
-  display:block;border:1.5px dashed #2a2a33;
-  border-radius:var(--radius);
-  padding:52px 26px;text-align:center;
-  background:var(--panel);transition:.25s;cursor:pointer;
-  margin-bottom:20px;
-}
-.upload:hover,.upload:active{
-  border-color:rgba(109,61,184,.6);
-  background:#0e0d13;
-}
-.upload-ico{
-  width:64px;height:64px;border-radius:17px;
-  background:rgba(59,23,109,.22);
-  border:1px solid rgba(109,61,184,.3);
-  display:grid;place-items:center;
-  margin:0 auto 18px;font-size:24px;color:#a67fd0;
-}
-.upload b{font-size:16px;display:block;color:#fff;font-weight:700}
-.upload small{font-size:12px;color:var(--text2);display:block;margin-top:8px}
-
-/* ============ PREVIEW ============ */
-.preview{
-  display:none;border-radius:var(--radius);
-  overflow:hidden;background:var(--panel);
-  border:1px solid var(--line);margin-bottom:20px;
-  animation:fadeUp .3s ease;
-}
-.preview.show{display:block}
-.preview img{
-  width:100%;display:block;aspect-ratio:16/11;
-  object-fit:cover;background:#111;
-}
-.preview-info{
-  padding:16px 20px;display:flex;
-  justify-content:space-between;align-items:center;
-  border-top:1px solid var(--line);gap:12px;
-}
-.preview-info b{font-size:13px;font-weight:600;color:#fff;display:block;word-break:break-all}
-.preview-info span{font-size:11.5px;color:var(--text2);display:block;margin-top:4px}
-.remove{
-  width:36px;height:36px;border-radius:11px;
-  background:#1a1a20;border:1px solid #2a2a33;
-  display:grid;place-items:center;
-  color:#b8b8c0;font-size:14px;transition:.2s;flex-shrink:0;
-}
-.remove:hover{color:#e07a7a;border-color:#3a2020}
-
-/* ============ RES GRID ============ */
-.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
-.res{
-  padding:24px;border-radius:19px;
-  background:var(--panel);border:1px solid var(--line);
-  text-align:left;transition:.22s;color:var(--text);
-}
-.res:hover{border-color:rgba(109,61,184,.4)}
-.res:active{transform:scale(.97)}
-.res.selected{
-  background:
-    radial-gradient(circle at 100% 0%, rgba(84,37,143,.35), transparent 70%),
-    linear-gradient(160deg,#180f28,#0d0818);
-  border-color:rgba(109,61,184,.6);
-  box-shadow:0 0 24px rgba(84,37,143,.3);
-}
-.res h4{font-size:22px;font-weight:800;letter-spacing:-.4px;color:#fff}
-.res p{font-size:11px;color:var(--text2);margin-top:6px;letter-spacing:.3px}
-.res.selected p{color:#c9a8ee}
-
-/* ============ ACTION BUTTON ============ */
-.action{
-  width:100%;padding:19px;border-radius:17px;
-  background:linear-gradient(145deg,#3b176d,#54258f);
-  border:1px solid rgba(109,61,184,.6);
-  color:#f0e6ff;font-size:15px;font-weight:800;
-  letter-spacing:.3px;transition:.22s;
-  box-shadow:0 10px 30px rgba(84,37,143,.4);
-}
-.action:hover:not(:disabled){
-  transform:translateY(-1px);
-  box-shadow:0 14px 36px rgba(84,37,143,.55);
-}
-.action:active:not(:disabled){transform:scale(.98)}
-.action:disabled{
-  background:#15151a;border-color:var(--line);
-  color:var(--muted);box-shadow:none;cursor:not-allowed;
-}
-
-/* ============ EMPTY STATE ============ */
-.empty-state{text-align:center;padding:100px 26px}
-.empty-ico{
-  width:80px;height:80px;border-radius:22px;
-  background:var(--panel);border:1px solid var(--line);
-  display:grid;place-items:center;
-  margin:0 auto 24px;font-size:30px;color:#6a4a90;
-}
-.empty-state h4{font-size:17px;font-weight:700;color:#fff}
-.empty-state p{font-size:13px;color:var(--text2);margin-top:10px;line-height:1.55}
-
-/* ============ PROFILE ============ */
-.profile-card{
-  text-align:center;padding:40px 24px;
-  border-radius:var(--radius);
-  background:var(--panel);border:1px solid var(--line);
-  margin-bottom:20px;
-}
-.profile-avatar{
-  width:92px;height:92px;border-radius:50%;
-  background:linear-gradient(145deg,#3b176d,#1a1226);
-  border:1px solid rgba(109,61,184,.5);
-  display:grid;place-items:center;
-  margin:0 auto 20px;font-size:34px;font-weight:800;
-  color:#e5d4fa;box-shadow:0 0 32px rgba(84,37,143,.35);
-}
-.profile-card h4{font-size:18px;font-weight:700;color:#fff}
-.profile-card p{font-size:12.5px;color:var(--text2);margin-top:6px;letter-spacing:.4px}
-
-/* ============ STATS ============ */
-.stats{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  border-radius:var(--radius);
-  background:var(--panel);border:1px solid var(--line);
-  overflow:hidden;margin-bottom:28px;
-}
-.stat{padding:26px 10px;text-align:center;border-right:1px solid var(--line)}
-.stat:last-child{border-right:0}
-.stat b{font-size:22px;font-weight:800;color:#fff;display:block;letter-spacing:-.4px}
-.stat span{
-  font-size:10.5px;color:var(--text2);margin-top:7px;
-  display:block;letter-spacing:.8px;text-transform:uppercase;font-weight:600;
-}
-
-/* ============ MENU ============ */
-.menu-label{
-  font-size:11px;color:var(--text2);letter-spacing:2px;
-  text-transform:uppercase;font-weight:700;margin:0 4px 14px;
-}
-.menu-item{
-  display:flex;align-items:center;gap:16px;
-  padding:18px 20px;background:var(--panel);
-  border:1px solid var(--line);border-radius:17px;
-  margin-bottom:12px;width:100%;text-align:left;
-  transition:.2s;
-}
-.menu-item:hover,.menu-item:active{
-  border-color:rgba(109,61,184,.4);
-  transform:translateY(-1px);
-}
-.mi-ico{
-  width:42px;height:42px;border-radius:12px;
-  background:rgba(59,23,109,.22);
-  border:1px solid rgba(109,61,184,.28);
-  display:grid;place-items:center;
-  color:#a67fd0;font-size:16px;flex-shrink:0;
-}
-.mi-text{flex:1;min-width:0}
-.mi-text b{font-size:14px;font-weight:700;color:#fff;display:block}
-.mi-text span{font-size:11.5px;color:var(--text2);display:block;margin-top:4px}
-.mi-arrow{color:var(--text2);font-size:22px;flex-shrink:0}
 
 /* ============ TOAST ============ */
 .toast{
-  position:fixed;left:50%;bottom:110px;
+  position:fixed;left:50%;bottom:100px;
   transform:translate(-50%,16px);
   background:rgba(16,16,22,.96);
   border:1px solid rgba(109,61,184,.35);
-  border-radius:15px;padding:14px 20px;
-  font-size:13px;color:#e5d4fa;
+  border-radius:14px;
+  padding:12px 18px;font-size:12.5px;color:#e5d4fa;
   opacity:0;pointer-events:none;transition:.28s;
   white-space:nowrap;z-index:100;
   box-shadow:0 10px 30px rgba(0,0,0,.6);
@@ -482,8 +328,179 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
 }
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
+/* ================================================== */
+/* ============ OWNER PANEL (TERSEMBUNYI) =========== */
+/* ================================================== */
+.owner-panel{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(8px);
+  z-index:200;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  animation:fadeIn .25s ease;
+}
+.owner-panel.show{display:flex}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+.owner-sheet{
+  width:100%;
+  max-width:560px;
+  background:linear-gradient(180deg,#0e0a16 0%,#080709 100%);
+  border-top:1px solid rgba(109,61,184,.5);
+  border-radius:26px 26px 0 0;
+  padding:26px 22px 30px;
+  animation:slideUp .3s ease;
+  max-height:90vh;
+  overflow-y:auto;
+}
+@keyframes slideUp{
+  from{transform:translateY(30px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+
+.owner-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:6px;
+}
+.owner-header h3{
+  font-size:17px;font-weight:800;color:#fff;
+  display:flex;align-items:center;gap:8px;
+}
+.owner-header h3 .badge-owner{
+  padding:4px 10px;border-radius:999px;
+  background:linear-gradient(145deg,#a855f7,#6d3db8);
+  font-size:9px;font-weight:800;
+  letter-spacing:1.2px;color:#fff;
+}
+.owner-close{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--panel);border:1px solid var(--line);
+  display:grid;place-items:center;
+  font-size:15px;color:var(--text);
+  transition:.2s;
+}
+.owner-close:hover{border-color:var(--danger);color:var(--danger)}
+
+.owner-sub{
+  font-size:12px;color:var(--text2);
+  margin-bottom:22px;line-height:1.55;
+}
+
+.owner-section{margin-bottom:20px}
+.owner-section h4{
+  font-size:10.5px;color:var(--text2);
+  letter-spacing:1.8px;text-transform:uppercase;
+  font-weight:700;margin:0 2px 10px;
+}
+
+/* Mode toggle di dalam panel owner */
+.owner-mode-row{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.owner-mode-btn{
+  padding:16px 14px;
+  border-radius:14px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  text-align:left;transition:.2s;
+  color:var(--text);
+}
+.owner-mode-btn:hover{border-color:rgba(109,61,184,.5)}
+.owner-mode-btn.selected{
+  background:linear-gradient(145deg,#1a0f2e,#0d0818);
+  border-color:var(--accent);
+  box-shadow:0 0 20px rgba(84,37,143,.4);
+}
+.owner-mode-btn .om-ico{
+  width:32px;height:32px;border-radius:9px;
+  display:grid;place-items:center;
+  font-size:14px;margin-bottom:10px;
+}
+.owner-mode-btn.free .om-ico{
+  background:rgba(34,197,94,.15);
+  border:1px solid rgba(34,197,94,.3);
+  color:#4ade80;
+}
+.owner-mode-btn.premium .om-ico{
+  background:rgba(109,61,184,.25);
+  border:1px solid rgba(109,61,184,.45);
+  color:#c9a8ee;
+}
+.owner-mode-btn b{
+  font-size:13px;font-weight:700;color:#fff;
+  display:block;letter-spacing:-.1px;
+}
+.owner-mode-btn small{
+  font-size:10.5px;color:var(--text2);
+  display:block;margin-top:3px;
+}
+
+/* Owner action list */
+.owner-action{
+  display:flex;align-items:center;gap:14px;
+  padding:15px 16px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  width:100%;text-align:left;
+  margin-bottom:8px;transition:.2s;
+}
+.owner-action:hover{
+  border-color:rgba(109,61,184,.5);
+  transform:translateY(-1px);
+}
+.owner-action .oa-ico{
+  width:38px;height:38px;border-radius:10px;
+  background:rgba(109,61,184,.2);
+  border:1px solid rgba(109,61,184,.35);
+  display:grid;place-items:center;
+  color:#c9a8ee;font-size:15px;flex-shrink:0;
+}
+.owner-action .oa-text{flex:1}
+.owner-action .oa-text b{font-size:13px;font-weight:700;color:#fff;display:block}
+.owner-action .oa-text span{font-size:11px;color:var(--text2);display:block;margin-top:3px}
+.owner-action .oa-arrow{color:var(--text2);font-size:18px}
+
+/* Danger action */
+.owner-action.danger{
+  border-color:rgba(239,68,68,.3);
+}
+.owner-action.danger .oa-ico{
+  background:rgba(239,68,68,.15);
+  border-color:rgba(239,68,68,.35);
+  color:#ef4444;
+}
+.owner-action.danger .oa-text b{color:#ef4444}
+
+/* Owner FAB (indikator kecil kalau owner aktif) */
+.owner-indicator{
+  position:fixed;
+  top:20px;left:20px;
+  padding:7px 12px;
+  border-radius:999px;
+  background:linear-gradient(145deg,#a855f7,#6d3db8);
+  color:#fff;font-size:9.5px;font-weight:800;
+  letter-spacing:1.2px;
+  z-index:60;
+  display:none;
+  align-items:center;gap:6px;
+  box-shadow:0 0 20px rgba(168,85,247,.55);
+  cursor:pointer;
+}
+.owner-indicator.show{display:inline-flex}
+.owner-indicator .oi-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:#fff;
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{50%{opacity:.4}}
+
 /* ============ RESPONSIVE ============ */
-@media (min-width:700px){
+@media(min-width:700px){
   body{background:#020202}
   .app{
     border-left:1px solid #101014;
@@ -491,319 +508,237 @@ button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
     background:#050505;min-height:100vh;
   }
 }
-@media (max-width:400px){
-  .app{padding:28px 18px 125px}
-  .hero{padding:32px 24px;min-height:auto}
-  .hero h2{font-size:30px}
-  .tool{padding:20px 18px;min-height:220px}
-  .tool h4{font-size:14.5px}
-  .res h4{font-size:19px}
+@media(max-width:380px){
+  .app{padding:20px 16px 120px}
+  .service{padding:16px 14px;min-height:110px}
+  .service b{font-size:12.5px}
+  .greeting-left h2{font-size:20px}
 }
 </style>
 </head>
-<body>
+<body data-mode="free">
+
+<!-- Indikator owner aktif -->
+<button class="owner-indicator" id="ownerIndicator" onclick="openOwnerPanel()">
+  <span class="oi-dot"></span>
+  OWNER MODE
+</button>
 
 <main class="app">
 
-  <!-- ============ HOME ============ -->
-  <section class="page active" id="page-home">
-    <header class="top">
-      <div class="brand">
-        <small>GUSTAV LIZARD</small>
-        <h1>GUSTAV HD</h1>
+  <!-- ============ PROFILE PAGE ============ -->
+  <section class="page active" id="page-profile">
+
+    <header class="profile-header">
+      <button class="back" onclick="toast('Kembali')">←</button>
+      <div class="center">
+        <b>Anda</b>
+        <small id="dateNow">19/09/26, 01.02</small>
       </div>
-      <div class="avatar">G</div>
+      <button class="edit" onclick="toast('Edit profil')">✎</button>
     </header>
 
-    <section class="hero">
-      <div class="tag"><i class="dot"></i> AUTO-PROCESS</div>
-      <h2>Make your media more HD.</h2>
-      <p>Enhance foto dan upscale video dengan kualitas hingga 4K.</p>
-      <button class="hero-btn" data-nav="enhance">Mulai Enhance →</button>
-    </section>
-
-    <div class="section-head">
-      <h3>Tools</h3><span>GUSTAV HD</span>
+    <div class="greeting">
+      <div class="greeting-left">
+        <small>Welcome back</small>
+        <h2>Hello, User!</h2>
+      </div>
+      <div class="mode-badge" id="modeBadge">
+        <span class="mb-dot"></span>
+        <span id="modeBadgeText">FREE</span>
+      </div>
     </div>
 
-    <section class="tools">
-      <button class="tool" data-nav="enhance">
-        <div class="icon">✦</div>
-        <div class="tool-body">
-          <h4>Enhance Photo</h4>
-          <p>Naikkan detail dan resolusi foto.</p>
-          <b>720P • 1080P • 2K • 4K</b>
-        </div>
-      </button>
-      <button class="tool" data-nav="enhance">
-        <div class="icon">▶</div>
-        <div class="tool-body">
-          <h4>Upscale Video</h4>
-          <p>Perbesar video tanpa mengubah alurnya.</p>
-          <b>720P • 1080P • 2K • 4K</b>
-        </div>
-      </button>
-    </section>
-
-    <div class="section-head">
-      <h3>Membership</h3><span>Upgrade</span>
-    </div>
-
-    <section class="premium">
-      <div>
-        <h4>GUSTAV HD Premium</h4>
-        <p>Akses kualitas lebih tinggi &amp; limit lebih besar.</p>
+    <div class="premium-banner free" id="premiumBanner" onclick="toast('Info premium')">
+      <div class="banner-icon" id="bannerIcon">✦</div>
+      <div class="banner-text">
+        <b id="bannerTitle">GUSTAV HD PREMIUM</b>
+        <small id="bannerDesc">Unlock unlimited AI magic. Pro models, 4K exports & priority queue.</small>
       </div>
-      <button class="upgrade" data-toast="Menu Premium segera hadir">UPGRADE</button>
-    </section>
-
-    <section class="plan">
-      <div class="plan-row">
-        <div class="plan-title">Free Plan</div>
-        <div class="plan-count">1 / 3 hari ini</div>
-      </div>
-      <div class="progress"><i></i></div>
-    </section>
-
-    <p class="footer-note">© 2026 GUSTAV LIZARD</p>
-  </section>
-
-  <!-- ============ ENHANCE ============ -->
-  <section class="page" id="page-enhance">
-    <header class="top">
-      <button class="back-btn" data-nav="home">←</button>
-      <div class="page-title">
-        <span class="ico">✦</span>
-        Enhance Photo
-      </div>
-      <div class="chip">PREMIUM</div>
-    </header>
-
-    <label class="upload" for="fileInput">
-      <div class="upload-ico">⇪</div>
-      <b>Pilih Foto</b>
-      <small>JPG, PNG, WEBP — maks 10MB</small>
-      <input type="file" id="fileInput" accept="image/*" hidden>
-    </label>
-
-    <div class="preview" id="preview">
-      <img id="previewImg" alt="preview">
-      <div class="preview-info">
-        <div>
-          <b id="fileName">-</b>
-          <span id="fileSize">-</span>
-        </div>
-        <button class="remove" id="removeBtn">✕</button>
-      </div>
+      <div class="banner-arrow">›</div>
     </div>
 
     <div class="section-head">
-      <h3>Output Resolution</h3><span>Pilih</span>
+      <h3>Services</h3>
+      <a href="#" onclick="toast('Lihat semua');return false;">See all</a>
     </div>
 
-    <div class="res-grid">
-      <button class="res" data-r="720"><h4>720p</h4><p>HD Ready</p></button>
-      <button class="res" data-r="1080"><h4>1080p</h4><p>Full HD</p></button>
-      <button class="res" data-r="1440"><h4>2K</h4><p>Ultra HD</p></button>
-      <button class="res selected" data-r="2160"><h4>4K</h4><p>Ultra HD</p></button>
-    </div>
-
-    <button class="action" id="processBtn" disabled>Mulai Enhance</button>
-  </section>
-
-  <!-- ============ HISTORY ============ -->
-  <section class="page" id="page-history">
-    <header class="top">
-      <div class="brand">
-        <small>GUSTAV HD</small>
-        <h1>History</h1>
-      </div>
-      <div class="avatar">◷</div>
-    </header>
-
-    <div class="empty-state">
-      <div class="empty-ico">◷</div>
-      <h4>Belum ada riwayat</h4>
-      <p>Hasil enhance kamu akan muncul di sini.</p>
-    </div>
-  </section>
-
-  <!-- ============ PROFILE ============ -->
-  <section class="page" id="page-profile">
-    <header class="top">
-      <div class="brand">
-        <small>GUSTAV HD</small>
-        <h1>Profile</h1>
-      </div>
-      <div class="avatar">○</div>
-    </header>
-
-    <div class="profile-card">
-      <div class="profile-avatar">G</div>
-      <h4>Guest User</h4>
-      <p>Free Member</p>
-    </div>
-
-    <div class="stats">
-      <div class="stat"><b>0</b><span>Enhance</span></div>
-      <div class="stat"><b>0</b><span>Kredit</span></div>
-      <div class="stat"><b>3</b><span>Limit/hari</span></div>
-    </div>
-
-    <div class="menu-list">
-      <div class="menu-label">Akun</div>
-      <button class="menu-item" data-toast="Fitur segera hadir">
-        <span class="mi-ico">◐</span>
-        <div class="mi-text">
-          <b>Informasi Pribadi</b>
-          <span>Nama, email, dan foto profil</span>
-        </div>
-        <span class="mi-arrow">›</span>
+    <div class="services">
+      <button class="service" onclick="toast('Enhance Photo')">
+        <div class="service-icon">✦</div>
+        <b>Enhance Photo</b>
       </button>
-      <button class="menu-item" data-toast="Fitur segera hadir">
-        <span class="mi-ico">◈</span>
-        <div class="mi-text">
-          <b>Pengaturan</b>
-          <span>Preferensi aplikasi</span>
-        </div>
-        <span class="mi-arrow">›</span>
+      <button class="service" onclick="toast('Face Swap')">
+        <div class="service-icon">◐</div>
+        <b>Face Swap</b>
+      </button>
+      <button class="service" onclick="toast('Upscale Video')">
+        <div class="service-icon">▶</div>
+        <b>Upscale Video</b>
+      </button>
+      <button class="service" onclick="toast('Project History')">
+        <div class="service-icon">◷</div>
+        <b>Project History</b>
       </button>
     </div>
+
+    <div class="section-head">
+      <h3>Settings</h3>
+    </div>
+
+    <div class="settings-list">
+      <button class="setting-item" onclick="toast('Account Profile')">
+        <div class="s-icon">◐</div>
+        <div class="s-text">
+          <b>Account Profile</b>
+          <span>Name, email and avatar</span>
+        </div>
+        <span class="s-arrow">›</span>
+      </button>
+
+      <button class="setting-item" onclick="toast('Manage Premium')">
+        <div class="s-icon">♛</div>
+        <div class="s-text">
+          <b>Manage Premium Subscription</b>
+          <span id="subStatus">Free Plan</span>
+        </div>
+        <span class="s-arrow">›</span>
+      </button>
+
+      <button class="setting-item" onclick="toast('Language')">
+        <div class="s-icon">文</div>
+        <div class="s-text">
+          <b>Language</b>
+          <span>English (US)</span>
+        </div>
+        <span class="s-arrow">›</span>
+      </button>
+
+      <button class="setting-item" onclick="toast('Privacy Policy')">
+        <div class="s-icon">⛨</div>
+        <div class="s-text">
+          <b>Privacy Policy</b>
+          <span>Opens in a new tab</span>
+        </div>
+        <span class="s-arrow">↗</span>
+      </button>
+    </div>
+
+    <button class="logout" onclick="toast('Log out')">
+      <span>⏻</span> Log out
+    </button>
+
+    <!-- Trigger tersembunyi untuk buka panel owner -->
+    <div style="text-align:center;margin-top:20px;">
+      <div id="secretTrigger"
+           onclick="handleSecretTap()"
+           style="display:inline-block;padding:8px 16px;font-size:10px;color:#2a2a33;cursor:pointer;user-select:none;letter-spacing:1px;">
+        GUSTAV LIZARD
+      </div>
+    </div>
+
   </section>
 
 </main>
 
 <!-- ============ BOTTOM NAV ============ -->
 <nav class="bottom-nav">
-  <button class="nav active" data-nav="home">
+  <button class="nav active" onclick="toast('Home')">
     <span class="nav-ico">⌂</span><span>Home</span>
   </button>
-  <button class="nav" data-nav="enhance">
-    <span class="nav-ico">✦</span><span>Enhance</span>
+  <button class="nav" onclick="toast('Projects')">
+    <span class="nav-ico">▤</span><span>Projects</span>
   </button>
-  <button class="nav" data-nav="history">
+  <button class="fab" onclick="toast('Buat baru')">+</button>
+  <button class="nav" onclick="toast('History')">
     <span class="nav-ico">◷</span><span>History</span>
   </button>
-  <button class="nav" data-nav="profile">
+  <button class="nav" onclick="toast('Profile')">
     <span class="nav-ico">○</span><span>Profile</span>
   </button>
 </nav>
 
+<!-- ============ OWNER PANEL ============ -->
+<div class="owner-panel" id="ownerPanel">
+  <div class="owner-sheet">
+    <div class="owner-header">
+      <h3>
+        Owner Panel
+        <span class="badge-owner">ADMIN</span>
+      </h3>
+      <button class="owner-close" onclick="closeOwnerPanel()">✕</button>
+    </div>
+    <p class="owner-sub">
+      Panel khusus owner/developer. Perubahan di sini hanya tersimpan di sesi ini (prototype).
+    </p>
+
+    <!-- MODE SWITCH -->
+    <div class="owner-section">
+      <h4>Mode Aplikasi</h4>
+      <div class="owner-mode-row">
+        <button class="owner-mode-btn free selected" id="btnFree" onclick="setMode('free')">
+          <div class="om-ico">✦</div>
+          <b>Free Mode</b>
+          <small>Limit 3/hari</small>
+        </button>
+        <button class="owner-mode-btn premium" id="btnPremium" onclick="setMode('premium')">
+          <div class="om-ico">♛</div>
+          <b>Premium Mode</b>
+          <small>Unlimited</small>
+        </button>
+      </div>
+    </div>
+
+    <!-- OWNER TOOLS -->
+    <div class="owner-section">
+      <h4>Developer Tools</h4>
+
+      <button class="owner-action" onclick="resetLimit()">
+        <div class="oa-ico">↻</div>
+        <div class="oa-text">
+          <b>Reset Daily Limit</b>
+          <span>Kembalikan limit harian user ke 3/3</span>
+        </div>
+        <span class="oa-arrow">›</span>
+      </button>
+
+      <button class="owner-action" onclick="clearCache()">
+        <div class="oa-ico">⌫</div>
+        <div class="oa-text">
+          <b>Clear Cache</b>
+          <span>Hapus data lokal prototype</span>
+        </div>
+        <span class="oa-arrow">›</span>
+      </button>
+
+      <button class="owner-action" onclick="simulateBoost()">
+        <div class="oa-ico">⚡</div>
+        <div class="oa-text">
+          <b>Simulasi Priority Lane</b>
+          <span>Test tampilan antrian prioritas</span>
+        </div>
+        <span class="oa-arrow">›</span>
+      </button>
+
+      <button class="owner-action danger" onclick="logoutOwner()">
+        <div class="oa-ico">⏻</div>
+        <div class="oa-text">
+          <b>Keluar Owner Mode</b>
+          <span>Kembali sebagai user biasa</span>
+        </div>
+        <span class="oa-arrow">›</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============ PAGE NAVIGATION ============ */
-const pages = document.querySelectorAll('.page');
-const navs  = document.querySelectorAll('.nav');
-
-function goTo(pageName){
-  pages.forEach(p => p.classList.remove('active'));
-  const target = document.getElementById('page-' + pageName);
-  if(target){
-    target.classList.add('active');
-    window.scrollTo({top:0, behavior:'smooth'});
-  }
-  navs.forEach(n => {
-    n.classList.toggle('active', n.dataset.nav === pageName);
-  });
-}
-
-document.querySelectorAll('[data-nav]').forEach(el => {
-  el.addEventListener('click', () => {
-    const page = el.dataset.nav;
-    if(page === 'enhance') toast('Enhance Photo');
-    if(page === 'history') toast('History');
-    if(page === 'profile') toast('Profile');
-    goTo(page);
-  });
-});
-
-/* ============ UPLOAD & PREVIEW ============ */
-const fileInput   = document.getElementById('fileInput');
-const preview     = document.getElementById('preview');
-const previewImg  = document.getElementById('previewImg');
-const fileNameEl  = document.getElementById('fileName');
-const fileSizeEl  = document.getElementById('fileSize');
-const removeBtn   = document.getElementById('removeBtn');
-const processBtn  = document.getElementById('processBtn');
-
-let currentFile = null;
-let currentRes  = 2160;
-const MAX_SIZE = 10 * 1024 * 1024;
-
-fileInput.addEventListener('change', e => {
-  const f = e.target.files[0];
-  if(!f) return;
-
-  if(!f.type.startsWith('image/')){
-    toast('File harus berupa gambar');
-    return;
-  }
-
-  if(f.size > MAX_SIZE){
-    toast('Ukuran file maks 10MB');
-    return;
-  }
-
-  currentFile = f;
-  previewImg.src = URL.createObjectURL(f);
-  fileNameEl.textContent = f.name;
-  fileSizeEl.textContent = formatSize(f.size);
-
-  preview.classList.add('show');
-  processBtn.disabled = false;
-
-  toast('Foto berhasil diupload');
-});
-
-removeBtn.addEventListener('click', () => {
-  currentFile = null;
-  fileInput.value = '';
-  previewImg.src = '';
-  preview.classList.remove('show');
-  processBtn.disabled = true;
-  toast('Foto dihapus');
-});
-
-function formatSize(bytes){
-  if(bytes < 1024) return bytes + ' B';
-  if(bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
-  return (bytes / 1024 / 1024).toFixed(2) + ' MB';
-}
-
-/* ============ RESOLUTION PICKER ============ */
-document.querySelectorAll('.res').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.res').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    currentRes = parseInt(btn.dataset.r);
-  });
-});
-
-/* ============ PROCESS (PROTOTYPE) ============ */
-processBtn.addEventListener('click', () => {
-  if(!currentFile){
-    toast('Upload foto dulu ya');
-    return;
-  }
-
-  const label = currentRes >= 2160 ? '4K' : currentRes + 'p';
-  processBtn.disabled = true;
-  processBtn.textContent = `Memproses ${label}...`;
-  toast(`Processing ${label} — prototype`);
-
-  setTimeout(() => {
-    processBtn.textContent = 'Selesai! (prototype)';
-    toast('Tahap prototype — belum proses HD asli');
-
-    setTimeout(() => {
-      processBtn.textContent = 'Mulai Enhance';
-      processBtn.disabled = false;
-    }, 1800);
-  }, 1600);
-});
-
-/* ============ TOAST ============ */
+/* ==================================================
+   TOAST
+================================================== */
 let toastTimer;
 function toast(msg){
   const el = document.getElementById('toast');
@@ -813,9 +748,196 @@ function toast(msg){
   toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
 }
 
-/* ============ GENERIC TOAST BUTTONS ============ */
-document.querySelectorAll('[data-toast]').forEach(el => {
-  el.addEventListener('click', () => toast(el.dataset.toast));
+/* ==================================================
+   OWNER SYSTEM
+   - Default: user biasa (owner = false)
+   - Akses via: 3 cara (secret tap, kode, URL param)
+================================================== */
+let isOwner = false;
+let mode = 'free';
+
+// ---------- 1. SECRET TAP: klik 5× pada tulisan "GUSTAV LIZARD" ----------
+let secretTapCount = 0;
+let secretTapTimer;
+function handleSecretTap(){
+  secretTapCount++;
+  clearTimeout(secretTapTimer);
+
+  // Reset hitungan kalau tidak ada tap lanjutan dalam 1.5 detik
+  secretTapTimer = setTimeout(() => {
+    secretTapCount = 0;
+  }, 1500);
+
+  // Kalau sudah 5× tap → minta kode rahasia
+  if(secretTapCount >= 5){
+    secretTapCount = 0;
+    askOwnerCode();
+  }
+}
+
+// ---------- 2. KODE RAHASIA ----------
+const OWNER_CODE = 'GUSTAV2026'; // ← bisa kamu ubah
+
+function askOwnerCode(){
+  const input = prompt('Masukkan kode owner:');
+  if(input === null) return;
+
+  if(input.trim() === OWNER_CODE){
+    activateOwner();
+  } else {
+    toast('Kode salah');
+  }
+}
+
+// ---------- 3. URL PARAM: ?owner=1 ----------
+function checkUrlOwner(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('owner') === '1'){
+    activateOwner(true);
+  }
+}
+
+// ---------- AKTIFKAN OWNER ----------
+function activateOwner(silent){
+  isOwner = true;
+  document.getElementById('ownerIndicator').classList.add('show');
+  if(!silent) toast('Owner mode aktif ✦');
+}
+
+// ---------- KELUAR OWNER ----------
+function logoutOwner(){
+  isOwner = false;
+  document.getElementById('ownerIndicator').classList.remove('show');
+  closeOwnerPanel();
+  toast('Keluar dari owner mode');
+}
+
+// ---------- BUKA / TUTUP PANEL ----------
+function openOwnerPanel(){
+  if(!isOwner){
+    toast('Akses ditolak');
+    return;
+  }
+  document.getElementById('ownerPanel').classList.add('show');
+  syncOwnerPanelUI();
+}
+function closeOwnerPanel(){
+  document.getElementById('ownerPanel').classList.remove('show');
+}
+
+// ---------- SET MODE ----------
+function setMode(newMode){
+  if(!isOwner){
+    toast('Hanya owner yang bisa ganti mode');
+    return;
+  }
+  if(mode === newMode) return;
+
+  mode = newMode;
+  applyMode();
+
+  if(newMode === 'premium'){
+    toast('Premium mode aktif ♛');
+  } else {
+    toast('Free mode aktif');
+  }
+}
+
+// ---------- APPLY MODE KE UI ----------
+function applyMode(){
+  document.body.dataset.mode = mode;
+
+  const banner = document.getElementById('premiumBanner');
+  const icon   = document.getElementById('bannerIcon');
+  const title  = document.getElementById('bannerTitle');
+  const desc   = document.getElementById('bannerDesc');
+  const sub    = document.getElementById('subStatus');
+  const badge  = document.getElementById('modeBadgeText');
+
+  if(mode === 'premium'){
+    banner.classList.remove('free');
+    banner.classList.add('premium');
+    icon.textContent = '♛';
+    title.textContent = 'PREMIUM ACTIVATED';
+    desc.textContent = 'selamat menikmati!';
+    sub.textContent = 'Premium Active - Tahunan';
+    badge.textContent = 'PREMIUM';
+  } else {
+    banner.classList.remove('premium');
+    banner.classList.add('free');
+    icon.textContent = '✦';
+    title.textContent = 'GUSTAV HD PREMIUM';
+    desc.textContent = 'Unlock unlimited AI magic. Pro models, 4K exports & priority queue.';
+    sub.textContent = 'Free Plan';
+    badge.textContent = 'FREE';
+  }
+}
+
+// ---------- SYNC UI PANEL OWNER ----------
+function syncOwnerPanelUI(){
+  const btnFree = document.getElementById('btnFree');
+  const btnPrem = document.getElementById('btnPremium');
+
+  btnFree.classList.toggle('selected', mode === 'free');
+  btnPrem.classList.toggle('selected', mode === 'premium');
+}
+
+/* ==================================================
+   OWNER TOOLS
+================================================== */
+function resetLimit(){
+  toast('Daily limit direset → 3/3');
+}
+function clearCache(){
+  if(confirm('Hapus semua data lokal?')){
+    localStorage.clear();
+    toast('Cache dibersihkan');
+  }
+}
+function simulateBoost(){
+  toast('Simulasi Priority Lane aktif ⚡');
+}
+
+/* ==================================================
+   LIVE DATE
+================================================== */
+function updateDate(){
+  const now = new Date();
+  const dd = String(now.getDate()).padStart(2,'0');
+  const mm = String(now.getMonth()+1).padStart(2,'0');
+  const yy = String(now.getFullYear()).slice(-2);
+  const hh = String(now.getHours()).padStart(2,'0');
+  const mn = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById('dateNow').textContent = `${dd}/${mm}/${yy}, ${hh}.${mn}`;
+}
+updateDate();
+setInterval(updateDate, 30000);
+
+/* ==================================================
+   CLOSE PANEL kalau klik area gelap
+================================================== */
+document.getElementById('ownerPanel').addEventListener('click', e => {
+  if(e.target.id === 'ownerPanel') closeOwnerPanel();
+});
+
+/* ==================================================
+   INIT
+================================================== */
+applyMode();
+checkUrlOwner();
+
+/* ==================================================
+   KEYBOARD SHORTCUT (desktop): Ctrl+Shift+O
+================================================== */
+document.addEventListener('keydown', e => {
+  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'o'){
+    e.preventDefault();
+    if(isOwner){
+      openOwnerPanel();
+    } else {
+      askOwnerCode();
+    }
+  }
 });
 </script>
 </body>
