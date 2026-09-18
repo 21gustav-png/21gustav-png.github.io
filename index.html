@@ -2,9 +2,10 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>GUSTAV HD</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUSTAV HD — Button Library</title>
 <style>
+/* ============ ROOT ============ */
 :root{
   --bg:#050505;
   --panel:#0b0b0f;
@@ -14,14 +15,12 @@
   --purple:#54258f;
   --accent:#6d3db8;
   --green:#22c55e;
+  --red:#ef4444;
   --text:#e5e5e7;
   --text2:#8a8a94;
   --muted:#555560;
-  --danger:#ef4444;
-  --radius:20px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
 body{
   background:var(--bg);
   color:var(--text);
@@ -30,915 +29,478 @@ body{
   line-height:1.5;
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+  padding:32px 20px 60px;
 }
-button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
-
-/* ============ APP SHELL ============ */
-.app{
-  width:100%;
-  max-width:640px;
-  min-height:100vh;
-  margin:0 auto;
-  padding:24px 20px 120px;
-  position:relative;
+.container{
+  max-width:640px;margin:0 auto;
 }
-.app::before{
-  content:"";position:fixed;
-  width:380px;height:380px;
-  top:-160px;right:-180px;
-  background:var(--deep);
-  filter:blur(150px);
-  opacity:.25;
-  pointer-events:none;z-index:0;
+h1{
+  font-size:24px;font-weight:800;color:#fff;
+  letter-spacing:-.7px;margin-bottom:8px;
 }
-.app::after{
-  content:"";position:fixed;
-  width:300px;height:300px;
-  bottom:-120px;left:-140px;
-  background:var(--purple);
-  filter:blur(150px);
-  opacity:.12;
-  pointer-events:none;z-index:0;
-}
-.app > *{position:relative;z-index:1}
-
-/* ============ PAGE ============ */
-.page{display:none;animation:fadeUp .3s ease}
-.page.active{display:block}
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(8px)}
-  to{opacity:1;transform:translateY(0)}
-}
-
-/* ============ PROFILE HEADER ============ */
-.profile-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:8px 4px 20px;
-}
-.profile-header .back,
-.profile-header .edit{
-  width:44px;height:44px;border-radius:50%;
-  background:var(--panel);
-  border:1px solid var(--line);
-  display:grid;place-items:center;
-  font-size:17px;color:var(--text);
-  transition:.2s;
-}
-.profile-header .back:hover,
-.profile-header .edit:hover{
-  border-color:var(--accent);
-  transform:scale(1.05);
-}
-.profile-header .center{text-align:center;flex:1}
-.profile-header .center b{
-  font-size:16px;font-weight:700;color:#fff;display:block;
-}
-.profile-header .center small{
-  font-size:11px;color:var(--text2);display:block;margin-top:3px;
-  letter-spacing:.5px;
-}
-
-/* ============ GREETING ============ */
-.greeting{
-  padding:8px 4px 16px;
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-}
-.greeting-left small{
-  font-size:11px;color:var(--text2);
-  letter-spacing:1.5px;text-transform:uppercase;font-weight:600;
-}
-.greeting-left h2{
-  font-size:22px;font-weight:800;color:#fff;
-  letter-spacing:-.5px;margin-top:6px;
-}
-/* Badge mode kecil (read-only untuk user, hanya owner yang bisa ganti) */
-.mode-badge{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:7px 12px;border-radius:999px;
-  background:var(--panel);
-  border:1px solid var(--line);
-  font-size:10px;font-weight:800;
-  letter-spacing:1px;text-transform:uppercase;
-  color:var(--text2);
-  transition:.3s;
-  flex-shrink:0;
-}
-.mode-badge .mb-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--green);
-  box-shadow:0 0 6px var(--green);
-  transition:.3s;
-}
-body[data-mode="premium"] .mode-badge .mb-dot{
-  background:#a855f7;
-  box-shadow:0 0 6px #a855f7;
-}
-body[data-mode="premium"] .mode-badge{
-  color:#c9a8ee;
-  border-color:rgba(109,61,184,.5);
-  background:rgba(59,23,109,.25);
-}
-
-/* ============ PREMIUM BANNER ============ */
-.premium-banner{
-  border-radius:var(--radius);
-  padding:18px 20px;
-  display:flex;align-items:center;gap:14px;
-  margin-bottom:28px;
-  border:1px solid;
-  transition:.3s;
-  position:relative;
-  overflow:hidden;
-}
-.premium-banner.free{
-  background:
-    radial-gradient(circle at 100% 0%, rgba(34,197,94,.15), transparent 60%),
-    linear-gradient(160deg,#0a1a10 0%,#050a07 100%);
-  border-color:rgba(34,197,94,.3);
-}
-.premium-banner.free .banner-icon{
-  background:linear-gradient(145deg,#22c55e,#15803d);
-  box-shadow:0 0 20px rgba(34,197,94,.4);
-}
-.premium-banner.premium{
-  background:
-    radial-gradient(circle at 100% 0%, rgba(109,61,184,.3), transparent 60%),
-    linear-gradient(160deg,#1a0f2e 0%,#0a0512 100%);
-  border-color:rgba(109,61,184,.5);
-}
-.premium-banner.premium .banner-icon{
-  background:linear-gradient(145deg,#a855f7,#6d3db8);
-  box-shadow:0 0 20px rgba(168,85,247,.5);
-}
-.banner-icon{
-  width:46px;height:46px;border-radius:13px;
-  display:grid;place-items:center;
-  font-size:20px;color:#fff;
-  flex-shrink:0;position:relative;z-index:1;
-}
-.banner-text{flex:1;min-width:0;position:relative;z-index:1}
-.banner-text b{font-size:14px;font-weight:700;color:#fff;display:block}
-.banner-text small{font-size:11px;color:var(--text2);display:block;margin-top:3px;line-height:1.4}
-.banner-arrow{color:var(--text2);font-size:20px;position:relative;z-index:1}
-
-/* ============ SECTION HEAD ============ */
-.section-head{
-  display:flex;align-items:center;justify-content:space-between;
-  margin:0 4px 14px;
-}
-.section-head h3{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.2px}
-.section-head a{
-  font-size:11.5px;color:var(--text2);
-  text-decoration:none;letter-spacing:.3px;transition:.2s;
-}
-.section-head a:hover{color:#c9a8ee}
-
-/* ============ SERVICES ============ */
-.services{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:12px;margin-bottom:32px;
-}
-.service{
-  padding:20px 18px;
-  border-radius:18px;
-  background:var(--panel);
-  border:1px solid var(--line);
-  display:flex;flex-direction:column;
-  gap:14px;text-align:left;
-  transition:.22s;min-height:120px;
-  justify-content:space-between;
-}
-.service:hover{border-color:rgba(109,61,184,.4);transform:translateY(-2px)}
-.service:active{transform:scale(.98)}
-.service-icon{
-  width:40px;height:40px;border-radius:11px;
-  display:grid;place-items:center;
-  font-size:17px;flex-shrink:0;
-  transition:.3s;
-}
-body[data-mode="free"] .service-icon{
-  background:rgba(34,197,94,.12);
-  border:1px solid rgba(34,197,94,.25);
-  color:#4ade80;
-}
-body[data-mode="premium"] .service-icon{
-  background:rgba(109,61,184,.22);
-  border:1px solid rgba(109,61,184,.4);
-  color:#c9a8ee;
-}
-.service b{font-size:13.5px;font-weight:600;color:#fff;letter-spacing:-.1px;line-height:1.35}
-
-/* ============ SETTINGS ============ */
-.settings-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.setting-item{
-  display:flex;align-items:center;gap:14px;
-  padding:16px 18px;
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:16px;
-  width:100%;text-align:left;
-  transition:.2s;
-}
-.setting-item:hover{border-color:rgba(109,61,184,.4);transform:translateY(-1px)}
-.setting-item .s-icon{
-  width:40px;height:40px;border-radius:11px;
-  display:grid;place-items:center;
-  font-size:16px;flex-shrink:0;transition:.3s;
-}
-body[data-mode="free"] .setting-item .s-icon{
-  background:rgba(34,197,94,.12);
-  border:1px solid rgba(34,197,94,.25);
-  color:#4ade80;
-}
-body[data-mode="premium"] .setting-item .s-icon{
-  background:rgba(109,61,184,.22);
-  border:1px solid rgba(109,61,184,.4);
-  color:#c9a8ee;
-}
-.setting-item .s-text{flex:1;min-width:0}
-.setting-item .s-text b{font-size:13.5px;font-weight:700;color:#fff;display:block}
-.setting-item .s-text span{font-size:11.5px;color:var(--text2);display:block;margin-top:3px}
-.setting-item .s-arrow{color:var(--text2);font-size:20px;flex-shrink:0}
-
-/* ============ LOGOUT ============ */
-.logout{
-  width:100%;padding:16px;border-radius:16px;
-  background:rgba(80,20,20,.25);
-  border:1px solid rgba(239,68,68,.25);
-  color:#ef4444;font-size:13.5px;font-weight:700;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:.2s;margin-bottom:16px;
-}
-.logout:hover,.logout:active{
-  background:rgba(80,20,20,.4);
-  border-color:rgba(239,68,68,.5);
-}
-.logout span{font-size:15px}
-
-/* ============ BOTTOM NAV ============ */
-.bottom-nav{
-  position:fixed;left:50%;bottom:14px;
-  transform:translateX(-50%);
-  width:min(calc(100% - 24px), 616px);
-  padding:10px 12px;border-radius:24px;
-  background:rgba(10,10,14,.9);
-  border:1px solid #24242b;
-  backdrop-filter:blur(22px);
-  -webkit-backdrop-filter:blur(22px);
-  display:grid;grid-template-columns:repeat(5,1fr);
-  align-items:center;z-index:50;
-  box-shadow:0 12px 40px rgba(0,0,0,.6);
-}
-.nav{
-  background:none;padding:8px 2px;border-radius:14px;
-  color:#5a5a64;font-size:9.5px;font-weight:600;
-  display:flex;flex-direction:column;align-items:center;
-  gap:4px;transition:.2s;letter-spacing:.3px;
-}
-.nav-ico{font-size:17px;line-height:1;display:block}
-.nav.active{color:#c9a8ee}
-.nav:hover{color:#9a7fc0}
-.fab{
-  width:52px;height:52px;border-radius:50%;
-  background:linear-gradient(145deg,#a855f7,#7c3aed);
-  display:grid;place-items:center;
-  color:#fff;font-size:24px;font-weight:300;
-  margin:0 auto;
-  box-shadow:0 0 22px rgba(168,85,247,.55);
-  transition:.22s;border:3px solid #0a0a0e;
-}
-.fab:hover,.fab:active{
-  transform:scale(1.06);
-  box-shadow:0 0 30px rgba(168,85,247,.75);
-}
-
-/* ============ TOAST ============ */
-.toast{
-  position:fixed;left:50%;bottom:100px;
-  transform:translate(-50%,16px);
-  background:rgba(16,16,22,.96);
-  border:1px solid rgba(109,61,184,.35);
-  border-radius:14px;
-  padding:12px 18px;font-size:12.5px;color:#e5d4fa;
-  opacity:0;pointer-events:none;transition:.28s;
-  white-space:nowrap;z-index:100;
-  box-shadow:0 10px 30px rgba(0,0,0,.6);
-  font-weight:600;backdrop-filter:blur(12px);
-}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-
-/* ================================================== */
-/* ============ OWNER PANEL (TERSEMBUNYI) =========== */
-/* ================================================== */
-.owner-panel{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.85);
-  backdrop-filter:blur(8px);
-  z-index:200;
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-  animation:fadeIn .25s ease;
-}
-.owner-panel.show{display:flex}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-
-.owner-sheet{
-  width:100%;
-  max-width:560px;
-  background:linear-gradient(180deg,#0e0a16 0%,#080709 100%);
-  border-top:1px solid rgba(109,61,184,.5);
-  border-radius:26px 26px 0 0;
-  padding:26px 22px 30px;
-  animation:slideUp .3s ease;
-  max-height:90vh;
-  overflow-y:auto;
-}
-@keyframes slideUp{
-  from{transform:translateY(30px);opacity:0}
-  to{transform:translateY(0);opacity:1}
-}
-
-.owner-header{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:6px;
-}
-.owner-header h3{
-  font-size:17px;font-weight:800;color:#fff;
-  display:flex;align-items:center;gap:8px;
-}
-.owner-header h3 .badge-owner{
-  padding:4px 10px;border-radius:999px;
-  background:linear-gradient(145deg,#a855f7,#6d3db8);
-  font-size:9px;font-weight:800;
-  letter-spacing:1.2px;color:#fff;
-}
-.owner-close{
-  width:34px;height:34px;border-radius:50%;
-  background:var(--panel);border:1px solid var(--line);
-  display:grid;place-items:center;
-  font-size:15px;color:var(--text);
-  transition:.2s;
-}
-.owner-close:hover{border-color:var(--danger);color:var(--danger)}
-
-.owner-sub{
+.subtitle{
   font-size:12px;color:var(--text2);
-  margin-bottom:22px;line-height:1.55;
+  margin-bottom:32px;letter-spacing:.5px;
 }
-
-.owner-section{margin-bottom:20px}
-.owner-section h4{
+.section{margin-bottom:36px}
+.section-title{
   font-size:10.5px;color:var(--text2);
   letter-spacing:1.8px;text-transform:uppercase;
-  font-weight:700;margin:0 2px 10px;
+  font-weight:700;margin-bottom:14px;
+  padding-left:4px;
 }
 
-/* Mode toggle di dalam panel owner */
-.owner-mode-row{
-  display:grid;grid-template-columns:1fr 1fr;
+/* ==================================================
+   ============ TOMBOL LIBRARY ======================
+   ================================================== */
+
+/* ---------- TYPE 1: PRIMARY ---------- */
+.btn-primary{
+  position:relative;
+  width:100%;
+  padding:18px 22px;
+  border-radius:16px;
+  background:linear-gradient(145deg,#3b176d,#54258f);
+  border:1px solid rgba(109,61,184,.6);
+  color:#f0e6ff;
+  font-size:13.5px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   gap:10px;
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .18s ease, box-shadow .25s ease;
+  box-shadow:
+    0 0 0 1px rgba(84,37,143,.15) inset,
+    0 10px 30px rgba(84,37,143,.4);
+  font-family:inherit;
 }
-.owner-mode-btn{
-  padding:16px 14px;
-  border-radius:14px;
-  background:var(--panel);
-  border:1px solid var(--line);
-  text-align:left;transition:.2s;
-  color:var(--text);
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 0 0 1px rgba(109,61,184,.5) inset,
+    0 16px 40px rgba(84,37,143,.6);
 }
-.owner-mode-btn:hover{border-color:rgba(109,61,184,.5)}
-.owner-mode-btn.selected{
-  background:linear-gradient(145deg,#1a0f2e,#0d0818);
-  border-color:var(--accent);
-  box-shadow:0 0 20px rgba(84,37,143,.4);
+.btn-primary:active{
+  transform:scale(.98) translateY(0);
 }
-.owner-mode-btn .om-ico{
-  width:32px;height:32px;border-radius:9px;
-  display:grid;place-items:center;
-  font-size:14px;margin-bottom:10px;
+.btn-primary .icon{
+  font-size:16px;
+  line-height:1;
 }
-.owner-mode-btn.free .om-ico{
-  background:rgba(34,197,94,.15);
-  border:1px solid rgba(34,197,94,.3);
-  color:#4ade80;
+/* Ripple */
+.btn-primary .ripple,
+.btn-secondary .ripple,
+.btn-danger .ripple{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,.25);
+  transform:scale(0);
+  animation:ripple .6s ease-out;
+  pointer-events:none;
 }
-.owner-mode-btn.premium .om-ico{
-  background:rgba(109,61,184,.25);
-  border:1px solid rgba(109,61,184,.45);
+@keyframes ripple{
+  to{transform:scale(4);opacity:0}
+}
+
+/* ---------- TYPE 2: SECONDARY ---------- */
+.btn-secondary{
+  position:relative;
+  width:100%;
+  padding:17px 22px;
+  border-radius:15px;
+  background:rgba(59,23,109,.15);
+  border:1px solid rgba(109,61,184,.4);
+  color:#c9a8ee;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  cursor:pointer;
+  overflow:hidden;
+  transition:all .2s ease;
+  font-family:inherit;
+}
+.btn-secondary:hover{
+  background:rgba(59,23,109,.3);
+  border-color:rgba(109,61,184,.7);
+  transform:translateY(-1px);
+  color:#e5d4fa;
+}
+.btn-secondary:active{
+  transform:scale(.98);
+}
+.btn-secondary .icon{font-size:15px;line-height:1}
+
+/* ---------- TYPE 3: GHOST ---------- */
+.btn-ghost{
+  background:transparent;
+  border:0;
+  color:#a67fd0;
+  font-size:12.5px;
+  font-weight:600;
+  padding:9px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  transition:all .2s ease;
+  letter-spacing:.3px;
+  font-family:inherit;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.btn-ghost:hover{
+  background:rgba(59,23,109,.25);
   color:#c9a8ee;
 }
-.owner-mode-btn b{
-  font-size:13px;font-weight:700;color:#fff;
-  display:block;letter-spacing:-.1px;
-}
-.owner-mode-btn small{
-  font-size:10.5px;color:var(--text2);
-  display:block;margin-top:3px;
+.btn-ghost:active{
+  transform:scale(.97);
 }
 
-/* Owner action list */
-.owner-action{
-  display:flex;align-items:center;gap:14px;
-  padding:15px 16px;
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:14px;
-  width:100%;text-align:left;
-  margin-bottom:8px;transition:.2s;
+/* ---------- TYPE 4: DANGER ---------- */
+.btn-danger{
+  position:relative;
+  width:100%;
+  padding:17px 22px;
+  border-radius:16px;
+  background:rgba(80,20,20,.25);
+  border:1px solid rgba(239,68,68,.25);
+  color:#ef4444;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  cursor:pointer;
+  overflow:hidden;
+  transition:all .2s ease;
+  font-family:inherit;
 }
-.owner-action:hover{
-  border-color:rgba(109,61,184,.5);
+.btn-danger:hover{
+  background:rgba(80,20,20,.4);
+  border-color:rgba(239,68,68,.5);
   transform:translateY(-1px);
 }
-.owner-action .oa-ico{
-  width:38px;height:38px;border-radius:10px;
-  background:rgba(109,61,184,.2);
-  border:1px solid rgba(109,61,184,.35);
-  display:grid;place-items:center;
-  color:#c9a8ee;font-size:15px;flex-shrink:0;
+.btn-danger:active{
+  transform:scale(.98);
 }
-.owner-action .oa-text{flex:1}
-.owner-action .oa-text b{font-size:13px;font-weight:700;color:#fff;display:block}
-.owner-action .oa-text span{font-size:11px;color:var(--text2);display:block;margin-top:3px}
-.owner-action .oa-arrow{color:var(--text2);font-size:18px}
+.btn-danger .icon{font-size:15px;line-height:1}
 
-/* Danger action */
-.owner-action.danger{
-  border-color:rgba(239,68,68,.3);
-}
-.owner-action.danger .oa-ico{
-  background:rgba(239,68,68,.15);
-  border-color:rgba(239,68,68,.35);
-  color:#ef4444;
-}
-.owner-action.danger .oa-text b{color:#ef4444}
-
-/* Owner FAB (indikator kecil kalau owner aktif) */
-.owner-indicator{
-  position:fixed;
-  top:20px;left:20px;
-  padding:7px 12px;
-  border-radius:999px;
-  background:linear-gradient(145deg,#a855f7,#6d3db8);
-  color:#fff;font-size:9.5px;font-weight:800;
-  letter-spacing:1.2px;
-  z-index:60;
-  display:none;
-  align-items:center;gap:6px;
-  box-shadow:0 0 20px rgba(168,85,247,.55);
+/* ---------- TYPE 5: ICON BUTTON ---------- */
+.btn-icon{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  background:var(--panel);
+  border:1px solid var(--line);
+  color:var(--text);
+  font-size:17px;
+  display:grid;
+  place-items:center;
   cursor:pointer;
+  transition:all .2s ease;
+  font-family:inherit;
+  flex-shrink:0;
 }
-.owner-indicator.show{display:inline-flex}
-.owner-indicator .oi-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:#fff;
-  animation:pulse 1.5s infinite;
+.btn-icon:hover{
+  border-color:var(--accent);
+  transform:scale(1.06);
+  color:#e5d4fa;
 }
-@keyframes pulse{50%{opacity:.4}}
+.btn-icon:active{
+  transform:scale(.94);
+}
+.btn-icon.small{
+  width:38px;height:38px;font-size:14px;
+}
+.btn-icon.danger:hover{
+  border-color:var(--red);
+  color:var(--red);
+}
 
-/* ============ RESPONSIVE ============ */
-@media(min-width:700px){
-  body{background:#020202}
-  .app{
-    border-left:1px solid #101014;
-    border-right:1px solid #101014;
-    background:#050505;min-height:100vh;
-  }
+/* ---------- TYPE 6: PILL BUTTON (chip) ---------- */
+.btn-pill{
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(59,23,109,.22);
+  border:1px solid rgba(109,61,184,.5);
+  color:#c9a8ee;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:all .2s ease;
+  font-family:inherit;
 }
-@media(max-width:380px){
-  .app{padding:20px 16px 120px}
-  .service{padding:16px 14px;min-height:110px}
-  .service b{font-size:12.5px}
-  .greeting-left h2{font-size:20px}
+.btn-pill:hover{
+  background:rgba(59,23,109,.4);
+  border-color:var(--accent);
+}
+.btn-pill:active{transform:scale(.97)}
+
+/* ---------- TYPE 7: LOADING STATE ---------- */
+.btn-primary.loading{
+  pointer-events:none;
+  opacity:.8;
+}
+.btn-primary .spinner{
+  width:16px;height:16px;
+  border:2px solid rgba(255,255,255,.3);
+  border-top-color:#fff;
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  display:none;
+}
+.btn-primary.loading .spinner{display:inline-block}
+.btn-primary.loading .icon{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---------- TYPE 8: SUCCESS STATE ---------- */
+.btn-primary.success{
+  background:linear-gradient(145deg,#15803d,#22c55e);
+  border-color:rgba(34,197,94,.6);
+  box-shadow:
+    0 0 0 1px rgba(34,197,94,.2) inset,
+    0 10px 30px rgba(34,197,94,.4);
+}
+
+/* ---------- TYPE 9: DISABLED ---------- */
+.btn-primary:disabled,
+.btn-secondary:disabled{
+  background:#15151a;
+  border-color:var(--line);
+  color:var(--muted);
+  box-shadow:none;
+  cursor:not-allowed;
+  transform:none;
+  letter-spacing:.4px;
+}
+.btn-primary:disabled:hover{
+  transform:none;
+  box-shadow:none;
+}
+.btn-primary:disabled .icon{opacity:.5}
+
+/* ---------- GRID LAYOUT ---------- */
+.btn-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.icon-row{
+  display:flex;gap:14px;align-items:center;
+  flex-wrap:wrap;
 }
 </style>
 </head>
-<body data-mode="free">
+<body>
+<div class="container">
 
-<!-- Indikator owner aktif -->
-<button class="owner-indicator" id="ownerIndicator" onclick="openOwnerPanel()">
-  <span class="oi-dot"></span>
-  OWNER MODE
-</button>
+  <h1>GUSTAV HD</h1>
+  <p class="subtitle">Button Library — Preview semua tipe tombol</p>
 
-<main class="app">
+  <!-- ==================== PRIMARY ==================== -->
+  <div class="section">
+    <div class="section-title">1. Primary — Tombol Utama</div>
 
-  <!-- ============ PROFILE PAGE ============ -->
-  <section class="page active" id="page-profile">
-
-    <header class="profile-header">
-      <button class="back" onclick="toast('Kembali')">←</button>
-      <div class="center">
-        <b>Anda</b>
-        <small id="dateNow">19/09/26, 01.02</small>
-      </div>
-      <button class="edit" onclick="toast('Edit profil')">✎</button>
-    </header>
-
-    <div class="greeting">
-      <div class="greeting-left">
-        <small>Welcome back</small>
-        <h2>Hello, User!</h2>
-      </div>
-      <div class="mode-badge" id="modeBadge">
-        <span class="mb-dot"></span>
-        <span id="modeBadgeText">FREE</span>
-      </div>
-    </div>
-
-    <div class="premium-banner free" id="premiumBanner" onclick="toast('Info premium')">
-      <div class="banner-icon" id="bannerIcon">✦</div>
-      <div class="banner-text">
-        <b id="bannerTitle">GUSTAV HD PREMIUM</b>
-        <small id="bannerDesc">Unlock unlimited AI magic. Pro models, 4K exports & priority queue.</small>
-      </div>
-      <div class="banner-arrow">›</div>
-    </div>
-
-    <div class="section-head">
-      <h3>Services</h3>
-      <a href="#" onclick="toast('Lihat semua');return false;">See all</a>
-    </div>
-
-    <div class="services">
-      <button class="service" onclick="toast('Enhance Photo')">
-        <div class="service-icon">✦</div>
-        <b>Enhance Photo</b>
-      </button>
-      <button class="service" onclick="toast('Face Swap')">
-        <div class="service-icon">◐</div>
-        <b>Face Swap</b>
-      </button>
-      <button class="service" onclick="toast('Upscale Video')">
-        <div class="service-icon">▶</div>
-        <b>Upscale Video</b>
-      </button>
-      <button class="service" onclick="toast('Project History')">
-        <div class="service-icon">◷</div>
-        <b>Project History</b>
-      </button>
-    </div>
-
-    <div class="section-head">
-      <h3>Settings</h3>
-    </div>
-
-    <div class="settings-list">
-      <button class="setting-item" onclick="toast('Account Profile')">
-        <div class="s-icon">◐</div>
-        <div class="s-text">
-          <b>Account Profile</b>
-          <span>Name, email and avatar</span>
-        </div>
-        <span class="s-arrow">›</span>
-      </button>
-
-      <button class="setting-item" onclick="toast('Manage Premium')">
-        <div class="s-icon">♛</div>
-        <div class="s-text">
-          <b>Manage Premium Subscription</b>
-          <span id="subStatus">Free Plan</span>
-        </div>
-        <span class="s-arrow">›</span>
-      </button>
-
-      <button class="setting-item" onclick="toast('Language')">
-        <div class="s-icon">文</div>
-        <div class="s-text">
-          <b>Language</b>
-          <span>English (US)</span>
-        </div>
-        <span class="s-arrow">›</span>
-      </button>
-
-      <button class="setting-item" onclick="toast('Privacy Policy')">
-        <div class="s-icon">⛨</div>
-        <div class="s-text">
-          <b>Privacy Policy</b>
-          <span>Opens in a new tab</span>
-        </div>
-        <span class="s-arrow">↗</span>
-      </button>
-    </div>
-
-    <button class="logout" onclick="toast('Log out')">
-      <span>⏻</span> Log out
+    <button class="btn-primary">
+      <span class="icon">⚡</span>
+      Mulai Enhance
     </button>
 
-    <!-- Trigger tersembunyi untuk buka panel owner -->
-    <div style="text-align:center;margin-top:20px;">
-      <div id="secretTrigger"
-           onclick="handleSecretTap()"
-           style="display:inline-block;padding:8px 16px;font-size:10px;color:#2a2a33;cursor:pointer;user-select:none;letter-spacing:1px;">
-        GUSTAV LIZARD
-      </div>
-    </div>
+    <div style="height:12px"></div>
 
-  </section>
+    <button class="btn-primary">
+      <span class="icon">⬇</span>
+      Simpan
+    </button>
 
-</main>
+    <div style="height:12px"></div>
 
-<!-- ============ BOTTOM NAV ============ -->
-<nav class="bottom-nav">
-  <button class="nav active" onclick="toast('Home')">
-    <span class="nav-ico">⌂</span><span>Home</span>
-  </button>
-  <button class="nav" onclick="toast('Projects')">
-    <span class="nav-ico">▤</span><span>Projects</span>
-  </button>
-  <button class="fab" onclick="toast('Buat baru')">+</button>
-  <button class="nav" onclick="toast('History')">
-    <span class="nav-ico">◷</span><span>History</span>
-  </button>
-  <button class="nav" onclick="toast('Profile')">
-    <span class="nav-ico">○</span><span>Profile</span>
-  </button>
-</nav>
-
-<!-- ============ OWNER PANEL ============ -->
-<div class="owner-panel" id="ownerPanel">
-  <div class="owner-sheet">
-    <div class="owner-header">
-      <h3>
-        Owner Panel
-        <span class="badge-owner">ADMIN</span>
-      </h3>
-      <button class="owner-close" onclick="closeOwnerPanel()">✕</button>
-    </div>
-    <p class="owner-sub">
-      Panel khusus owner/developer. Perubahan di sini hanya tersimpan di sesi ini (prototype).
-    </p>
-
-    <!-- MODE SWITCH -->
-    <div class="owner-section">
-      <h4>Mode Aplikasi</h4>
-      <div class="owner-mode-row">
-        <button class="owner-mode-btn free selected" id="btnFree" onclick="setMode('free')">
-          <div class="om-ico">✦</div>
-          <b>Free Mode</b>
-          <small>Limit 3/hari</small>
-        </button>
-        <button class="owner-mode-btn premium" id="btnPremium" onclick="setMode('premium')">
-          <div class="om-ico">♛</div>
-          <b>Premium Mode</b>
-          <small>Unlimited</small>
-        </button>
-      </div>
-    </div>
-
-    <!-- OWNER TOOLS -->
-    <div class="owner-section">
-      <h4>Developer Tools</h4>
-
-      <button class="owner-action" onclick="resetLimit()">
-        <div class="oa-ico">↻</div>
-        <div class="oa-text">
-          <b>Reset Daily Limit</b>
-          <span>Kembalikan limit harian user ke 3/3</span>
-        </div>
-        <span class="oa-arrow">›</span>
-      </button>
-
-      <button class="owner-action" onclick="clearCache()">
-        <div class="oa-ico">⌫</div>
-        <div class="oa-text">
-          <b>Clear Cache</b>
-          <span>Hapus data lokal prototype</span>
-        </div>
-        <span class="oa-arrow">›</span>
-      </button>
-
-      <button class="owner-action" onclick="simulateBoost()">
-        <div class="oa-ico">⚡</div>
-        <div class="oa-text">
-          <b>Simulasi Priority Lane</b>
-          <span>Test tampilan antrian prioritas</span>
-        </div>
-        <span class="oa-arrow">›</span>
-      </button>
-
-      <button class="owner-action danger" onclick="logoutOwner()">
-        <div class="oa-ico">⏻</div>
-        <div class="oa-text">
-          <b>Keluar Owner Mode</b>
-          <span>Kembali sebagai user biasa</span>
-        </div>
-        <span class="oa-arrow">›</span>
-      </button>
-    </div>
-
+    <button class="btn-primary" disabled>
+      <span class="icon">⚡</span>
+      Mulai Enhance
+    </button>
   </div>
+
+  <!-- ==================== SECONDARY ==================== -->
+  <div class="section">
+    <div class="section-title">2. Secondary — Tombol Kedua</div>
+
+    <div class="btn-row">
+      <button class="btn-secondary">
+        <span class="icon">⇧</span>
+        Bagikan
+      </button>
+      <button class="btn-secondary">
+        <span class="icon">⟲</span>
+        Ulangi
+      </button>
+    </div>
+
+    <div style="height:12px"></div>
+
+    <button class="btn-secondary">
+      <span class="icon">⟲</span>
+      Ulangi Enhance
+    </button>
+  </div>
+
+  <!-- ==================== GHOST ==================== -->
+  <div class="section">
+    <div class="section-title">3. Ghost — Tombol Ringan</div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <span style="color:var(--text2);font-size:13px;">Lihat semua</span>
+      <button class="btn-ghost">
+        See all →
+      </button>
+    </div>
+
+    <div style="height:8px"></div>
+
+    <button class="btn-ghost">Nanti</button>
+    <button class="btn-ghost">Batal</button>
+  </div>
+
+  <!-- ==================== DANGER ==================== -->
+  <div class="section">
+    <div class="section-title">4. Danger — Tombol Bahaya</div>
+
+    <button class="btn-danger">
+      <span class="icon">⏻</span>
+      Log out
+    </button>
+  </div>
+
+  <!-- ==================== ICON ==================== -->
+  <div class="section">
+    <div class="section-title">5. Icon Button</div>
+
+    <div class="icon-row">
+      <button class="btn-icon">←</button>
+      <button class="btn-icon">✎</button>
+      <button class="btn-icon">✕</button>
+      <button class="btn-icon">🔇</button>
+      <button class="btn-icon">🔊</button>
+      <button class="btn-icon danger">⏻</button>
+    </div>
+
+    <div style="height:12px"></div>
+
+    <div class="icon-row">
+      <button class="btn-icon small">←</button>
+      <button class="btn-icon small">✎</button>
+      <button class="btn-icon small">✕</button>
+    </div>
+  </div>
+
+  <!-- ==================== PILL ==================== -->
+  <div class="section">
+    <div class="section-title">6. Pill — Chip & Badge</div>
+
+    <div class="icon-row">
+      <button class="btn-pill">Free</button>
+      <button class="btn-pill">Premium</button>
+      <button class="btn-pill">4K Ultra HD</button>
+      <button class="btn-pill">Owner</button>
+    </div>
+  </div>
+
+  <!-- ==================== LOADING & SUCCESS ==================== -->
+  <div class="section">
+    <div class="section-title">7. Loading & Success State</div>
+
+    <button class="btn-primary" id="btnLoading" onclick="testLoading(this)">
+      <span class="spinner"></span>
+      <span class="icon">⚡</span>
+      Mulai Enhance
+    </button>
+
+    <div style="height:12px"></div>
+
+    <button class="btn-primary" id="btnSuccess" onclick="testSuccess(this)">
+      <span class="icon">⬇</span>
+      Simpan
+    </button>
+  </div>
+
+  <!-- ==================== COMBINED ==================== -->
+  <div class="section">
+    <div class="section-title">8. Kombinasi — Seperti di Halaman 2C</div>
+
+    <div class="btn-row">
+      <button class="btn-secondary">
+        <span class="icon">⇧</span>
+        Bagikan
+      </button>
+      <button class="btn-primary" style="padding:17px 22px;font-size:12.5px;">
+        <span class="icon">⬇</span>
+        Simpan
+      </button>
+    </div>
+
+    <div style="height:12px"></div>
+
+    <button class="btn-secondary">
+      <span class="icon">⟲</span>
+      Ulangi Enhance
+    </button>
+  </div>
+
 </div>
 
-<div class="toast" id="toast"></div>
-
 <script>
-/* ==================================================
-   TOAST
-================================================== */
-let toastTimer;
-function toast(msg){
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
-}
+/* ============ RIPPLE EFFECT ============ */
+document.querySelectorAll('.btn-primary, .btn-secondary, .btn-danger').forEach(btn => {
+  btn.addEventListener('click', function(e){
+    if(this.disabled || this.classList.contains('loading')) return;
 
-/* ==================================================
-   OWNER SYSTEM
-   - Default: user biasa (owner = false)
-   - Akses via: 3 cara (secret tap, kode, URL param)
-================================================== */
-let isOwner = false;
-let mode = 'free';
-
-// ---------- 1. SECRET TAP: klik 5× pada tulisan "GUSTAV LIZARD" ----------
-let secretTapCount = 0;
-let secretTapTimer;
-function handleSecretTap(){
-  secretTapCount++;
-  clearTimeout(secretTapTimer);
-
-  // Reset hitungan kalau tidak ada tap lanjutan dalam 1.5 detik
-  secretTapTimer = setTimeout(() => {
-    secretTapCount = 0;
-  }, 1500);
-
-  // Kalau sudah 5× tap → minta kode rahasia
-  if(secretTapCount >= 5){
-    secretTapCount = 0;
-    askOwnerCode();
-  }
-}
-
-// ---------- 2. KODE RAHASIA ----------
-const OWNER_CODE = 'GUSTAV2026'; // ← bisa kamu ubah
-
-function askOwnerCode(){
-  const input = prompt('Masukkan kode owner:');
-  if(input === null) return;
-
-  if(input.trim() === OWNER_CODE){
-    activateOwner();
-  } else {
-    toast('Kode salah');
-  }
-}
-
-// ---------- 3. URL PARAM: ?owner=1 ----------
-function checkUrlOwner(){
-  const params = new URLSearchParams(window.location.search);
-  if(params.get('owner') === '1'){
-    activateOwner(true);
-  }
-}
-
-// ---------- AKTIFKAN OWNER ----------
-function activateOwner(silent){
-  isOwner = true;
-  document.getElementById('ownerIndicator').classList.add('show');
-  if(!silent) toast('Owner mode aktif ✦');
-}
-
-// ---------- KELUAR OWNER ----------
-function logoutOwner(){
-  isOwner = false;
-  document.getElementById('ownerIndicator').classList.remove('show');
-  closeOwnerPanel();
-  toast('Keluar dari owner mode');
-}
-
-// ---------- BUKA / TUTUP PANEL ----------
-function openOwnerPanel(){
-  if(!isOwner){
-    toast('Akses ditolak');
-    return;
-  }
-  document.getElementById('ownerPanel').classList.add('show');
-  syncOwnerPanelUI();
-}
-function closeOwnerPanel(){
-  document.getElementById('ownerPanel').classList.remove('show');
-}
-
-// ---------- SET MODE ----------
-function setMode(newMode){
-  if(!isOwner){
-    toast('Hanya owner yang bisa ganti mode');
-    return;
-  }
-  if(mode === newMode) return;
-
-  mode = newMode;
-  applyMode();
-
-  if(newMode === 'premium'){
-    toast('Premium mode aktif ♛');
-  } else {
-    toast('Free mode aktif');
-  }
-}
-
-// ---------- APPLY MODE KE UI ----------
-function applyMode(){
-  document.body.dataset.mode = mode;
-
-  const banner = document.getElementById('premiumBanner');
-  const icon   = document.getElementById('bannerIcon');
-  const title  = document.getElementById('bannerTitle');
-  const desc   = document.getElementById('bannerDesc');
-  const sub    = document.getElementById('subStatus');
-  const badge  = document.getElementById('modeBadgeText');
-
-  if(mode === 'premium'){
-    banner.classList.remove('free');
-    banner.classList.add('premium');
-    icon.textContent = '♛';
-    title.textContent = 'PREMIUM ACTIVATED';
-    desc.textContent = 'selamat menikmati!';
-    sub.textContent = 'Premium Active - Tahunan';
-    badge.textContent = 'PREMIUM';
-  } else {
-    banner.classList.remove('premium');
-    banner.classList.add('free');
-    icon.textContent = '✦';
-    title.textContent = 'GUSTAV HD PREMIUM';
-    desc.textContent = 'Unlock unlimited AI magic. Pro models, 4K exports & priority queue.';
-    sub.textContent = 'Free Plan';
-    badge.textContent = 'FREE';
-  }
-}
-
-// ---------- SYNC UI PANEL OWNER ----------
-function syncOwnerPanelUI(){
-  const btnFree = document.getElementById('btnFree');
-  const btnPrem = document.getElementById('btnPremium');
-
-  btnFree.classList.toggle('selected', mode === 'free');
-  btnPrem.classList.toggle('selected', mode === 'premium');
-}
-
-/* ==================================================
-   OWNER TOOLS
-================================================== */
-function resetLimit(){
-  toast('Daily limit direset → 3/3');
-}
-function clearCache(){
-  if(confirm('Hapus semua data lokal?')){
-    localStorage.clear();
-    toast('Cache dibersihkan');
-  }
-}
-function simulateBoost(){
-  toast('Simulasi Priority Lane aktif ⚡');
-}
-
-/* ==================================================
-   LIVE DATE
-================================================== */
-function updateDate(){
-  const now = new Date();
-  const dd = String(now.getDate()).padStart(2,'0');
-  const mm = String(now.getMonth()+1).padStart(2,'0');
-  const yy = String(now.getFullYear()).slice(-2);
-  const hh = String(now.getHours()).padStart(2,'0');
-  const mn = String(now.getMinutes()).padStart(2,'0');
-  document.getElementById('dateNow').textContent = `${dd}/${mm}/${yy}, ${hh}.${mn}`;
-}
-updateDate();
-setInterval(updateDate, 30000);
-
-/* ==================================================
-   CLOSE PANEL kalau klik area gelap
-================================================== */
-document.getElementById('ownerPanel').addEventListener('click', e => {
-  if(e.target.id === 'ownerPanel') closeOwnerPanel();
+    const rect = this.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+    ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
 });
 
-/* ==================================================
-   INIT
-================================================== */
-applyMode();
-checkUrlOwner();
+/* ============ TEST LOADING ============ */
+function testLoading(btn){
+  btn.classList.add('loading');
+  btn.innerHTML = `<span class="spinner"></span> Memproses...`;
 
-/* ==================================================
-   KEYBOARD SHORTCUT (desktop): Ctrl+Shift+O
-================================================== */
-document.addEventListener('keydown', e => {
-  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'o'){
-    e.preventDefault();
-    if(isOwner){
-      openOwnerPanel();
-    } else {
-      askOwnerCode();
-    }
-  }
-});
+  setTimeout(() => {
+    btn.classList.remove('loading');
+    btn.innerHTML = `<span class="icon">⚡</span> Mulai Enhance`;
+    btn.style.pointerEvents = 'auto';
+  }, 2500);
+}
+
+/* ============ TEST SUCCESS ============ */
+function testSuccess(btn){
+  const original = btn.innerHTML;
+  btn.classList.add('success');
+  btn.innerHTML = `<span class="icon">✓</span> Berhasil`;
+
+  setTimeout(() => {
+    btn.classList.remove('success');
+    btn.innerHTML = original;
+  }, 1800);
+}
 </script>
 </body>
 </html>
