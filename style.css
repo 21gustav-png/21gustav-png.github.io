@@ -108,8 +108,6 @@ input{font:inherit}
   font-size:22px;font-weight:800;color:#fff;
   letter-spacing:-.5px;margin-top:4px;
 }
-
-/* Mode badge */
 .mode-badge{
   display:inline-flex;align-items:center;gap:6px;
   padding:6px 11px;border-radius:999px;
@@ -211,7 +209,6 @@ body[data-mode="premium"] .mode-badge{
   overflow:hidden;
   z-index:2;
 }
-/* Free mode - hijau soft (tidak menyala) */
 body[data-mode="free"] .card{
   background:linear-gradient(160deg,#0a1410,#0a0a0d);
   border-color:rgba(34,197,94,.2);
@@ -220,7 +217,6 @@ body[data-mode="free"] .card:hover{
   border-color:rgba(34,197,94,.35);
   box-shadow:0 0 20px rgba(34,197,94,.1);
 }
-/* Premium mode - ungu menyala */
 body[data-mode="premium"] .card{
   background:linear-gradient(160deg,#1a0f2e,#0d0818);
   border-color:rgba(168,85,247,.4);
@@ -320,7 +316,7 @@ body[data-mode="premium"] .setting-item .s-icon{
 }
 
 /* ==================================================
-   SVG ICON BASE
+   SVG ICON
 ================================================== */
 .ico{
   width:18px;height:18px;
@@ -360,6 +356,16 @@ body[data-mode="premium"] .setting-item .s-icon{
 .btn-primary:disabled .ico{opacity:.5}
 .btn-primary .ico{width:18px;height:18px}
 
+/* Tombol primary hijau di Free */
+body[data-mode="free"] .btn-primary{
+  background:#15803d;
+  box-shadow:0 8px 24px rgba(34,197,94,.3);
+}
+body[data-mode="free"] .btn-primary:hover{
+  background:#166534;
+  box-shadow:0 12px 32px rgba(34,197,94,.45);
+}
+
 /* ==================================================
    TOMBOL SECONDARY
 ================================================== */
@@ -381,6 +387,16 @@ body[data-mode="premium"] .setting-item .s-icon{
 }
 .btn-secondary:active{transform:scale(.98)}
 .btn-secondary .ico{width:16px;height:16px}
+
+body[data-mode="free"] .btn-secondary{
+  border-color:rgba(34,197,94,.5);
+  color:#4ade80;
+}
+body[data-mode="free"] .btn-secondary:hover{
+  background:rgba(34,197,94,.15);
+  border-color:#22c55e;
+  color:#86efac;
+}
 
 /* ==================================================
    TOMBOL DANGER
@@ -435,6 +451,11 @@ body[data-mode="premium"] .setting-item .s-icon{
   background:rgba(59,23,109,.22);
   flex-shrink:0;
 }
+body[data-mode="free"] .sub-chip{
+  border-color:rgba(34,197,94,.5);
+  color:#4ade80;
+  background:rgba(34,197,94,.15);
+}
 
 /* ==================================================
    HALAMAN 2: PENINGKAT KUALITAS
@@ -458,19 +479,30 @@ body[data-mode="premium"] .setting-item .s-icon{
   background:#111;aspect-ratio:4/5;
   margin-bottom:18px;border:1px solid var(--line);
 }
-.ba-slider img{
-  width:100%;height:100%;object-fit:cover;display:block;
-}
-.ba-slider .after-img{
+.ba-slider video{
+  width:100%;height:100%;
+  object-fit:cover;display:block;
   position:absolute;inset:0;
+}
+.ba-slider video.blur-video{
+  filter: blur(4px) brightness(0.85);
+  z-index:1;
+}
+.ba-slider video.after-img{
   clip-path:inset(0 50% 0 0);
   transition:clip-path .05s;
+  z-index:2;
 }
 .ba-slider .slider-line{
   position:absolute;top:0;bottom:0;left:50%;
   width:3px;background:#fff;pointer-events:none;
   box-shadow:0 0 12px rgba(255,255,255,.6);
   transform:translateX(-50%);
+  z-index:10;
+}
+body[data-mode="free"] .slider-line{
+  background:#22c55e;
+  box-shadow:0 0 12px rgba(34,197,94,.6);
 }
 .ba-slider .slider-handle{
   position:absolute;top:50%;left:50%;
@@ -478,7 +510,7 @@ body[data-mode="premium"] .setting-item .s-icon{
   background:#fff;transform:translate(-50%,-50%);
   display:grid;place-items:center;
   box-shadow:0 4px 16px rgba(0,0,0,.5);
-  pointer-events:none;color:#111;
+  pointer-events:none;color:#111;z-index:10;
 }
 .ba-slider .slider-handle .ico{
   width:16px;height:16px;stroke:#111;stroke-width:2.5;
@@ -489,12 +521,13 @@ body[data-mode="premium"] .setting-item .s-icon{
   background:rgba(0,0,0,.65);color:#fff;
   font-size:10px;font-weight:700;
   letter-spacing:.5px;backdrop-filter:blur(8px);
+  z-index:10;
 }
 .ba-slider .ba-label.before{left:12px}
 .ba-slider .ba-label.after{right:12px}
 .ba-slider input[type=range]{
   position:absolute;inset:0;width:100%;height:100%;
-  opacity:0;cursor:ew-resize;margin:0;
+  opacity:0;cursor:ew-resize;margin:0;z-index:10;
 }
 
 /* Tabs */
@@ -515,6 +548,10 @@ body[data-mode="premium"] .setting-item .s-icon{
   background:linear-gradient(145deg,#1a0f2e,#0d0818);
   color:#fff;
   box-shadow:0 2px 12px rgba(84,37,143,.25);
+}
+body[data-mode="free"] .tab.active{
+  background:linear-gradient(145deg,#0a1410,#0a0a0d);
+  box-shadow:0 2px 12px rgba(34,197,94,.25);
 }
 
 /* Feature Grid */
@@ -544,6 +581,14 @@ body[data-mode="premium"] .setting-item .s-icon{
   border-color:var(--neon);
   box-shadow:0 0 24px rgba(168,85,247,.35);
 }
+body[data-mode="free"] .feature.selected{
+  background:
+    radial-gradient(circle at 100% 0%,rgba(34,197,94,.3),transparent 70%),
+    linear-gradient(160deg,#0a1410,#0a0a0d);
+  border-color:#22c55e;
+  box-shadow:0 0 24px rgba(34,197,94,.3);
+}
+body[data-mode="free"] .feature.selected small{color:#4ade80}
 .feature-icon{
   width:38px;height:38px;border-radius:11px;
   display:grid;place-items:center;flex-shrink:0;
@@ -630,6 +675,14 @@ body[data-mode="premium"] .feature-icon{
   border-color:var(--accent);
   box-shadow:0 0 24px rgba(84,37,143,.35);
 }
+body[data-mode="free"] .res.selected{
+  background:
+    radial-gradient(circle at 100% 0%,rgba(34,197,94,.3),transparent 70%),
+    linear-gradient(160deg,#0a1410,#0a0a0d);
+  border-color:#22c55e;
+  box-shadow:0 0 24px rgba(34,197,94,.3);
+}
+body[data-mode="free"] .res.selected p{color:#4ade80}
 .res.locked{opacity:.55;cursor:not-allowed}
 .res.locked:hover{border-color:var(--line);transform:none}
 .res h4{
@@ -690,6 +743,14 @@ body[data-mode="premium"] .feature-icon{
   0%,100%{transform:scale(1)}
   50%{transform:scale(1.08)}
 }
+body[data-mode="free"] .orbit .core{
+  background:radial-gradient(circle at 50% 45%,#22c55e,#15803d 70%);
+  box-shadow:
+    0 0 50px rgba(34,197,94,.8),
+    inset 0 0 25px rgba(255,255,255,.15);
+}
+body[data-mode="free"] .orbit .ring{border-top-color:#22c55e}
+body[data-mode="free"] .orbit .ring2{border-bottom-color:#4ade80}
 .loading-status{
   font-size:15px;font-weight:700;color:#fff;
 }
@@ -707,6 +768,10 @@ body[data-mode="premium"] .feature-icon{
   background:linear-gradient(90deg,var(--purple),var(--neon));
   border-radius:10px;transition:width .3s;
   box-shadow:0 0 12px rgba(168,85,247,.6);
+}
+body[data-mode="free"] .progress i{
+  background:linear-gradient(90deg,#15803d,#22c55e);
+  box-shadow:0 0 12px rgba(34,197,94,.6);
 }
 .progress-percent{
   font-size:20px;font-weight:800;color:#fff;
@@ -727,8 +792,10 @@ body[data-mode="premium"] .feature-icon{
    BOTTOM NAV
 ================================================== */
 .bottom-nav{
-  position:fixed;left:50%;bottom:12px;
-  transform:translateX(-50%);
+  position:fixed !important;
+  left:50% !important;
+  bottom:12px !important;
+  transform:translateX(-50%) !important;
   width:min(calc(100% - 20px),620px);
   padding:8px 10px;border-radius:22px;
   background:rgba(10,10,14,.92);
@@ -736,7 +803,8 @@ body[data-mode="premium"] .feature-icon{
   backdrop-filter:blur(22px);
   -webkit-backdrop-filter:blur(22px);
   display:grid;grid-template-columns:repeat(5,1fr);
-  align-items:center;z-index:50;
+  align-items:center;
+  z-index:9999 !important;
   box-shadow:0 12px 40px rgba(0,0,0,.6);
 }
 .nav{
@@ -805,6 +873,33 @@ body[data-mode="premium"] .feature-icon{
   100%{left:200%}
 }
 
+/* FAB hijau di Free */
+body[data-mode="free"] .fab-premium{
+  background:linear-gradient(145deg,#22c55e,#15803d);
+  animation:glowPulseGreen 2s ease-in-out infinite;
+}
+body[data-mode="free"] .fab-premium .ico{
+  stroke:#fff;
+  filter:drop-shadow(0 0 4px #fff);
+}
+body[data-mode="free"] .fab-premium .fab-ring{
+  border-top-color:#4ade80;
+  border-right-color:rgba(74,222,128,.3);
+}
+@keyframes glowPulseGreen{
+  0%,100%{
+    box-shadow:0 0 20px rgba(34,197,94,.6),0 0 40px rgba(34,197,94,.3);
+    transform:scale(1);
+  }
+  50%{
+    box-shadow:
+      0 0 35px rgba(34,197,94,1),
+      0 0 70px rgba(34,197,94,.6),
+      0 0 100px rgba(34,197,94,.3);
+    transform:scale(1.08);
+  }
+}
+
 /* ==================================================
    TOAST
 ================================================== */
@@ -817,7 +912,7 @@ body[data-mode="premium"] .feature-icon{
   font-size:12.5px;color:var(--soft);
   opacity:0;pointer-events:none;
   transition:.28s;white-space:nowrap;
-  z-index:100;
+  z-index:10000;
   box-shadow:0 10px 30px rgba(0,0,0,.6);
   font-weight:600;backdrop-filter:blur(12px);
 }
