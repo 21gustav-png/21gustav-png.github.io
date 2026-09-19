@@ -19,17 +19,65 @@ const MAX_SIZE = 10 * 1024 * 1024;
 const OWNER_CODE = 'GUSTAV2026';
 
 /* ==================================================
+   AUTO SLIDER — Garis Geser Sendiri
+================================================== */
+let autoSliderInterval = null;
+let autoSliderValue = 30;
+let autoSliderDirection = 1;
+
+function startAutoSlider(){
+  if(autoSliderInterval) return;
+
+  autoSliderInterval = setInterval(() => {
+    autoSliderValue += autoSliderDirection * 0.4;
+
+    if(autoSliderValue >= 80){
+      autoSliderValue = 80;
+      autoSliderDirection = -1;
+    } else if(autoSliderValue <= 20){
+      autoSliderValue = 20;
+      autoSliderDirection = 1;
+    }
+
+    applySliderValue(autoSliderValue);
+  }, 30);
+}
+
+function stopAutoSlider(){
+  if(autoSliderInterval){
+    clearInterval(autoSliderInterval);
+    autoSliderInterval = null;
+  }
+}
+
+function applySliderValue(v){
+  const after = document.querySelector('#page-quality .ba-slider .after-img');
+  const line = document.getElementById('sliderLine');
+  const handle = document.querySelector('#page-quality .slider-handle');
+
+  if(after) after.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+  if(line) line.style.left = v + '%';
+  if(handle) handle.style.left = v + '%';
+
+  const rangeInput = document.getElementById('baRange');
+  if(rangeInput) rangeInput.value = v;
+}
+
+function userDrag(v){
+  stopAutoSlider();
+  autoSliderValue = parseFloat(v);
+  applySliderValue(autoSliderValue);
+
+  clearTimeout(window.resumeTimer);
+  window.resumeTimer = setTimeout(() => {
+    startAutoSlider();
+  }, 3000);
+}
+
+/* ==================================================
    NAVIGASI
 ================================================== */
 function goTo(name){
-  // Simpan ke history (kecuali loading)
-  if(name !== 'loading'){
-    const current = pageHistory[pageHistory.length - 1];
-    if(current !== name){
-      pageHistory.push(name);
-    }
-  }
-
   // Sembunyikan semua halaman
   pages.forEach(p => p.classList.remove('active'));
 
@@ -49,6 +97,14 @@ function goTo(name){
 
   // Background bintang hanya di Home + Premium mode
   updateBg(name);
+
+  // Auto slider hanya di halaman quality
+  if(name === 'quality'){
+    stopAutoSlider();
+    setTimeout(startAutoSlider, 500);
+  } else {
+    stopAutoSlider();
+  }
 }
 
 function goBack(){
@@ -56,7 +112,6 @@ function goBack(){
     pageHistory.pop();
     const prev = pageHistory[pageHistory.length - 1];
 
-    // Pindah TANPA tambah ke history
     pages.forEach(p => p.classList.remove('active'));
     const t = document.getElementById('page-' + prev);
     if(t){
@@ -67,6 +122,13 @@ function goBack(){
     const hideNav = ['quality','options','loading','result'].includes(prev);
     bottomNav.style.display = hideNav ? 'none' : 'grid';
     updateBg(prev);
+
+    if(prev === 'quality'){
+      stopAutoSlider();
+      setTimeout(startAutoSlider, 500);
+    } else {
+      stopAutoSlider();
+    }
   } else {
     goTo('home');
   }
@@ -121,16 +183,6 @@ function toast(msg){
 /* ==================================================
    HALAMAN 2: PENINGKAT KUALITAS
 ================================================== */
-function updateSlider(v){
-  const after = document.querySelector('#page-quality .ba-slider video.after-img');
-  const line = document.getElementById('sliderLine');
-  const handle = document.querySelector('#page-quality .slider-handle');
-
-  if(after) after.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
-  if(line) line.style.left = v + '%';
-  if(handle) handle.style.left = v + '%';
-}
-
 function switchTab(tab, el){
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
@@ -152,7 +204,6 @@ function pickFeature(el, feature){
   el.classList.add('selected');
   currentFeature = feature;
 
-  // Auto-set AI Upscale ke 4K
   if(feature === 'ai'){
     currentRes = 2160;
   }
@@ -180,16 +231,13 @@ function openGallery(){
 
     currentFile = f;
 
-    // Tentukan apakah foto atau video
     const isVideo = f.type.startsWith('video/');
 
-    // Kalau pilih FPS tapi bukan video
     if(currentFeature === 'fps' && !isVideo){
       toast('FPS hanya untuk video');
       return;
     }
 
-    // Siapkan halaman options
     setupOptions(f, isVideo);
     goTo('options');
   };
@@ -200,16 +248,13 @@ function openGallery(){
    HALAMAN 4: OPTIONS
 ================================================== */
 function setupOptions(f, isVideo){
-  // Set preview
   const img = document.getElementById('optionsPreviewImg');
   img.src = URL.createObjectURL(f);
   img.style.display = 'block';
 
-  // Set file info
   document.getElementById('optionsFileName').textContent = f.name;
   document.getElementById('optionsFileSize').textContent = formatSize(f.size);
 
-  // Set title berdasarkan feature
   const featureNames = {
     'resolusi': 'Pilih Resolusi',
     'fps': 'Pilih Frame Rate',
@@ -222,11 +267,9 @@ function setupOptions(f, isVideo){
   };
   document.getElementById('optionsTitle').textContent = featureNames[currentFeature] || 'Pilih Opsi';
 
-  // Reset pilihan
   document.querySelectorAll('#resGrid .res').forEach(r => r.classList.remove('selected'));
   document.querySelectorAll('#formatGrid .res').forEach(r => r.classList.remove('selected'));
 
-  // Default format JPG
   document.querySelector('#formatGrid .res[data-f="jpg"]').classList.add('selected');
 
   const resGrid = document.getElementById('resGrid');
@@ -234,7 +277,6 @@ function setupOptions(f, isVideo){
   const formatGrid = document.getElementById('formatGrid');
 
   if(currentFeature === 'fps'){
-    // Tampilkan FPS, bukan resolusi
     document.getElementById('optionsSectionTitle').textContent = 'Frame Rate (FPS)';
     resGrid.innerHTML = `
       <button class="res" data-r="60" onclick="pickRes(this)"><h4>60</h4><p>Standard</p></button>
@@ -244,7 +286,6 @@ function setupOptions(f, isVideo){
     `;
     currentRes = 60;
   } else {
-    // Tampilkan resolusi
     document.getElementById('optionsSectionTitle').textContent = 'Output Resolution';
     resGrid.innerHTML = `
       <button class="res" data-r="720" onclick="pickRes(this)"><h4>720p</h4><p>HD Ready</p></button>
@@ -259,25 +300,19 @@ function setupOptions(f, isVideo){
       </button>
     `;
 
-    // Apply mode (lock/unlock)
     if(mode === 'premium'){
       document.querySelectorAll('#resGrid .res').forEach(r => r.classList.remove('locked'));
       document.querySelectorAll('#resGrid .lock-badge').forEach(b => b.style.display = 'none');
     }
   }
 
-  // Tampilkan format grid
   formatHead.style.display = 'flex';
   formatGrid.style.display = 'grid';
 
-  // Set selected pertama
   document.querySelector('#resGrid .res').classList.add('selected');
   currentRes = parseInt(document.querySelector('#resGrid .res').dataset.r);
 
-  // Enable process button
   document.getElementById('optionsProcessBtn').disabled = false;
-
-  // Update chip
   document.getElementById('optionsChip').textContent = mode === 'premium' ? 'PREMIUM' : 'FREE';
 }
 
@@ -286,7 +321,6 @@ function pickRes(el){
     tryLocked(el);
     return;
   }
-  // Hapus SEMUA selected (fix bug 2 ungu)
   document.querySelectorAll('.res').forEach(r => r.classList.remove('selected'));
   el.classList.add('selected');
   currentRes = parseInt(el.dataset.r);
@@ -421,7 +455,6 @@ async function saveResult(){
   const label = getLabel().replace(/\s/g, '');
   const newName = `${originalName}_GUSTAV-${label}.${ext}`;
 
-  // Coba Web Share API dulu
   if(navigator.canShare && navigator.share){
     try{
       const file = new File([currentFile], newName, { type: currentFile.type });
@@ -434,12 +467,9 @@ async function saveResult(){
         toast('Berhasil disimpan');
         return;
       }
-    }catch(err){
-      // Lanjut ke download biasa
-    }
+    }catch(err){}
   }
 
-  // Fallback: download
   const url = URL.createObjectURL(currentFile);
   const a = document.createElement('a');
   a.href = url;
