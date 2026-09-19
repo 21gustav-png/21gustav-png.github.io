@@ -121,18 +121,16 @@ function toast(msg){
 /* ==================================================
    HALAMAN 2: PENINGKAT KUALITAS
 ================================================== */
-// Before/After slider
 function updateSlider(v){
-  const after = document.getElementById('baAfter');
+  const after = document.querySelector('#page-quality .ba-slider video.after-img');
   const line = document.getElementById('sliderLine');
-  const handle = document.querySelector('.ba-slider .slider-handle');
+  const handle = document.querySelector('#page-quality .slider-handle');
 
-  after.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
-  line.style.left = v + '%';
-  handle.style.left = v + '%';
+  if(after) after.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
+  if(line) line.style.left = v + '%';
+  if(handle) handle.style.left = v + '%';
 }
 
-// Tab switch
 function switchTab(tab, el){
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
@@ -149,7 +147,6 @@ function switchTab(tab, el){
   }
 }
 
-// Pilih feature
 function pickFeature(el, feature){
   document.querySelectorAll('.feature').forEach(f => f.classList.remove('selected'));
   el.classList.add('selected');
@@ -163,14 +160,12 @@ function pickFeature(el, feature){
   toast('Fitur: ' + feature.charAt(0).toUpperCase() + feature.slice(1));
 }
 
-// Buka galeri HP
 function openGallery(){
   if(!currentFeature){
     toast('Pilih fitur dulu');
     return;
   }
 
-  // Buat input file temporary
   const input = document.createElement('input');
   input.type = 'file';
   input.accept = 'image/*,video/*';
@@ -234,7 +229,6 @@ function setupOptions(f, isVideo){
   // Default format JPG
   document.querySelector('#formatGrid .res[data-f="jpg"]').classList.add('selected');
 
-  // Setup resolusi grid
   const resGrid = document.getElementById('resGrid');
   const formatHead = document.getElementById('formatHead');
   const formatGrid = document.getElementById('formatGrid');
@@ -369,7 +363,6 @@ function startProcess(){
 
 function cancelProcess(){
   if(confirm('Batal proses?')){
-    // Hapus loading dari history
     if(pageHistory[pageHistory.length - 1] === 'loading'){
       pageHistory.pop();
     }
@@ -390,17 +383,11 @@ function getLabel(){
    HALAMAN 6: HASIL
 ================================================== */
 function showResult(label){
-  // Set preview before/after
-  const before = document.getElementById('resultBefore');
-  const after = document.getElementById('resultAfter');
-
-  if(currentFile){
-    const url = URL.createObjectURL(currentFile);
-    before.src = url;
-    after.src = url;
+  const resultImg = document.getElementById('resultImg');
+  if(resultImg && currentFile){
+    resultImg.src = URL.createObjectURL(currentFile);
   }
 
-  // Set info
   const resText = currentFeature === 'fps'
     ? label
     : label + ' (' + getResolutionSize(currentRes) + ')';
@@ -418,16 +405,6 @@ function showResult(label){
 function getResolutionSize(r){
   const m = {720:'1280×720', 1080:'1920×1080', 1440:'2560×1440', 2160:'3840×2160'};
   return m[r] || r + 'p';
-}
-
-function updateResultSlider(v){
-  const after = document.getElementById('resultAfter');
-  const line = document.getElementById('resultLine');
-  const handle = document.querySelector('#page-result .slider-handle');
-
-  after.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
-  line.style.left = v + '%';
-  handle.style.left = v + '%';
 }
 
 /* ==================================================
@@ -542,7 +519,6 @@ function applyMode(){
     document.querySelectorAll('.lock-badge').forEach(b => b.style.display = 'flex');
   }
 
-  // Update background
   const currentPage = document.querySelector('.page.active')?.id.replace('page-','');
   updateBg(currentPage);
 }
@@ -631,12 +607,10 @@ function logout(){
 /* ==================================================
    EVENT LISTENERS
 ================================================== */
-// Owner panel close on backdrop click
 document.getElementById('ownerPanel').addEventListener('click', e => {
   if(e.target.id === 'ownerPanel') closeOwnerPanel();
 });
 
-// Keyboard shortcut Ctrl+Shift+O
 document.addEventListener('keydown', e => {
   if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'o'){
     e.preventDefault();
@@ -652,7 +626,6 @@ applyMode();
 createStars();
 updateBg('home');
 
-// URL param untuk owner mode
 const params = new URLSearchParams(window.location.search);
 if(params.get('owner') === '1') activateOwner(true);
 
