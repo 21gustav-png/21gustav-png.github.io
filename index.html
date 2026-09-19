@@ -119,8 +119,12 @@
   </div>
 
   <div class="ba-slider">
-    <img id="baBefore" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=60" alt="before">
-    <img id="baAfter" class="after-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=100" alt="after">
+    <video class="blur-video" autoplay loop muted playsinline>
+      <source src="https://cdn.pixabay.com/video/2023/10/22/185819-877491243_large.mp4" type="video/mp4">
+    </video>
+    <video class="after-img" autoplay loop muted playsinline>
+      <source src="https://cdn.pixabay.com/video/2023/10/22/185819-877491243_large.mp4" type="video/mp4">
+    </video>
     <span class="ba-label before">Sebelum</span>
     <span class="ba-label after">Sesudah</span>
     <div class="slider-line" id="sliderLine"></div>
@@ -263,16 +267,8 @@
     Berhasil di-enhance
   </div>
 
-  <div class="ba-slider">
-    <img id="resultBefore" alt="before">
-    <img id="resultAfter" class="after-img" alt="after">
-    <span class="ba-label before">Sebelum</span>
-    <span class="ba-label after">Sesudah</span>
-    <div class="slider-line" id="resultLine"></div>
-    <div class="slider-handle">
-      <svg class="ico" viewBox="0 0 24 24"><path d="M8 7l-4 5 4 5M16 7l4 5-4 5"/></svg>
-    </div>
-    <input type="range" min="0" max="100" value="50" id="resultRange" oninput="updateResultSlider(this.value)">
+  <div class="preview show" style="display:block">
+    <img id="resultImg" alt="result">
   </div>
 
   <div class="settings-list">
