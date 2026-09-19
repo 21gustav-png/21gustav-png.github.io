@@ -354,7 +354,6 @@ body[data-mode="premium"] .setting-item .s-icon{
 }
 .btn-primary:disabled .ico{opacity:.5}
 .btn-primary .ico{width:18px;height:18px}
-
 body[data-mode="free"] .btn-primary{
   background:#15803d;
   box-shadow:0 8px 24px rgba(34,197,94,.3);
@@ -471,7 +470,8 @@ body[data-mode="free"] .sub-chip{
 }
 
 /* ==================================================
-   FOTO BEFORE/AFTER — FIX: KIRI BLUR, KANAN TAJAM
+   FOTO BEFORE/AFTER — WINK STYLE
+   Garis tipis 2px, tanpa handle, blur ringan
 ================================================== */
 .ba-slider{
   position:relative;
@@ -493,42 +493,49 @@ body[data-mode="free"] .sub-chip{
   inset:0;
 }
 
-/* FOTO TAJAM (After) — di BELAKANG */
+/* Foto TAJAM (After) — di belakang */
 .ba-slider img.after-img{
   z-index:1;
 }
 
-/* FOTO BLUR (Before) — di DEPAN, di-clip */
+/* Foto BLUR (Before) — di depan, di-clip */
 .ba-slider img.blur-video{
-  filter: blur(10px) brightness(0.65) saturate(0.7);
-  clip-path:inset(0 50% 0 0);
-  transition:clip-path .05s;
+  filter: blur(2px) brightness(0.9) !important;
+  clip-path:inset(0 0 0 100%);
+  transition:clip-path 0s !important;
   z-index:2;
-  transform:scale(1.08);
+  transform:none !important;
 }
 
+/* Garis tipis 2px */
 .ba-slider .slider-line{
-  position:absolute;top:0;bottom:0;left:50%;
-  width:3px;background:#fff;pointer-events:none;
-  box-shadow:0 0 12px rgba(255,255,255,.6);
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:100%;
+  width:2px !important;
+  background:#22c55e;
+  box-shadow:0 0 8px rgba(34,197,94,.7);
   transform:translateX(-50%);
   z-index:10;
+  transition:none !important;
 }
-body[data-mode="free"] .slider-line{
-  background:#22c55e;
-  box-shadow:0 0 12px rgba(34,197,94,.6);
+
+body[data-mode="premium"] .ba-slider .slider-line{
+  background:#a855f7;
+  box-shadow:0 0 8px rgba(168,85,247,.7);
 }
+
+/* Sembunyikan handle */
 .ba-slider .slider-handle{
-  position:absolute;top:50%;left:50%;
-  width:38px;height:38px;border-radius:50%;
-  background:#fff;transform:translate(-50%,-50%);
-  display:grid;place-items:center;
-  box-shadow:0 4px 16px rgba(0,0,0,.5);
-  pointer-events:none;color:#111;z-index:10;
+  display:none !important;
 }
-.ba-slider .slider-handle .ico{
-  width:16px;height:16px;stroke:#111;stroke-width:2.5;
+
+/* Sembunyikan input range */
+.ba-slider input[type=range]{
+  display:none !important;
 }
+
 .ba-slider .ba-label{
   position:absolute;top:12px;
   padding:5px 10px;border-radius:8px;
@@ -539,10 +546,6 @@ body[data-mode="free"] .slider-line{
 }
 .ba-slider .ba-label.before{left:12px}
 .ba-slider .ba-label.after{right:12px}
-.ba-slider input[type=range]{
-  position:absolute;inset:0;width:100%;height:100%;
-  opacity:0;cursor:ew-resize;margin:0;z-index:10;
-}
 
 /* Tabs */
 .tabs{
