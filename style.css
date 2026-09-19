@@ -22,7 +22,6 @@
   --radius:20px;
   --radius-sm:14px;
 }
-
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 body{
@@ -356,7 +355,6 @@ body[data-mode="premium"] .setting-item .s-icon{
 .btn-primary:disabled .ico{opacity:.5}
 .btn-primary .ico{width:18px;height:18px}
 
-/* Tombol primary hijau di Free */
 body[data-mode="free"] .btn-primary{
   background:#15803d;
   box-shadow:0 8px 24px rgba(34,197,94,.3);
@@ -387,7 +385,6 @@ body[data-mode="free"] .btn-primary:hover{
 }
 .btn-secondary:active{transform:scale(.98)}
 .btn-secondary .ico{width:16px;height:16px}
-
 body[data-mode="free"] .btn-secondary{
   border-color:rgba(34,197,94,.5);
   color:#4ade80;
@@ -473,26 +470,43 @@ body[data-mode="free"] .sub-chip{
   margin-top:6px;line-height:1.5;
 }
 
-/* Before/After Slider */
+/* ==================================================
+   FOTO BEFORE/AFTER — 1 FOTO + BLUR KUAT
+================================================== */
 .ba-slider{
-  position:relative;border-radius:18px;overflow:hidden;
-  background:#111;aspect-ratio:4/5;
-  margin-bottom:18px;border:1px solid var(--line);
+  position:relative;
+  overflow:hidden;
+  background:#111;
+  aspect-ratio:1/1;
+  max-height:340px;
+  margin-bottom:18px;
+  border:1px solid var(--line);
+  border-radius:18px;
 }
-.ba-slider video{
-  width:100%;height:100%;
-  object-fit:cover;display:block;
-  position:absolute;inset:0;
+
+.ba-slider img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  position:absolute;
+  inset:0;
 }
-.ba-slider video.blur-video{
-  filter: blur(4px) brightness(0.85);
+
+/* FOTO BLUR (Before) — blur kuat */
+.ba-slider img.blur-video{
+  filter: blur(10px) brightness(0.65) saturate(0.7);
   z-index:1;
+  transform:scale(1.08);
 }
-.ba-slider video.after-img{
+
+/* FOTO TAJAM (After) */
+.ba-slider img.after-img{
   clip-path:inset(0 50% 0 0);
   transition:clip-path .05s;
   z-index:2;
 }
+
 .ba-slider .slider-line{
   position:absolute;top:0;bottom:0;left:50%;
   width:3px;background:#fff;pointer-events:none;
