@@ -4,331 +4,205 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>GUSTAV HD</title>
-<style>
-:root{--bg:#050505;--panel:#0b0b0f;--line:#202027;--deep:#3b176d;--purple:#54258f;--accent:#6d3db8;--pale:#c9a8ee;--soft:#e5d4fa;--neon:#a855f7;--neon2:#c084fc;--gold:#fbbf24;--green:#22c55e;--red:#ef4444;--text:#e5e5e7;--text2:#8a8a94;--muted:#555560;--radius:20px}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%}
-body{background:var(--bg);color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;font-size:14px;line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-button{font:inherit;color:inherit;border:0;cursor:pointer;background:none}
-.bg-animation{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;display:none}
-.bg-animation.show{display:block}
-.nebula{position:absolute;top:-20%;left:-20%;width:140%;height:140%;background:radial-gradient(circle at 30% 40%,rgba(84,37,143,.35) 0%,transparent 40%),radial-gradient(circle at 70% 60%,rgba(168,85,247,.25) 0%,transparent 45%),radial-gradient(circle at 50% 80%,rgba(59,23,109,.3) 0%,transparent 40%);filter:blur(60px);animation:nebulaMove 25s ease-in-out infinite;will-change:transform}
-@keyframes nebulaMove{0%,100%{transform:rotate(0) scale(1)}33%{transform:rotate(8deg) scale(1.08)}66%{transform:rotate(-8deg) scale(1.05)}}
-.stars{position:absolute;inset:0;width:100%;height:100%}
-.star{position:absolute;border-radius:50%;background:#c9a8ee;box-shadow:0 0 6px rgba(201,168,238,.8),0 0 12px rgba(168,85,247,.4);animation:starMove linear infinite,starTwinkle ease-in-out infinite;will-change:transform,opacity}
-@keyframes starMove{0%{transform:translateY(-10vh)}100%{transform:translateY(110vh)}}
-@keyframes starTwinkle{0%,100%{opacity:.3}50%{opacity:1}}
-.app{width:100%;max-width:640px;min-height:100vh;margin:0 auto;padding:32px 20px 130px;position:relative;z-index:1}
-.page{display:none;animation:fadeUp .35s ease}
-.page.active{display:block}
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.greeting{padding:8px 4px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.greeting small{font-size:11px;color:var(--text2);letter-spacing:1.5px;text-transform:uppercase;font-weight:600}
-.greeting h2{font-size:24px;font-weight:800;color:#fff;letter-spacing:-.6px;margin-top:6px}
-.mode-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--panel);border:1px solid var(--line);font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--text2);transition:.3s;flex-shrink:0}
-.mode-badge .mb-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);transition:.3s}
-body[data-mode="premium"] .mode-badge .mb-dot{background:var(--neon);box-shadow:0 0 6px var(--neon)}
-body[data-mode="premium"] .mode-badge{color:#c9a8ee;border-color:rgba(109,61,184,.5);background:rgba(59,23,109,.25)}
-.premium-banner{border-radius:var(--radius);padding:18px 20px;display:flex;align-items:center;gap:14px;margin-bottom:28px;border:1px solid;transition:.3s;position:relative;overflow:hidden;cursor:pointer;z-index:2}
-.premium-banner.free{background:radial-gradient(circle at 100% 0%,rgba(34,197,94,.15),transparent 60%),linear-gradient(160deg,#0a1a10 0%,#050a07 100%);border-color:rgba(34,197,94,.3)}
-.premium-banner.free .banner-icon{background:linear-gradient(145deg,#22c55e,#15803d);box-shadow:0 0 20px rgba(34,197,94,.4)}
-.premium-banner.premium{background:radial-gradient(circle at 100% 0%,rgba(168,85,247,.3),transparent 60%),linear-gradient(160deg,#1a0f2e 0%,#0a0512 100%);border-color:rgba(168,85,247,.5);animation:bannerPulse 3s ease-in-out infinite}
-@keyframes bannerPulse{0%,100%{box-shadow:0 0 0 rgba(168,85,247,0)}50%{box-shadow:0 0 30px rgba(168,85,247,.35)}}
-.premium-banner.premium .banner-icon{background:linear-gradient(145deg,var(--neon),var(--purple));box-shadow:0 0 20px rgba(168,85,247,.5)}
-.banner-icon{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;color:#fff;flex-shrink:0;position:relative;z-index:1}
-.banner-icon .ico{width:22px;height:22px;stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.banner-text{flex:1;min-width:0}
-.banner-text b{font-size:14px;font-weight:700;color:#fff;display:block}
-.banner-text small{font-size:11px;color:var(--text2);display:block;margin-top:3px;line-height:1.4}
-.banner-arrow{color:var(--text2);font-size:20px}
-.section-head{display:flex;align-items:center;justify-content:space-between;margin:0 4px 14px}
-.section-head h3{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.2px}
-.section-head a{font-size:11.5px;color:var(--text2);letter-spacing:.3px;cursor:pointer;transition:.2s}
-.section-head a:hover{color:#c9a8ee}
-.services{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
-.service{padding:20px 18px;border-radius:18px;background:var(--panel);border:1px solid var(--line);display:flex;flex-direction:column;gap:14px;text-align:left;transition:.22s;min-height:120px;justify-content:space-between;cursor:pointer;z-index:2}
-.service:hover{border-color:rgba(109,61,184,.4);transform:translateY(-2px)}
-.service:active{transform:scale(.98)}
-.service-icon{width:42px;height:42px;border-radius:11px;display:grid;place-items:center;flex-shrink:0;transition:.3s}
-body[data-mode="free"] .service-icon{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#4ade80}
-body[data-mode="premium"] .service-icon{background:rgba(168,85,247,.22);border:1px solid rgba(168,85,247,.45);color:#d8b4fe}
-.service-icon .ico{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.service b{font-size:13.5px;font-weight:600;color:#fff;line-height:1.35}
-.settings-list{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.setting-item{display:flex;align-items:center;gap:14px;padding:16px 18px;background:var(--panel);border:1px solid var(--line);border-radius:16px;width:100%;text-align:left;transition:.2s;cursor:pointer;z-index:2}
-.setting-item:hover{border-color:rgba(109,61,184,.4);transform:translateY(-1px)}
-.setting-item .s-icon{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;flex-shrink:0;transition:.3s}
-body[data-mode="free"] .setting-item .s-icon{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#4ade80}
-body[data-mode="premium"] .setting-item .s-icon{background:rgba(168,85,247,.22);border:1px solid rgba(168,85,247,.45);color:#d8b4fe}
-.setting-item .s-icon .ico{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.setting-item .s-text{flex:1;min-width:0}
-.setting-item .s-text b{font-size:13.5px;font-weight:700;color:#fff;display:block}
-.setting-item .s-text span{font-size:11.5px;color:var(--text2);display:block;margin-top:3px}
-.setting-item .s-arrow{color:var(--text2);font-size:20px}
-.logout{width:100%;padding:16px;border-radius:16px;background:rgba(80,20,20,.25);border:1px solid rgba(239,68,68,.25);color:var(--red);font-size:13.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s;margin-bottom:16px;z-index:2;position:relative}
-.logout:hover{background:rgba(80,20,20,.4);border-color:rgba(239,68,68,.5)}
-.logout .ico{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.sub-header{display:flex;align-items:center;gap:14px;padding:4px 0 24px}
-.sub-back{width:44px;height:44px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;transition:.2s;flex-shrink:0}
-.sub-back:hover{border-color:var(--accent);transform:scale(1.05)}
-.sub-back .ico{width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.sub-title{flex:1;display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;color:#fff;letter-spacing:-.4px}
-.sub-title .st-ico{color:var(--pale);width:20px;height:20px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.sub-chip{padding:7px 12px;border-radius:999px;border:1px solid rgba(109,61,184,.5);color:#c9a8ee;font-size:9.5px;font-weight:800;letter-spacing:1.2px;background:rgba(59,23,109,.22);flex-shrink:0}
-.upload{display:block;border:1.5px dashed #2a2a33;border-radius:var(--radius);padding:48px 24px;text-align:center;background:var(--panel);transition:.25s;cursor:pointer;margin-bottom:18px}
-.upload:hover{border-color:rgba(109,61,184,.6);background:#0e0d13}
-.upload-ico{width:64px;height:64px;border-radius:17px;display:grid;place-items:center;margin:0 auto 18px;transition:.3s}
-body[data-mode="free"] .upload-ico{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25);color:#4ade80}
-body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px solid rgba(168,85,247,.45);color:#d8b4fe}
-.upload-ico .ico{width:28px;height:28px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.upload b{font-size:16px;display:block;color:#fff;font-weight:700}
-.upload small{font-size:12px;color:var(--text2);display:block;margin-top:8px}
-.preview{display:none;border-radius:var(--radius);overflow:hidden;background:var(--panel);border:1px solid var(--line);margin-bottom:20px}
-.preview.show{display:block}
-.preview img,.preview video{width:100%;display:block;aspect-ratio:16/11;object-fit:cover;background:#111}
-.preview-info{padding:16px 20px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);gap:12px}
-.preview-info b{font-size:13px;font-weight:600;color:#fff;display:block;word-break:break-all}
-.preview-info span{font-size:11.5px;color:var(--text2);display:block;margin-top:4px}
-.remove{width:36px;height:36px;border-radius:11px;background:#1a1a20;border:1px solid #2a2a33;display:grid;place-items:center;transition:.2s;flex-shrink:0;color:#b8b8c0}
-.remove:hover{color:#e07a7a;border-color:#3a2020}
-.remove .ico{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
-.res{padding:22px 20px;border-radius:17px;background:var(--panel);border:1.5px solid var(--line);text-align:left;transition:.22s;cursor:pointer;position:relative;overflow:hidden}
-.res:hover{border-color:rgba(109,61,184,.4)}
-.res:active{transform:scale(.97)}
-.res.selected{background:radial-gradient(circle at 100% 0%,rgba(84,37,143,.4),transparent 70%),linear-gradient(160deg,#1a0f2e,#0d0818);border-color:var(--accent);box-shadow:0 0 24px rgba(84,37,143,.35)}
-.res.locked{opacity:.55;cursor:not-allowed}
-.res.locked:hover{border-color:var(--line);transform:none}
-.res h4{font-size:20px;font-weight:800;letter-spacing:-.4px;color:#fff}
-.res p{font-size:11px;color:var(--text2);margin-top:6px}
-.res.selected p{color:#c9a8ee}
-.res .lock-badge{position:absolute;top:12px;right:12px;color:var(--muted)}
-.res .lock-badge .ico{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.fps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
-.fps{padding:16px 12px;border-radius:14px;background:var(--panel);border:1.5px solid var(--line);text-align:center;transition:.2s;cursor:pointer}
-.fps:hover{border-color:rgba(109,61,184,.4)}
-.fps:active{transform:scale(.97)}
-.fps.selected{background:linear-gradient(145deg,#1a0f2e,#0d0818);border-color:var(--accent);box-shadow:0 0 20px rgba(84,37,143,.35)}
-.fps h4{font-size:16px;font-weight:800;color:#fff}
-.fps p{font-size:10px;color:var(--text2);margin-top:3px}
-.fps.selected p{color:#c9a8ee}
-.btn-primary{position:relative;width:100%;padding:18px 22px;border-radius:14px;background:var(--purple);color:#fff;font-size:13.5px;font-weight:800;letter-spacing:.6px;display:flex;align-items:center;justify-content:center;gap:10px;overflow:hidden;transition:.18s;box-shadow:0 8px 24px rgba(84,37,143,.4);z-index:2}
-.btn-primary:hover{background:#6330a5;transform:translateY(-1px);box-shadow:0 12px 32px rgba(84,37,143,.55)}
-.btn-primary:active{transform:scale(.98)}
-.btn-primary:disabled{background:#141419;color:var(--muted);box-shadow:none;cursor:not-allowed;transform:none}
-.btn-primary:disabled .ico{opacity:.5}
-.btn-primary .ico{width:18px;height:18px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.btn-secondary{position:relative;width:100%;padding:17px 22px;border-radius:14px;background:transparent;border:1.5px solid rgba(109,61,184,.5);color:#c9a8ee;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:9px;transition:.2s;z-index:2}
-.btn-secondary:hover{background:rgba(59,23,109,.25);border-color:var(--accent);color:#e5d4fa;transform:translateY(-1px)}
-.btn-secondary:active{transform:scale(.98)}
-.btn-secondary .ico{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.loading-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;gap:24px}
-.orbit{width:180px;height:180px;position:relative;display:grid;place-items:center}
-.orbit .ring{position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:var(--neon);border-right-color:rgba(168,85,247,.2);animation:spin 3.5s linear infinite}
-.orbit .ring2{position:absolute;inset:14px;border-radius:50%;border:2px solid transparent;border-bottom-color:var(--neon2);border-left-color:rgba(192,132,252,.15);animation:spin 5s linear infinite reverse}
-.orbit .core{width:90px;height:90px;border-radius:50%;background:radial-gradient(circle at 50% 45%,var(--neon),var(--purple) 70%);display:grid;place-items:center;box-shadow:0 0 50px rgba(168,85,247,.8),inset 0 0 25px rgba(255,255,255,.15);animation:corePulse 1.5s ease-in-out infinite}
-.orbit .core .ico{width:38px;height:38px;stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px #fff)}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes corePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-.loading-status{font-size:15px;font-weight:700;color:#fff}
-.loading-sub{font-size:12px;color:var(--text2);margin-top:-16px}
-.progress{width:100%;max-width:340px;height:8px;background:#17171c;border-radius:10px;overflow:hidden;margin-top:8px}
-.progress i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--purple),var(--neon));border-radius:10px;transition:width .3s;box-shadow:0 0 12px rgba(168,85,247,.6)}
-.result-card{border-radius:var(--radius);overflow:hidden;background:var(--panel);border:1px solid var(--line);margin-bottom:20px}
-.result-card img{width:100%;display:block;aspect-ratio:16/11;object-fit:cover;background:#111}
-.result-info{padding:16px 20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
-.result-row{display:flex;justify-content:space-between;align-items:center;font-size:12.5px}
-.result-row span{color:var(--text2)}
-.result-row b{color:#fff;font-weight:700}
-.result-status{display:flex;align-items:center;gap:8px;color:var(--green);font-size:13px;font-weight:700;margin-bottom:18px;padding:0 4px}
-.result-status .ico{width:18px;height:18px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.toast{position:fixed;left:50%;bottom:110px;transform:translate(-50%,16px);background:rgba(16,16,22,.96);border:1px solid rgba(109,61,184,.35);border-radius:14px;padding:12px 18px;font-size:12.5px;color:var(--soft);opacity:0;pointer-events:none;transition:.28s;white-space:nowrap;z-index:100;box-shadow:0 10px 30px rgba(0,0,0,.6);font-weight:600;backdrop-filter:blur(12px)}
-.toast.show{opacity:1;transform:translate(-50%,0)}
-.bottom-nav{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);width:min(calc(100% - 24px),616px);padding:10px 12px;border-radius:24px;background:rgba(10,10,14,.92);border:1px solid #24242b;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);display:grid;grid-template-columns:repeat(5,1fr);align-items:center;z-index:50;box-shadow:0 12px 40px rgba(0,0,0,.6)}
-.nav{padding:8px 2px;border-radius:14px;color:#5a5a64;font-size:9.5px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:4px;transition:.2s;cursor:pointer}
-.nav:hover{color:#9a7fc0}
-.nav.active{color:var(--pale)}
-.nav .ico{width:22px;height:22px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;display:block}
-.fab-premium{position:relative;width:52px;height:52px;border-radius:50%;background:linear-gradient(145deg,var(--neon),var(--neon2));display:grid;place-items:center;margin:0 auto;border:3px solid #0a0a0e;transition:transform .2s;overflow:hidden;animation:glowPulse 2s ease-in-out infinite;cursor:pointer;z-index:2}
-.fab-premium .ico{width:24px;height:24px;stroke:var(--gold);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px var(--gold));position:relative;z-index:2}
-.fab-premium .fab-ring{position:absolute;inset:-6px;border-radius:50%;border:2px solid transparent;border-top-color:var(--gold);border-right-color:rgba(251,191,36,.3);animation:fabRingSpin 3s linear infinite;pointer-events:none}
-.fab-premium::after{content:"";position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:shimmer 3s ease-in-out infinite;pointer-events:none;z-index:1}
-.fab-premium:hover{transform:scale(1.06)}
-.fab-premium:active{transform:scale(.95);animation-play-state:paused}
-@keyframes glowPulse{0%,100%{box-shadow:0 0 20px rgba(168,85,247,.6),0 0 40px rgba(168,85,247,.3);transform:scale(1);filter:brightness(1)}50%{box-shadow:0 0 35px rgba(168,85,247,1),0 0 70px rgba(168,85,247,.6),0 0 100px rgba(168,85,247,.3);transform:scale(1.08);filter:brightness(1.2)}}
-@keyframes fabRingSpin{to{transform:rotate(360deg)}}
-@keyframes shimmer{0%{left:-100%}100%{left:200%}}
-.owner-indicator{position:fixed;top:20px;left:20px;padding:7px 12px;border-radius:999px;background:linear-gradient(145deg,var(--neon),var(--purple));color:#fff;font-size:9.5px;font-weight:800;letter-spacing:1.2px;z-index:60;display:none;align-items:center;gap:6px;box-shadow:0 0 20px rgba(168,85,247,.55);cursor:pointer}
-.owner-indicator.show{display:inline-flex}
-.owner-indicator .oi-dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.5s infinite}
-@keyframes pulse{50%{opacity:.4}}
-.owner-panel{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:200;display:none;align-items:flex-end;justify-content:center}
-.owner-panel.show{display:flex}
-.owner-sheet{width:100%;max-width:560px;background:linear-gradient(180deg,#0e0a16 0%,#080709 100%);border-top:1px solid rgba(168,85,247,.5);border-radius:26px 26px 0 0;padding:26px 22px 30px;animation:slideUp .3s ease;max-height:90vh;overflow-y:auto}
-@keyframes slideUp{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
-.owner-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.owner-header h3{font-size:17px;font-weight:800;color:#fff;display:flex;align-items:center;gap:8px}
-.badge-owner{padding:4px 10px;border-radius:999px;background:linear-gradient(145deg,var(--neon),var(--purple));font-size:9px;font-weight:800;letter-spacing:1.2px;color:#fff}
-.owner-close{width:34px;height:34px;border-radius:50%;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;font-size:15px;transition:.2s;cursor:pointer}
-.owner-close:hover{border-color:var(--red);color:var(--red)}
-.owner-sub{font-size:12px;color:var(--text2);margin-bottom:22px;line-height:1.55}
-.owner-section{margin-bottom:20px}
-.owner-section h4{font-size:10.5px;color:var(--text2);letter-spacing:1.8px;text-transform:uppercase;font-weight:700;margin:0 2px 10px}
-.owner-mode-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.owner-mode-btn{padding:16px 14px;border-radius:14px;background:var(--panel);border:1px solid var(--line);text-align:left;transition:.2s;cursor:pointer;color:var(--text)}
-.owner-mode-btn:hover{border-color:rgba(168,85,247,.5)}
-.owner-mode-btn.selected{background:linear-gradient(145deg,#1a0f2e,#0d0818);border-color:var(--neon);box-shadow:0 0 20px rgba(168,85,247,.4)}
-.owner-mode-btn .om-ico{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font-size:14px;margin-bottom:10px}
-.owner-mode-btn.free .om-ico{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#4ade80}
-.owner-mode-btn.premium .om-ico{background:rgba(168,85,247,.25);border:1px solid rgba(168,85,247,.45);color:#d8b4fe}
-.owner-mode-btn b{font-size:13px;font-weight:700;color:#fff;display:block}
-.owner-mode-btn small{font-size:10.5px;color:var(--text2);display:block;margin-top:3px}
-.owner-action{display:flex;align-items:center;gap:14px;padding:15px 16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;width:100%;text-align:left;margin-bottom:8px;transition:.2s;cursor:pointer;color:var(--text)}
-.owner-action:hover{border-color:rgba(168,85,247,.5);transform:translateY(-1px)}
-.owner-action .oa-ico{width:38px;height:38px;border-radius:10px;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.35);display:grid;place-items:center;color:#d8b4fe;font-size:15px;flex-shrink:0}
-.owner-action .oa-text{flex:1}
-.owner-action .oa-text b{font-size:13px;font-weight:700;color:#fff;display:block}
-.owner-action .oa-text span{font-size:11px;color:var(--text2);display:block;margin-top:3px}
-.owner-action .oa-arrow{color:var(--text2);font-size:18px}
-.owner-action.danger{border-color:rgba(239,68,68,.3)}
-.owner-action.danger .oa-ico{background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.35);color:var(--red)}
-.owner-action.danger .oa-text b{color:var(--red)}
-.secret-trigger{text-align:center;margin-top:20px;padding:8px 16px;display:inline-block;font-size:10px;color:#1a1a20;cursor:pointer;user-select:none;letter-spacing:1px;position:relative;z-index:2}
-.empty-state{text-align:center;padding:100px 26px}
-.empty-ico{width:80px;height:80px;border-radius:22px;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;margin:0 auto 24px;color:var(--accent)}
-.empty-ico .ico{width:34px;height:34px;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.empty-state h4{font-size:17px;font-weight:700;color:#fff}
-.empty-state p{font-size:13px;color:var(--text2);margin-top:10px;line-height:1.55}
-.profile-card{text-align:center;padding:40px 24px;border-radius:var(--radius);background:var(--panel);border:1px solid var(--line);margin-bottom:20px}
-.profile-avatar{width:92px;height:92px;border-radius:50%;background:linear-gradient(145deg,#3b176d,#1a1226);border:1px solid rgba(109,61,184,.5);display:grid;place-items:center;margin:0 auto 20px;font-size:34px;font-weight:800;color:var(--soft);box-shadow:0 0 32px rgba(84,37,143,.35)}
-.profile-card h4{font-size:18px;font-weight:700;color:#fff}
-.profile-card p{font-size:12.5px;color:var(--text2);margin-top:6px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);border-radius:var(--radius);background:var(--panel);border:1px solid var(--line);overflow:hidden;margin-bottom:28px}
-.stat{padding:26px 10px;text-align:center;border-right:1px solid var(--line)}
-.stat:last-child{border-right:0}
-.stat b{font-size:22px;font-weight:800;color:#fff;display:block}
-.stat span{font-size:10.5px;color:var(--text2);margin-top:7px;display:block;letter-spacing:.8px;text-transform:uppercase;font-weight:600}
-.premium-hero{text-align:center;padding:20px 0 30px}
-.premium-hero .fab-premium{width:80px;height:80px;margin-bottom:20px}
-.premium-hero .fab-premium .ico{width:36px;height:36px}
-.premium-hero h2{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.7px}
-.premium-hero p{font-size:13px;color:var(--text2);margin-top:10px;max-width:340px;margin-left:auto;margin-right:auto;line-height:1.6}
-.btn-upgrade{width:100%;padding:18px;border-radius:16px;background:linear-gradient(145deg,var(--neon),var(--neon2));color:#fff;font-size:13.5px;font-weight:800;letter-spacing:.6px;display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden;animation:glowPulse 2s ease-in-out infinite;border:3px solid #0a0a0e;cursor:pointer}
-.btn-upgrade::after{content:"";position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:shimmer 3s ease-in-out infinite}
-.btn-upgrade .ico{width:18px;height:18px;stroke:var(--gold);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 4px var(--gold));position:relative;z-index:2}
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(8px);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;animation:fadeUp .25s ease}
-.modal-bg.show{display:flex}
-.modal{width:100%;max-width:420px;background:linear-gradient(180deg,#0e0a16 0%,#080709 100%);border:1px solid rgba(168,85,247,.4);border-radius:22px;padding:26px 22px;animation:popIn .3s ease;max-height:90vh;overflow-y:auto}
-@keyframes popIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
-.modal-icon{width:56px;height:56px;border-radius:16px;background:rgba(251,191,36,.15);border:1px solid rgba(251,191,36,.4);display:grid;place-items:center;margin:0 auto 16px;color:var(--gold);font-size:24px}
-.modal h3{font-size:17px;font-weight:800;color:#fff;text-align:center;margin-bottom:8px}
-.modal p{font-size:12.5px;color:var(--text2);text-align:center;line-height:1.6;margin-bottom:20px}
-.tool-btn{display:flex;align-items:center;gap:14px;padding:14px 16px;background:var(--panel);border:1px solid var(--line);border-radius:14px;width:100%;text-align:left;margin-bottom:10px;transition:.2s;cursor:pointer;color:var(--text)}
-.tool-btn:hover{border-color:rgba(168,85,247,.5);transform:translateY(-1px)}
-.tool-btn .tb-ico{width:42px;height:42px;border-radius:11px;background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.4);display:grid;place-items:center;color:#d8b4fe;font-size:18px;flex-shrink:0}
-.tool-btn .tb-text{flex:1}
-.tool-btn .tb-text b{font-size:13.5px;font-weight:700;color:#fff;display:block}
-.tool-btn .tb-text span{font-size:11px;color:var(--text2);display:block;margin-top:3px}
-.tool-btn .tb-arrow{color:var(--text2);font-size:18px}
-.modal-close{width:100%;padding:14px;border-radius:14px;background:transparent;border:1.5px solid var(--line);color:var(--text2);font-size:13px;font-weight:600;cursor:pointer;margin-top:8px}
-@media(min-width:700px){body{background:#020202}.app{border-left:1px solid #101014;border-right:1px solid #101014;min-height:100vh}}
-@media(max-width:380px){.app{padding:24px 16px 130px}.greeting h2{font-size:21px}.fab-premium{width:48px;height:48px}.res h4{font-size:18px}}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body data-mode="free">
 
+<!-- BACKGROUND ANIMATION -->
 <div class="bg-animation" id="bgAnimation">
   <div class="nebula"></div>
   <div class="stars" id="stars"></div>
 </div>
 
+<!-- OWNER INDICATOR -->
 <button class="owner-indicator" id="ownerIndicator" onclick="openOwnerPanel()">
   <span class="oi-dot"></span> OWNER MODE
 </button>
 
 <main class="app">
 
+<!-- ============ HOME ============ -->
 <section class="page active" id="page-home">
   <div class="greeting">
-    <div><small>Welcome back</small><h2>Hello, User!</h2></div>
-    <div class="mode-badge" id="modeBadge"><span class="mb-dot"></span><span id="modeBadgeText">FREE</span></div>
+    <div>
+      <small>Welcome back</small>
+      <h2>Hello, User!</h2>
+    </div>
+    <div class="mode-badge" id="modeBadge">
+      <span class="mb-dot"></span>
+      <span id="modeBadgeText">FREE</span>
+    </div>
   </div>
+
   <div class="premium-banner free" id="premiumBanner" onclick="goTo('premium')">
-    <div class="banner-icon" id="bannerIcon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg></div>
-    <div class="banner-text"><b id="bannerTitle">GUSTAV HD PREMIUM</b><small id="bannerDesc">Unlock unlimited AI magic. Pro models, 4K exports & priority queue.</small></div>
+    <div class="banner-icon" id="bannerIcon">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
+    </div>
+    <div class="banner-text">
+      <b id="bannerTitle">GUSTAV HD PREMIUM</b>
+      <small id="bannerDesc">Unlock unlimited AI magic. Pro models, 4K exports & priority queue.</small>
+    </div>
     <div class="banner-arrow">›</div>
   </div>
-  <div class="section-head"><h3>Services</h3><a onclick="toast('Lihat semua')">See all →</a></div>
+
+  <div class="section-head">
+    <h3>Services</h3>
+    <a onclick="toast('Lihat semua')">See all →</a>
+  </div>
+
   <div class="services">
-    <button class="service" onclick="goTo('enhance')">
+    <button class="service card" onclick="goTo('quality')">
       <div class="service-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg></div>
       <b>Enhance Photo</b>
     </button>
-    <button class="service" onclick="toast('Face Swap')">
+    <button class="service card" onclick="toast('Face Swap')">
       <div class="service-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="15" cy="15" r="3"/><path d="M5 5h3v3M16 16h3v3"/></svg></div>
       <b>Face Swap</b>
     </button>
-    <button class="service" onclick="goTo('video')">
+    <button class="service card" onclick="goTo('quality')">
       <div class="service-icon"><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg></div>
       <b>Upscale Video</b>
     </button>
-    <button class="service" onclick="goTo('projects')">
+    <button class="service card" onclick="goTo('projects')">
       <div class="service-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
       <b>Project History</b>
     </button>
   </div>
+
   <div class="section-head"><h3>Settings</h3></div>
+
   <div class="settings-list">
-    <button class="setting-item" onclick="toast('Account Profile')">
+    <button class="setting-item card" onclick="goTo('profile')">
       <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div>
       <div class="s-text"><b>Account Profile</b><span>Name, email and avatar</span></div>
       <span class="s-arrow">›</span>
     </button>
-    <button class="setting-item" onclick="goTo('premium')">
+    <button class="setting-item card" onclick="goTo('premium')">
       <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/></svg></div>
       <div class="s-text"><b>Manage Premium</b><span id="subStatus">Free Plan</span></div>
       <span class="s-arrow">›</span>
     </button>
-    <button class="setting-item" onclick="toast('Language')">
+    <button class="setting-item card" onclick="toast('Language')">
       <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2 3 2 15 0 18"/></svg></div>
       <div class="s-text"><b>Language</b><span>English (US)</span></div>
       <span class="s-arrow">›</span>
     </button>
-    <button class="setting-item" onclick="toast('Privacy Policy')">
+    <button class="setting-item card" onclick="toast('Privacy Policy')">
       <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 3l8 4v6c0 5-4 8-8 8s-8-3-8-8V7l8-4z"/></svg></div>
       <div class="s-text"><b>Privacy Policy</b><span>Opens in a new tab</span></div>
       <span class="s-arrow">↗</span>
     </button>
   </div>
-  <button class="logout" onclick="toast('Log out')">
-    <svg class="ico" viewBox="0 0 24 24"><path d="M12 3v10"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg>
-    Log out
-  </button>
-  <div style="text-align:center;margin-top:20px;"><div class="secret-trigger" onclick="handleSecretTap()">GUSTAV LIZARD</div></div>
+
+  <div style="text-align:center;">
+    <div class="secret-trigger" onclick="handleSecretTap()">GUSTAV LIZARD</div>
+  </div>
 </section>
 
-<section class="page" id="page-enhance">
+<!-- ============ HALAMAN 2: PENINGKAT KUALITAS ============ -->
+<section class="page" id="page-quality">
   <header class="sub-header">
-    <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-    <div class="sub-title"><svg class="st-ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>Enhance Photo</div>
-    <div class="sub-chip" id="subChip">FREE</div>
+    <button class="sub-back" onclick="goBack()">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="sub-title" style="justify-content:center;flex:1;">Peningkat Kualitas</div>
+    <div style="width:42px"></div>
   </header>
-  <label class="upload" for="fileInput">
-    <div class="upload-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg></div>
-    <b>Pilih Foto</b>
-    <small>JPG, PNG, WEBP — maks 10MB</small>
-    <input type="file" id="fileInput" accept="image/*" hidden>
-  </label>
-  <div class="preview" id="preview">
-    <img id="previewImg" alt="preview">
+
+  <div class="pk-header">
+    <div class="pk-title">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
+      Peningkat Kualitas
+      <svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
+    </div>
+    <div class="pk-sub">Kejernihan tingkat lanjut, detail lebih tajam</div>
+  </div>
+
+  <div class="ba-slider">
+    <img id="baBefore" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=60" alt="before">
+    <img id="baAfter" class="after-img" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=100" alt="after">
+    <span class="ba-label before">Sebelum</span>
+    <span class="ba-label after">Sesudah</span>
+    <div class="slider-line" id="sliderLine"></div>
+    <div class="slider-handle">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M8 7l-4 5 4 5M16 7l4 5-4 5"/></svg>
+    </div>
+    <input type="range" min="0" max="100" value="50" id="baRange" oninput="updateSlider(this.value)">
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('umum', this)">Umum</button>
+    <button class="tab" onclick="switchTab('skenario', this)">Skenario</button>
+  </div>
+
+  <div class="feature-grid" id="featureUmum">
+    <button class="feature" onclick="pickFeature(this, 'resolusi')">
+      <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M9 20h6"/></svg></div>
+      <div><b>Resolusi</b><small>720p – 4K</small></div>
+    </button>
+    <button class="feature" onclick="pickFeature(this, 'fps')">
+      <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg></div>
+      <div><b>FPS</b><small>60 – 180</small></div>
+    </button>
+    <button class="feature" onclick="pickFeature(this, 'potret')">
+      <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg></div>
+      <div><b>Potret</b><small>Fokus wajah</small></div>
+    </button>
+    <button class="feature" onclick="pickFeature(this, 'ai')">
+      <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg></div>
+      <div><b>AI Upscale</b><small>Otomatis 4K</small></div>
+    </button>
+  </div>
+
+  <div class="feature-grid" id="featureSkenario" style="display:none">
+    <button class="feature" onclick="pickFeature(this, 'sosial')">
+      <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M12 18h.01"/></svg></div>
+      <div><b>Sosial Media</b><small>1080p + ringan</small></div>
+    </button>
+    <button class="feature" onclick="pickFeature(this, 'cetak')">
+      <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+      <div><b>Cetak Foto</b><small>4K + max</small></div>
+    </button>
+    <button class="feature" onclick="pickFeature(this, 'cinema')">
+      <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M7 6v12M17 6v12"/></svg></div>
+      <div><b>Cinema</b><small>4K + 60fps</small></div>
+    </button>
+    <button class="feature" onclick="pickFeature(this, 'restorasi')">
+      <div class="feature-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></div>
+      <div><b>Restorasi</b><small>Foto lama</small></div>
+    </button>
+  </div>
+
+  <button class="btn-primary" onclick="openGallery()">
+    <svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+    COBA SEKARANG
+  </button>
+</section>
+
+<!-- ============ HALAMAN 4: PILIH RESOLUSI/FPS ============ -->
+<section class="page" id="page-options">
+  <header class="sub-header">
+    <button class="sub-back" onclick="goBack()">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="sub-title" id="optionsTitle">Pilih Opsi</div>
+    <div class="sub-chip" id="optionsChip">FREE</div>
+  </header>
+
+  <div class="preview show" id="optionsPreview">
+    <img id="optionsPreviewImg" alt="preview">
     <div class="preview-info">
-      <div><b id="fileName">-</b><span id="fileSize">-</span></div>
-      <button class="remove" onclick="resetUpload()"><svg class="ico" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+      <div><b id="optionsFileName">-</b><span id="optionsFileSize">-</span></div>
+      <button class="remove" onclick="resetOptions()">
+        <svg class="ico" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
     </div>
   </div>
-  <div class="section-head"><h3>Output Resolution</h3></div>
-  <div class="res-grid">
-    <button class="res selected" data-r="720" onclick="pickRes(this)"><h4>720p</h4><p>HD Ready</p></button>
+
+  <div class="section-head"><h3 id="optionsSectionTitle">Output Resolution</h3></div>
+
+  <div class="res-grid" id="resGrid">
+    <button class="res" data-r="720" onclick="pickRes(this)"><h4>720p</h4><p>HD Ready</p></button>
     <button class="res" data-r="1080" onclick="pickRes(this)"><h4>1080p</h4><p>Full HD</p></button>
     <button class="res locked" data-r="1440" onclick="tryLocked(this)">
       <div class="lock-badge"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
@@ -339,15 +213,25 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
       <h4>4K</h4><p>Ultra HD</p>
     </button>
   </div>
-  <button class="btn-primary" id="processBtn" disabled onclick="startProcess()">
+
+  <div class="section-head" style="display:none" id="formatHead"><h3>Output Format</h3></div>
+  <div class="res-grid" id="formatGrid" style="display:none">
+    <button class="res selected" data-f="jpg" onclick="pickFormat(this)"><h4>JPG</h4><p>Ringan</p></button>
+    <button class="res" data-f="png" onclick="pickFormat(this)"><h4>PNG</h4><p>Terbaik</p></button>
+  </div>
+
+  <button class="btn-primary" id="optionsProcessBtn" disabled onclick="startProcess()">
     <svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
-    MULAI ENHANCE
+    LANJUT
   </button>
 </section>
 
+<!-- ============ HALAMAN 5: LOADING ============ -->
 <section class="page" id="page-loading">
   <header class="sub-header">
-    <button class="sub-back" onclick="cancelProcess()"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+    <button class="sub-back" onclick="cancelProcess()">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
     <div class="sub-title" id="loadingTitle">Enhancing...</div>
     <div class="sub-chip" id="loadingChip">FREE</div>
   </header>
@@ -360,139 +244,129 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
     <div class="loading-status" id="loadingStatus">Menyiapkan...</div>
     <div class="loading-sub" id="loadingSub">Estimasi: 4 detik</div>
     <div class="progress"><i id="progressBar"></i></div>
-    <div style="font-size:22px;font-weight:800;color:#fff;margin-top:-8px;" id="progressPercent">0%</div>
+    <div class="progress-percent" id="progressPercent">0%</div>
   </div>
 </section>
 
-<section class="page" id="page-video">
-  <header class="sub-header">
-    <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-    <div class="sub-title"><svg class="st-ico" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-3v10l-6-3"/></svg>Upscale Video</div>
-    <div class="sub-chip" id="videoChip">FREE</div>
-  </header>
-  <label class="upload" for="videoInput">
-    <div class="upload-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg></div>
-    <b>Pilih Video</b>
-    <small>MP4, MOV, WEBM — maks 100MB · 1–60 detik</small>
-    <input type="file" id="videoInput" accept="video/*" hidden>
-  </label>
-  <div class="preview" id="videoPreview">
-    <video id="videoPreviewEl" controls muted></video>
-    <div class="preview-info">
-      <div><b id="videoName">-</b><span id="videoSize">-</span></div>
-      <button class="remove" onclick="resetVideo()"><svg class="ico" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
-    </div>
-  </div>
-  <div class="section-head"><h3>Output Resolution</h3></div>
-  <div class="res-grid">
-    <button class="res selected" data-vr="720" onclick="pickVideoRes(this)"><h4>720p</h4><p>HD Ready</p></button>
-    <button class="res" data-vr="1080" onclick="pickVideoRes(this)"><h4>1080p</h4><p>Full HD</p></button>
-    <button class="res locked" data-vr="1440" onclick="tryLocked(this)">
-      <div class="lock-badge"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <h4>2K</h4><p>Ultra HD</p>
-    </button>
-    <button class="res locked" data-vr="2160" onclick="tryLocked(this)">
-      <div class="lock-badge"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <h4>4K</h4><p>Ultra HD</p>
-    </button>
-  </div>
-  <div class="section-head"><h3>Frame Rate (FPS)</h3></div>
-  <div class="fps-grid">
-    <button class="fps" data-fps="24" onclick="pickFps(this)"><h4>24</h4><p>Cinematic</p></button>
-    <button class="fps selected" data-fps="30" onclick="pickFps(this)"><h4>30</h4><p>Standard</p></button>
-    <button class="fps" data-fps="60" onclick="pickFps(this)"><h4>60</h4><p>Smooth</p></button>
-  </div>
-  <button class="btn-primary" id="videoProcessBtn" disabled onclick="startVideoProcess()">
-    <svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
-    MULAI UPSCALE
-  </button>
-</section>
-
+<!-- ============ HALAMAN 6: HASIL ============ -->
 <section class="page" id="page-result">
   <header class="sub-header">
-    <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-    <div class="sub-title"><svg class="st-ico" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>Hasil Enhance</div>
+    <button class="sub-back" onclick="goBack()">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="sub-title">Hasil Enhance</div>
     <div class="sub-chip" id="resultChip">FREE</div>
   </header>
-  <div class="result-status"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>Berhasil di-enhance</div>
-  <div class="result-card">
-    <img id="resultImg" alt="result">
-    <div class="result-info">
-      <div class="result-row"><span>Resolusi</span><b id="resultRes">4K (3840×2160)</b></div>
-      <div class="result-row"><span>Ukuran</span><b id="resultSize">2.4 MB</b></div>
-      <div class="result-row"><span>Waktu</span><b id="resultTime">3.2 detik</b></div>
-      <div class="result-row"><span>Format</span><b>JPG</b></div>
+
+  <div class="result-status">
+    <svg class="ico" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg>
+    Berhasil di-enhance
+  </div>
+
+  <div class="ba-slider">
+    <img id="resultBefore" alt="before">
+    <img id="resultAfter" class="after-img" alt="after">
+    <span class="ba-label before">Sebelum</span>
+    <span class="ba-label after">Sesudah</span>
+    <div class="slider-line" id="resultLine"></div>
+    <div class="slider-handle">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M8 7l-4 5 4 5M16 7l4 5-4 5"/></svg>
+    </div>
+    <input type="range" min="0" max="100" value="50" id="resultRange" oninput="updateResultSlider(this.value)">
+  </div>
+
+  <div class="settings-list">
+    <div class="setting-item card">
+      <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M9 20h6"/></svg></div>
+      <div class="s-text"><b>Resolusi</b><span id="resultRes">4K (3840×2160)</span></div>
+    </div>
+    <div class="setting-item card">
+      <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></div>
+      <div class="s-text"><b>Ukuran</b><span id="resultSize">2.4 MB</span></div>
+    </div>
+    <div class="setting-item card">
+      <div class="s-icon"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div class="s-text"><b>Waktu</b><span id="resultTime">3.2 detik</span></div>
     </div>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
     <button class="btn-secondary" onclick="shareResult()">
       <svg class="ico" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
       Bagikan
     </button>
-    <button class="btn-primary" style="padding:17px 20px;font-size:12.5px;" onclick="saveResult()">
+    <button class="btn-primary" style="padding:14px 18px;font-size:12.5px;" onclick="saveResult()">
       <svg class="ico" viewBox="0 0 24 24"><path d="M12 3v13M7 11l5 5 5-5M4 21h16"/></svg>
       Simpan
     </button>
   </div>
-  <button class="btn-secondary" onclick="goTo('enhance')">
+
+  <button class="btn-secondary" onclick="goTo('quality')">
     <svg class="ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg>
     Ulangi Enhance
   </button>
 </section>
 
+<!-- ============ PREMIUM ============ -->
 <section class="page" id="page-premium">
   <header class="sub-header">
-    <button class="sub-back" onclick="goTo('home')"><svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-    <div class="sub-title"><svg class="st-ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/></svg>Premium</div>
+    <button class="sub-back" onclick="goBack()">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="sub-title">Premium</div>
     <div class="sub-chip">♛</div>
   </header>
+
   <div class="premium-hero">
     <div class="fab-premium"><span class="fab-ring"></span><svg class="ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/><path d="M3 17v2h18v-2"/></svg></div>
     <h2>Upgrade to Premium</h2>
     <p>Unlock semua fitur & akses kualitas tertinggi</p>
   </div>
+
   <div class="settings-list">
-    <div class="setting-item">
+    <div class="setting-item card">
       <div class="s-icon" style="background:rgba(168,85,247,.22);border-color:rgba(168,85,247,.45);color:#d8b4fe;"><svg class="ico" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
-      <div class="s-text"><b>4K Ultra HD</b><span>Resolusi tertinggi untuk hasil maksimal</span></div>
+      <div class="s-text"><b>4K Ultra HD</b><span>Resolusi tertinggi</span></div>
     </div>
-    <div class="setting-item">
+    <div class="setting-item card">
       <div class="s-icon" style="background:rgba(168,85,247,.22);border-color:rgba(168,85,247,.45);color:#d8b4fe;"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M5 5l14 14"/></svg></div>
-      <div class="s-text"><b>Tanpa Watermark</b><span>Hasil bersih tanpa logo</span></div>
+      <div class="s-text"><b>Tanpa Watermark</b><span>Hasil bersih</span></div>
     </div>
-    <div class="setting-item">
+    <div class="setting-item card">
       <div class="s-icon" style="background:rgba(168,85,247,.22);border-color:rgba(168,85,247,.45);color:#d8b4fe;"><svg class="ico" viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
-      <div class="s-text"><b>Priority Lane</b><span>Antrian cepat, tanpa menunggu</span></div>
+      <div class="s-text"><b>Priority Lane</b><span>Antrian cepat</span></div>
     </div>
-    <div class="setting-item">
+    <div class="setting-item card">
       <div class="s-icon" style="background:rgba(168,85,247,.22);border-color:rgba(168,85,247,.45);color:#d8b4fe;"><svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg></div>
-      <div class="s-text"><b>Unlimited Enhance</b><span>Tanpa batas harian</span></div>
+      <div class="s-text"><b>Unlimited Enhance</b><span>Tanpa batas</span></div>
     </div>
   </div>
-  <div style="margin-top:20px;">
-    <button class="btn-upgrade" onclick="toast('Fitur premium segera hadir')">
-      <svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
-      UPGRADE SEKARANG
-    </button>
-    <div style="height:12px"></div>
-    <button class="btn-secondary" onclick="toast('Lihat harga')">Lihat Harga</button>
-  </div>
+
+  <button class="btn-upgrade" onclick="toast('Fitur premium segera hadir')">
+    <svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>
+    UPGRADE SEKARANG
+  </button>
 </section>
 
+<!-- ============ PROJECTS ============ -->
 <section class="page" id="page-projects">
   <div class="empty-state">
     <div class="empty-ico"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
-    <h4>Belum ada project</h4><p>Hasil enhance kamu akan muncul di sini.</p>
+    <h4>Belum ada project</h4>
+    <p>Hasil enhance kamu akan muncul di sini.</p>
   </div>
 </section>
 
+<!-- ============ HISTORY ============ -->
 <section class="page" id="page-history">
   <div class="empty-state">
     <div class="empty-ico"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-    <h4>Belum ada riwayat</h4><p>Aktivitas kamu akan muncul di sini.</p>
+    <h4>Belum ada riwayat</h4>
+    <p>Aktivitas kamu akan muncul di sini.</p>
   </div>
 </section>
 
+<!-- ============ PROFILE ============ -->
 <section class="page" id="page-profile">
   <div class="profile-card">
     <div class="profile-avatar">G</div>
@@ -504,10 +378,15 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
     <div class="stat"><b>0</b><span>Kredit</span></div>
     <div class="stat"><b>3</b><span>Limit/hari</span></div>
   </div>
+  <button class="btn-danger" onclick="logout()">
+    <svg class="ico" viewBox="0 0 24 24"><path d="M12 3v10"/><path d="M18.4 6.6a9 9 0 1 1-12.8 0"/></svg>
+    Log out
+  </button>
 </section>
 
 </main>
 
+<!-- ============ BOTTOM NAV ============ -->
 <nav class="bottom-nav" id="bottomNav">
   <button class="nav active" data-nav="home" onclick="goTo('home')">
     <svg class="ico" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a2 2 0 0 1-2 2h-4v-6H9v6H5a2 2 0 0 1-2-2v-9z"/></svg>
@@ -517,7 +396,7 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
     <svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
     <span>Projects</span>
   </button>
-  <button class="fab-premium" onclick="goTo('premium')" title="Upgrade Premium">
+  <button class="fab-premium" onclick="goTo('premium')">
     <span class="fab-ring"></span>
     <svg class="ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/><path d="M3 17v2h18v-2"/></svg>
   </button>
@@ -531,37 +410,15 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
   </button>
 </nav>
 
-<div class="modal-bg" id="toolsModal">
-  <div class="modal">
-    <div class="modal-icon">⚠️</div>
-    <h3>Info Upscale Video</h3>
-    <p>Upscale video akan diproses di tools gratis pihak ketiga. Video kamu akan di-upload ke server mereka (bukan server kami).</p>
-    <button class="tool-btn" onclick="openTool('https://upscayl.org')">
-      <div class="tb-ico">🌐</div>
-      <div class="tb-text"><b>Upscayl</b><span>Gratis · Open-source · Desktop</span></div>
-      <span class="tb-arrow">›</span>
-    </button>
-    <button class="tool-btn" onclick="openTool('https://www.media.io/video-enhancer.html')">
-      <div class="tb-ico">🌐</div>
-      <div class="tb-text"><b>Media.io</b><span>Gratis · Maks 5 menit · Online</span></div>
-      <span class="tb-arrow">›</span>
-    </button>
-    <button class="tool-btn" onclick="openTool('https://www.kapwing.com/tools/upscale-video')">
-      <div class="tb-ico">🌐</div>
-      <div class="tb-text"><b>Kapwing</b><span>Gratis · Editor video · Online</span></div>
-      <span class="tb-arrow">›</span>
-    </button>
-    <button class="modal-close" onclick="closeToolsModal()">Batal</button>
-  </div>
-</div>
-
+<!-- ============ OWNER PANEL ============ -->
 <div class="owner-panel" id="ownerPanel">
   <div class="owner-sheet">
     <div class="owner-header">
       <h3>Owner Panel <span class="badge-owner">ADMIN</span></h3>
       <button class="owner-close" onclick="closeOwnerPanel()">✕</button>
     </div>
-    <p class="owner-sub">Panel khusus owner. Perubahan di sini hanya tersimpan di sesi ini.</p>
+    <p class="owner-sub">Panel khusus owner.</p>
+
     <div class="owner-section">
       <h4>Mode Aplikasi</h4>
       <div class="owner-mode-row">
@@ -573,11 +430,12 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
         </button>
       </div>
     </div>
+
     <div class="owner-section">
       <h4>Developer Tools</h4>
       <button class="owner-action" onclick="resetLimit()">
         <div class="oa-ico">↻</div>
-        <div class="oa-text"><b>Reset Daily Limit</b><span>Kembalikan limit harian</span></div>
+        <div class="oa-text"><b>Reset Daily Limit</b><span>Kembalikan limit</span></div>
         <span class="oa-arrow">›</span>
       </button>
       <button class="owner-action" onclick="clearCache()">
@@ -596,304 +454,6 @@ body[data-mode="premium"] .upload-ico{background:rgba(168,85,247,.22);border:1px
 
 <div class="toast" id="toast"></div>
 
-<script>
-const pages=document.querySelectorAll('.page');
-const navs=document.querySelectorAll('.nav');
-const bottomNav=document.getElementById('bottomNav');
-const bgAnimation=document.getElementById('bgAnimation');
-const starsContainer=document.getElementById('stars');
-let mode='free';
-let isOwner=false;
-
-function goTo(name){
-  pages.forEach(p=>p.classList.remove('active'));
-  const t=document.getElementById('page-'+name);
-  if(t){t.classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
-  navs.forEach(n=>n.classList.toggle('active',n.dataset.nav===name));
-  const hideNav=['enhance','loading','result','video'].includes(name);
-  bottomNav.style.display=hideNav?'none':'grid';
-  updateBg(name);
-}
-
-function updateBg(pageName){
-  if(pageName === 'home' && mode === 'premium'){
-    bgAnimation.classList.add('show');
-  } else {
-    bgAnimation.classList.remove('show');
-  }
-}
-
-const STAR_COUNT=60;
-function createStars(){
-  if(!starsContainer)return;
-  starsContainer.innerHTML='';
-  for(let i=0;i<STAR_COUNT;i++){
-    const s=document.createElement('div');
-    s.className='star';
-    s.style.left=(Math.random()*100)+'%';
-    s.style.top=(Math.random()*100)+'%';
-    const sz=1+Math.random()*2;
-    s.style.width=sz+'px';s.style.height=sz+'px';
-    s.style.opacity=0.3+Math.random()*0.7;
-    const d=15+Math.random()*15,dl=-Math.random()*20;
-    const td=2+Math.random()*2,tdl=-Math.random()*4;
-    s.style.animationDuration=`${d}s, ${td}s`;
-    s.style.animationDelay=`${dl}s, ${tdl}s`;
-    starsContainer.appendChild(s);
-  }
-}
-
-let toastTimer;
-function toast(msg){
-  const el=document.getElementById('toast');
-  el.textContent=msg;el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove('show'),1800);
-}
-
-/* ENHANCE PHOTO */
-const fileInput=document.getElementById('fileInput');
-const preview=document.getElementById('preview');
-const previewImg=document.getElementById('previewImg');
-const fileNameEl=document.getElementById('fileName');
-const fileSizeEl=document.getElementById('fileSize');
-const processBtn=document.getElementById('processBtn');
-let currentFile=null,currentRes=720;
-const MAX_SIZE=10*1024*1024;
-
-fileInput.addEventListener('change',e=>{
-  const f=e.target.files[0];
-  if(!f)return;
-  if(!f.type.startsWith('image/')){toast('File harus gambar');return}
-  if(f.size>MAX_SIZE){toast('Maks 10MB');return}
-  currentFile=f;
-  previewImg.src=URL.createObjectURL(f);
-  fileNameEl.textContent=f.name;
-  fileSizeEl.textContent=formatSize(f.size);
-  preview.classList.add('show');
-  processBtn.disabled=false;
-  toast('Foto berhasil diupload');
-});
-
-function resetUpload(){
-  currentFile=null;fileInput.value='';previewImg.src='';
-  preview.classList.remove('show');
-  processBtn.disabled=true;
-  toast('Foto dihapus');
-}
-function formatSize(b){
-  if(b<1024)return b+' B';
-  if(b<1048576)return (b/1024).toFixed(1)+' KB';
-  return (b/1048576).toFixed(2)+' MB';
-}
-
-function pickRes(el){
-  if(el.classList.contains('locked')){tryLocked(el);return}
-  document.querySelectorAll('#page-enhance .res').forEach(r=>r.classList.remove('selected'));
-  el.classList.add('selected');
-  currentRes=parseInt(el.dataset.r);
-}
-function tryLocked(){if(mode==='premium')return;toast('Upgrade ke Premium untuk membuka')}
-
-function startProcess(){
-  if(!currentFile){toast('Upload foto dulu');return}
-  goTo('loading');
-  const label=currentRes>=2160?'4K':currentRes>=1440?'2K':currentRes+'p';
-  document.getElementById('loadingChip').textContent=mode==='premium'?'PREMIUM':'FREE';
-  let progress=0;
-  const duration=mode==='premium'?2000:4000;
-  const step=50,inc=100/(duration/step);
-  const statuses=[{m:30,t:'Menyiapkan...'},{m:70,t:'Enhancing...'},{m:99,t:'Menyelesaikan...'},{m:100,t:'Selesai!'}];
-  const iv=setInterval(()=>{
-    progress+=inc;if(progress>100)progress=100;
-    document.getElementById('progressBar').style.width=progress+'%';
-    document.getElementById('progressPercent').textContent=Math.floor(progress)+'%';
-    for(const s of statuses){if(progress<=s.m){document.getElementById('loadingStatus').textContent=s.t;break}}
-    const rem=Math.ceil((100-progress)/inc*step/1000);
-    document.getElementById('loadingSub').textContent=progress<100?`Estimasi: ${rem} detik`:`Memproses ${label}...`;
-    if(progress>=100){clearInterval(iv);setTimeout(()=>showResult(label),500)}
-  },step);
-}
-
-function cancelProcess(){if(confirm('Batal proses?'))goTo('enhance')}
-
-function showResult(label){
-  document.getElementById('resultImg').src=previewImg.src;
-  document.getElementById('resultRes').textContent=label+' ('+getResSize(currentRes)+')';
-  document.getElementById('resultSize').textContent=currentFile?formatSize(currentFile.size*1.5):'2.4 MB';
-  document.getElementById('resultTime').textContent=(mode==='premium'?'1.6':'3.2')+' detik';
-  document.getElementById('resultChip').textContent=mode==='premium'?'PREMIUM':'FREE';
-  goTo('result');
-}
-function getResSize(r){
-  const m={720:'1280×720',1080:'1920×1080',1440:'2560×1440',2160:'3840×2160'};
-  return m[r]||'1280×720';
-}
-function saveResult(){toast('Foto disimpan ke galeri')}
-function shareResult(){
-  if(navigator.share)navigator.share({title:'GUSTAV HD',text:'Hasil enhance dari GUSTAV HD'}).catch(()=>{});
-  else toast('Share tidak didukung');
-}
-
-/* UPSCALE VIDEO */
-const videoInput=document.getElementById('videoInput');
-const videoPreview=document.getElementById('videoPreview');
-const videoPreviewEl=document.getElementById('videoPreviewEl');
-const videoName=document.getElementById('videoName');
-const videoSize=document.getElementById('videoSize');
-const videoProcessBtn=document.getElementById('videoProcessBtn');
-let currentVideo=null,currentVideoRes=720,currentFps=30;
-const MAX_VIDEO_SIZE=100*1024*1024;
-
-videoInput.addEventListener('change',e=>{
-  const f=e.target.files[0];
-  if(!f)return;
-  if(!f.type.startsWith('video/')){toast('File harus video');return}
-  if(f.size>MAX_VIDEO_SIZE){toast('Maks 100MB');return}
-  currentVideo=f;
-  videoPreviewEl.src=URL.createObjectURL(f);
-  videoName.textContent=f.name;
-  videoSize.textContent=formatSize(f.size);
-  videoPreview.classList.add('show');
-  videoProcessBtn.disabled=false;
-  toast('Video berhasil diupload');
-});
-
-function resetVideo(){
-  currentVideo=null;videoInput.value='';videoPreviewEl.src='';
-  videoPreview.classList.remove('show');
-  videoProcessBtn.disabled=true;
-  toast('Video dihapus');
-}
-function pickVideoRes(el){
-  if(el.classList.contains('locked')){tryLocked(el);return}
-  document.querySelectorAll('#page-video .res').forEach(r=>r.classList.remove('selected'));
-  el.classList.add('selected');
-  currentVideoRes=parseInt(el.dataset.vr);
-}
-function pickFps(el){
-  document.querySelectorAll('.fps').forEach(r=>r.classList.remove('selected'));
-  el.classList.add('selected');
-  currentFps=parseInt(el.dataset.fps);
-}
-function startVideoProcess(){
-  if(!currentVideo){toast('Upload video dulu');return}
-  document.getElementById('toolsModal').classList.add('show');
-}
-function closeToolsModal(){
-  document.getElementById('toolsModal').classList.remove('show');
-}
-function openTool(url){
-  window.open(url,'_blank');
-  closeToolsModal();
-  toast('Membuka tools...');
-}
-
-/* MODE */
-function applyMode(){
-  document.body.dataset.mode=mode;
-  const banner=document.getElementById('premiumBanner');
-  const icon=document.getElementById('bannerIcon');
-  const title=document.getElementById('bannerTitle');
-  const desc=document.getElementById('bannerDesc');
-  const sub=document.getElementById('subStatus');
-  const badge=document.getElementById('modeBadgeText');
-  const chips=['subChip','loadingChip','resultChip','videoChip'];
-  if(mode==='premium'){
-    banner.classList.remove('free');banner.classList.add('premium');
-    icon.innerHTML='<svg class="ico" viewBox="0 0 24 24"><path d="M3 17l4-8 4 5 3-5 7 8"/><path d="M3 17h18"/><path d="M3 17v2h18v-2"/></svg>';
-    title.textContent='PREMIUM ACTIVATED';
-    desc.textContent='selamat menikmati!';
-    sub.textContent='Premium Active - Tahunan';
-    badge.textContent='PREMIUM';
-    chips.forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='PREMIUM'});
-    document.querySelectorAll('.res').forEach(r=>r.classList.remove('locked'));
-    document.querySelectorAll('.lock-badge').forEach(b=>b.style.display='none');
-  }else{
-    banner.classList.remove('premium');banner.classList.add('free');
-    icon.innerHTML='<svg class="ico" viewBox="0 0 24 24"><path d="M12 2l1.5 5L19 8.5 13.5 10 12 15l-1.5-5L5 8.5 10.5 7 12 2z"/></svg>';
-    title.textContent='GUSTAV HD PREMIUM';
-    desc.textContent='Unlock unlimited AI magic. Pro models, 4K exports & priority queue.';
-    sub.textContent='Free Plan';
-    badge.textContent='FREE';
-    chips.forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='FREE'});
-    document.querySelectorAll('.res').forEach(r=>{
-      const rv=parseInt(r.dataset.r||r.dataset.vr);
-      if(rv>=1440)r.classList.add('locked');
-    });
-    document.querySelectorAll('.lock-badge').forEach(b=>b.style.display='flex');
-  }
-  const currentPage=document.querySelector('.page.active')?.id.replace('page-','');
-  updateBg(currentPage);
-}
-
-/* OWNER */
-let secretTapCount=0,secretTapTimer;
-function handleSecretTap(){
-  secretTapCount++;
-  clearTimeout(secretTapTimer);
-  secretTapTimer=setTimeout(()=>{secretTapCount=0},1500);
-  if(secretTapCount>=5){secretTapCount=0;askOwnerCode()}
-}
-const OWNER_CODE='GUSTAV2026';
-function askOwnerCode(){
-  const input=prompt('Masukkan kode owner:');
-  if(input===null)return;
-  if(input.trim()===OWNER_CODE)activateOwner();
-  else toast('Kode salah');
-}
-function activateOwner(silent){
-  isOwner=true;
-  document.getElementById('ownerIndicator').classList.add('show');
-  if(!silent)toast('Owner mode aktif ✦');
-}
-function logoutOwner(){
-  isOwner=false;
-  document.getElementById('ownerIndicator').classList.remove('show');
-  closeOwnerPanel();
-  toast('Keluar owner mode');
-}
-function openOwnerPanel(){
-  if(!isOwner){toast('Akses ditolak');return}
-  document.getElementById('ownerPanel').classList.add('show');
-  syncOwnerUI();
-}
-function closeOwnerPanel(){document.getElementById('ownerPanel').classList.remove('show')}
-function setMode(m){
-  if(!isOwner){toast('Hanya owner');return}
-  if(mode===m)return;
-  mode=m;applyMode();
-  toast(m==='premium'?'Premium mode aktif ♛':'Free mode aktif');
-}
-function syncOwnerUI(){
-  document.getElementById('btnFree').classList.toggle('selected',mode==='free');
-  document.getElementById('btnPremium').classList.toggle('selected',mode==='premium');
-}
-function resetLimit(){toast('Daily limit direset')}
-function clearCache(){
-  if(confirm('Hapus semua data?')){localStorage.clear();toast('Cache dibersihkan')}
-}
-document.getElementById('ownerPanel').addEventListener('click',e=>{
-  if(e.target.id==='ownerPanel')closeOwnerPanel();
-});
-document.getElementById('toolsModal').addEventListener('click',e=>{
-  if(e.target.id==='toolsModal')closeToolsModal();
-});
-document.addEventListener('keydown',e=>{
-  if(e.ctrlKey&&e.shiftKey&&e.key.toLowerCase()==='o'){
-    e.preventDefault();
-    if(isOwner)openOwnerPanel();else askOwnerCode();
-  }
-});
-
-applyMode();
-createStars();
-updateBg('home');
-
-const params=new URLSearchParams(window.location.search);
-if(params.get('owner')==='1')activateOwner(true);
-
-console.log('%c GUSTAV HD ','background:#54258f;color:#fff;padding:4px 8px;border-radius:4px;font-weight:bold');
-</script>
+<script src="script.js"></script>
 </body>
 </html>
