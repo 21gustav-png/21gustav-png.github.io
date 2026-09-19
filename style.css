@@ -471,7 +471,7 @@ body[data-mode="free"] .sub-chip{
 }
 
 /* ==================================================
-   FOTO BEFORE/AFTER — 1 FOTO + BLUR KUAT
+   FOTO BEFORE/AFTER — FIX: KIRI BLUR, KANAN TAJAM
 ================================================== */
 .ba-slider{
   position:relative;
@@ -493,18 +493,18 @@ body[data-mode="free"] .sub-chip{
   inset:0;
 }
 
-/* FOTO BLUR (Before) — blur kuat */
-.ba-slider img.blur-video{
-  filter: blur(10px) brightness(0.65) saturate(0.7);
+/* FOTO TAJAM (After) — di BELAKANG */
+.ba-slider img.after-img{
   z-index:1;
-  transform:scale(1.08);
 }
 
-/* FOTO TAJAM (After) */
-.ba-slider img.after-img{
+/* FOTO BLUR (Before) — di DEPAN, di-clip */
+.ba-slider img.blur-video{
+  filter: blur(10px) brightness(0.65) saturate(0.7);
   clip-path:inset(0 50% 0 0);
   transition:clip-path .05s;
   z-index:2;
+  transform:scale(1.08);
 }
 
 .ba-slider .slider-line{
@@ -887,7 +887,6 @@ body[data-mode="free"] .progress i{
   100%{left:200%}
 }
 
-/* FAB hijau di Free */
 body[data-mode="free"] .fab-premium{
   background:linear-gradient(145deg,#22c55e,#15803d);
   animation:glowPulseGreen 2s ease-in-out infinite;
