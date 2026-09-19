@@ -19,91 +19,107 @@ const MAX_SIZE = 10 * 1024 * 1024;
 const OWNER_CODE = 'GUSTAV2026';
 
 /* ==================================================
-   AUTO SLIDER — Garis Geser Sendiri
+   ANIMASI WINK — 0.5 DETIK
+   Alur:
+   1. Kanan (100%) → Kiri (10%) — 0.5s
+   2. Kiri (10%) → Tengah (50%) — 0.5s
+   3. Tengah (50%) → Kiri (10%) — 0.5s
+   4. Langsung ulang dari Kanan
 ================================================== */
-let autoSliderInterval = null;
-let autoSliderValue = 30;
-let autoSliderDirection = 1;
+let winkActive = false;
+let winkTimers = [];
 
-function startAutoSlider(){
-  if(autoSliderInterval) return;
+function startWinkAnimation(){
+  if(winkActive) return;
+  winkActive = true;
 
-  autoSliderInterval = setInterval(() => {
-    autoSliderValue += autoSliderDirection * 0.4;
+  const slider = document.querySelector('#page-quality .ba-slider');
+  if(!slider) return;
 
-    if(autoSliderValue >= 80){
-      autoSliderValue = 80;
-      autoSliderDirection = -1;
-    } else if(autoSliderValue <= 20){
-      autoSliderValue = 20;
-      autoSliderDirection = 1;
-    }
-
-    applySliderValue(autoSliderValue);
-  }, 30);
-}
-
-function stopAutoSlider(){
-  if(autoSliderInterval){
-    clearInterval(autoSliderInterval);
-    autoSliderInterval = null;
-  }
-}
-
-function applySliderValue(v){
-  const after = document.querySelector('#page-quality .ba-slider .after-img');
+  const blurImg = slider.querySelector('.blur-video');
   const line = document.getElementById('sliderLine');
-  const handle = document.querySelector('#page-quality .slider-handle');
 
-  if(after) after.style.clipPath = `inset(0 ${100 - v}% 0 0)`;
-  if(line) line.style.left = v + '%';
-  if(handle) handle.style.left = v + '%';
+  function setPos(percent){
+    if(blurImg) blurImg.style.clipPath = `inset(0 ${100 - percent}% 0 ${percent}%)`;
+    if(line) line.style.left = percent + '%';
+  }
 
-  const rangeInput = document.getElementById('baRange');
-  if(rangeInput) rangeInput.value = v;
+  function animateTo(fromP, toP, duration, callback){
+    const startTime = performance.now();
+    function step(now){
+      if(!winkActive) return;
+      const elapsed = now - startTime;
+      const p = Math.min(elapsed / duration, 1);
+      // Ease in-out
+      const eased = p < 0.5
+        ? 2 * p * p
+        : 1 - Math.pow(-2 * p + 2, 2) / 2;
+      const val = fromP + (toP - fromP) * eased;
+      setPos(val);
+      if(p < 1){
+        requestAnimationFrame(step);
+      } else if(callback){
+        callback();
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function runCycle(){
+    if(!winkActive) return;
+
+    // Mulai dari KANAN (100%)
+    setPos(100);
+
+    // FASE 1: Kanan (100%) → Kiri (10%) — 0.5s
+    winkTimers.push(setTimeout(() => {
+      animateTo(100, 10, 500, () => {
+
+        // FASE 2: Kiri (10%) → Tengah (50%) — 0.5s
+        animateTo(10, 50, 500, () => {
+
+          // FASE 3: Tengah (50%) → Kiri (10%) — 0.5s
+          animateTo(50, 10, 500, () => {
+
+            // ULANG dari awal (Kanan)
+            runCycle();
+          });
+        });
+      });
+    }, 100));
+  }
+
+  runCycle();
 }
 
-function userDrag(v){
-  stopAutoSlider();
-  autoSliderValue = parseFloat(v);
-  applySliderValue(autoSliderValue);
-
-  clearTimeout(window.resumeTimer);
-  window.resumeTimer = setTimeout(() => {
-    startAutoSlider();
-  }, 3000);
+function stopWinkAnimation(){
+  winkActive = false;
+  winkTimers.forEach(t => clearTimeout(t));
+  winkTimers = [];
 }
 
 /* ==================================================
    NAVIGASI
 ================================================== */
 function goTo(name){
-  // Sembunyikan semua halaman
   pages.forEach(p => p.classList.remove('active'));
-
-  // Tampilkan target
   const target = document.getElementById('page-' + name);
   if(target){
     target.classList.add('active');
     window.scrollTo({top:0, behavior:'smooth'});
   }
-
-  // Update bottom nav
   navs.forEach(n => n.classList.toggle('active', n.dataset.nav === name));
 
-  // Sembunyikan bottom nav di halaman tertentu
   const hideNav = ['quality','options','loading','result'].includes(name);
   bottomNav.style.display = hideNav ? 'none' : 'grid';
 
-  // Background bintang hanya di Home + Premium mode
   updateBg(name);
 
-  // Auto slider hanya di halaman quality
   if(name === 'quality'){
-    stopAutoSlider();
-    setTimeout(startAutoSlider, 500);
+    stopWinkAnimation();
+    setTimeout(startWinkAnimation, 600);
   } else {
-    stopAutoSlider();
+    stopWinkAnimation();
   }
 }
 
@@ -124,10 +140,10 @@ function goBack(){
     updateBg(prev);
 
     if(prev === 'quality'){
-      stopAutoSlider();
-      setTimeout(startAutoSlider, 500);
+      stopWinkAnimation();
+      setTimeout(startWinkAnimation, 600);
     } else {
-      stopAutoSlider();
+      stopWinkAnimation();
     }
   } else {
     goTo('home');
@@ -230,7 +246,6 @@ function openGallery(){
     }
 
     currentFile = f;
-
     const isVideo = f.type.startsWith('video/');
 
     if(currentFeature === 'fps' && !isVideo){
@@ -269,7 +284,6 @@ function setupOptions(f, isVideo){
 
   document.querySelectorAll('#resGrid .res').forEach(r => r.classList.remove('selected'));
   document.querySelectorAll('#formatGrid .res').forEach(r => r.classList.remove('selected'));
-
   document.querySelector('#formatGrid .res[data-f="jpg"]').classList.add('selected');
 
   const resGrid = document.getElementById('resGrid');
@@ -660,4 +674,4 @@ const params = new URLSearchParams(window.location.search);
 if(params.get('owner') === '1') activateOwner(true);
 
 console.log('%c GUSTAV HD ', 'background:#54258f;color:#fff;padding:4px 8px;border-radius:4px;font-weight:bold');
-console.log('3 file berhasil diload ✅');
+console.log('Wink animation 0.5s loaded ✅');
